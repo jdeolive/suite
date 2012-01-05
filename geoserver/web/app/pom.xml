@@ -125,33 +125,40 @@
       </executions>
     </plugin>
     <plugin>
-      <groupId>org.geoserver.maven</groupId>
-      <artifactId>config</artifactId>
-      <version>${gs.version}</version>
-      <executions>
-        <execution>
-          <id>configPackage</id>
-          <configuration>
-            <configDirectory>${basedir}/../../..</configDirectory>
-            <configId>data_dir</configId>
-          </configuration>
-         <phase>compile</phase>
-         <goals>
-           <goal>config</goal>
-         </goals>
-       </execution>
-       <execution>
-         <id>configClean</id>
-         <phase>clean</phase>
-         <goals>
-           <goal>clean</goal>
-         </goals>
-       </execution>
-      </executions>
-    </plugin>
-    <plugin>
        <artifactId>maven-antrun-plugin</artifactId>
        <executions>
+         <execution>
+            <id>configPackage</id>
+            <phase>package</phase>
+            <configuration>
+              <tasks>
+  <!-- check if config is available, if not fail -->
+  <available file="${configDirectory}/${configId}" property="configIsAvailable" />
+  <fail message="Unable to locate configuration: ${configDirectory}/${configId}" unless="configIsAvailable" />
+
+  <!-- copy the files from the config dir to the webapp dir -->
+  <echo message="Copying data dir from ${configDirectory}/${configId}" />
+  <copy todir="${warSourceDirectory}/data">
+     <fileset dir="${configDirectory}/${configId}" includes="**/**" />
+  </copy>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>configClean</id>
+            <phase>clean</phase>
+            <configuration>
+              <tasks>
+  <delete dir="${warSourceDirectory}/data" />
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
          <execution>
            <id>clean</id>
            <phase>clean</phase>
@@ -250,6 +257,8 @@
   </profiles>
 
   <properties>
+    <configDirectory>${basedir}/../../..</configDirectory>
+    <configId>data_dir</configId>
     <warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
   </properties>
 </project>
