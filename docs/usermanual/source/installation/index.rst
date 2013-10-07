@@ -18,7 +18,7 @@ Installation
 This section describes how to install OpenGeo Suite on your platform. 
 
 * :ref:`Windows <installation.windows>`
-* :ref:`OSX <installation.mac>`
+* :ref:`Mac <installation.mac>`
 * :ref:`Linux <installation.linux>`
 * :ref:`Amazon <installation.aws>`
 * :ref:`Application Server <installation.war>`
