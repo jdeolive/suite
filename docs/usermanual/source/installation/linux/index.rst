@@ -1,4 +1,4 @@
-.. _installation.linux.suite:
+.. _installation.linux:
 
 Installing OpenGeo Suite for Linux
 ==================================
