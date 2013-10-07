@@ -224,6 +224,9 @@ margin-bottom: 15px;
 text-align: center;
 }
 
+.table-leftwise {
+margin-left: 0;
+}
 
 /*-----------------------
 Structural Elements
