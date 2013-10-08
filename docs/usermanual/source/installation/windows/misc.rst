@@ -37,12 +37,11 @@ Changing the Jetty port
 
 To change the Jetty port:
 
-#. Open the file :file:`C:\\Program Files\\Boundless\\OpenGeo\\bin\\jetty.cmd` in a text editor such as Notepad.
+#. Open the file :file:`C:\\Program Files\\Boundless\\OpenGeo\\bin\\jetty\\start.ini` in a text editor such as Notepad.
 
-#. Edit the variable named ``PORT`` near the top of the file changing its value
-   from ``8080`` to a number that that does not conflict with any existing services on the machine. 
+#. Edit the property named ``jetty.port`` near the top of the file changing its value from ``8080`` to a number that that does not conflict with any existing services on the machine. 
 
-#. Optionally change the ``STOP_PORT`` variable value in the same manner.
+#. Optionally change the ``STOP.PORT`` property in the same manner.
 
 .. note:: It is a common convention for Java services like Jetty to use port values greater than 8000. 
 

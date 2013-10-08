@@ -22,7 +22,7 @@ Changing the Jetty port
 
 To change the Jetty port:
 
-#. Edit file :file:`~/Library/Application Support/GeoServer/geoserver/start.ini`.
+#. Edit file :file:`~/Library/Application Support/GeoServer/jetty/start.ini`.
 
 #. Search for the Java system property named ``jetty.port`` and change its value to a number that does not conflict with any existing services on the machine. 
 
@@ -50,8 +50,13 @@ it is often necessary to know where this directory is. It is located at
 You may wish to change this location to an alternate location, perhaps to use an 
 existing GeoServer configuration. To do so:
 
-#. Edit the file :file:`~/Library/Application Support/GeoServer/geoserver/start.ini`.
+#. Edit the file :file:`~/Library/Application Support/GeoServer/jetty/start.ini`.
 
-.. todo: finish this
+#. Uncomment the ``GEOSERVER_DATA_DIR`` system property and sets its value to the desired location. For example::
+
+    # geoserver data directory, uncomment and change to specify an alternative
+    -DGEOSERVER_DATA_DIR=/Users/opengeo/geoserver_data
+
+#. Restart GeoServer.app.
 
 
