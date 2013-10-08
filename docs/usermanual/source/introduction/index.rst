@@ -3,7 +3,7 @@
 Introduction
 ============
 
-This section will guide you through the basic functionality of the OpenGeo Suite.  More detailed information is available in upcoming sections.
+This section will guide you through the basic functionality of OpenGeo Suite.  More detailed information is available in upcoming sections.
 
 .. toctree::
    :maxdepth: 2
@@ -11,5 +11,5 @@ This section will guide you through the basic functionality of the OpenGeo Suite
    whatis
    dashboard
    recipes
-   samplelayers
+   sampledata
    moreinfo

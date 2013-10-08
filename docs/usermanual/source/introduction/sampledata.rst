@@ -1,17 +1,38 @@
-.. _builtindemos:
+.. _sampledata:
 
 
-Sample layers
-=============
+Sample data
+===========
 
-The OpenGeo Suite comes with some preloaded sample layers that may be viewed and restyled as required.
+OpenGeo Suite comes with some preloaded sample layers that may be viewed and restyled as required.
 
 .. note:: The sample layers are provided for demonstration purposes only. No assurances are provided with respect to the currency or accuracy of the data.
- 
+
+States
+------
+
+A population distribution layer for the United States of America taken from the 
+the 2010 Census. See the `U.S. Census Bureau <http://census.gov>`_ for more details.
+
+The :guilabel:`usa:states` layer is in a geographic projection (EPSG:4326) with an approximate spatial extent of ``-179.2, 17.8, -65.2, 71.4`` (west, south, east, north). 
+
+Countries
+---------
+
+A world wide country layer taken from the Natural Earth `1:50m cultural <http://www.naturalearthdata.com/downloads/50m-cultural-vectors/>`_ vector dataset. 
+
+The :guilabel:`opengeo:countries` layer is in a geographic projection (EPSG:4326) with a spatial extent of +-180 (longitude) and +-90 (latitude). 
+
+.. _sampledata.medford:
+
 Medford
 -------
 
-The city of Medford, in the USA state of Oregon, has generously shared some of their public domain municipal data. The following layers are available with the OpenGeo Suite:
+The city of Medford, in the USA state of Oregon, has generously shared some of their public domain municipal data. 
+
+.. note:: This data does not ship with OpenGeo Suite and must be `downloaded <http://data.opengeo.org/medford.zip>`_ separately. To install the data unpack it into the root of the GeoServer data directory.
+
+The following layers are available in the Medford dataset:
 
 .. list-table::
    :widths: 10 20 10 10
@@ -86,18 +107,24 @@ The city of Medford, in the USA state of Oregon, has generously shared some of t
      - Jan 2001 
      - GeoTIFF
 
-   
-The Medford layers have a declared :term:`SRS` (the projection GeoServer publishes the layer with) of EPSG:4326 and bounding boxes within the range ``-122.904, 42.231, -123.042, 42.438``. For further information, please refer to the acknowledgements.txt file in the OpenGeo Suite :file:`<installation_folder>/data_dir/data/medford` directory.
-
-
 .. figure:: img/medford.png
 
    *Medford zoning data viewed in GeoExplorer*
+   
+The Medford layers are in a geographic projection (EPSG:4326) with an approximate spatial extent of ``-122.904, 42.231, -123.042, 42.438`` (west, south, east, north). 
+
+.. _sampledata.world:
 
 World
 -----
 
-The OpenGeo Suite provides a number of world layers including: 
+A variety of world wide datasets compiled from a number of sources. 
+
+.. note::  This data does not ship with OpenGeo Suite by default and must be `downloaded <http://data.opengeo.org/world.zip>`_ separately. To install the data unpack it into the root of the GeoServer data directory.
+
+.. note:: The world data bundle contains styles that require the GeoServer WPS extensions. 
+
+The world layers include:
 
 .. list-table::
    :widths: 10 10 7
@@ -122,33 +149,15 @@ The OpenGeo Suite provides a number of world layers including:
      - Continental outlines             
      - MultiPolygon
 
-The world layers have a declared :term:`SRS` (the projection GeoServer publishes the layer with) of EPSG:4326 and bounding boxes within the range ``-179.97, -77.53, 179.58, 71.08``.
+The world layers are in a geographic projection (EPSG:4326). 
 
 The :guilabel:`world:volcanoes` layer is derived from the freely available volcano data compiled by the Smithsonian Institute, Global Volcanism Program. The :guilabel:`world:globaldata_temp` layer is derived from the `NASA GLOBE Program <http://www.globe.gov/>`_ and again is freely available. (GLOBE data is only available for locations in countries that have joined the GLOBE Program.) 
 
 The :guilabel:`world:urbanareas1_1` layer was obtained from the `Nordpil world database of large urban areas <http://nordpil.com/go/resources/world-database-of-large-cities/>`_, derived from the World Urbanization Prospects: The 2007 Revision Population Database (UN Population Division). The urban areas data is made available under a Creative Commons public domain license.
 
-The :guilabel:`world:cities` layer was derived from public domain data obtained from the `Natural Earth <http://www.naturalearthdata.com/>`_ website. The :guilabel:`world:borders` layer was downloaded from the `Mapping Hacks <http://www.mappinghacks.com/data>`_ website. The original data was derived from public domain sources. For further information, please refer to the Readme.txt file in the OpenGeo Suite :file:`<installation_folder>/data_dir/data/world` directory.
+The :guilabel:`world:cities` layer was derived from public domain data obtained from the `Natural Earth <http://www.naturalearthdata.com/>`_ website. The :guilabel:`world:borders` layer was downloaded from the `Mapping Hacks <http://www.mappinghacks.com/data>`_ website. The original data was derived from public domain sources. 
 
-
-USA
----
-
-A population distribution layer for the USA is also provided.
-
-.. list-table::
-   :widths: 10 10 7
-   :header-rows: 1
-
-   * - Layer Name
-     - Abstract
-     - Type  
-   * - :guilabel:`usa:states`             
-     - USA 2000 Census - Population distribution by state            
-     - MultiPolygon
-
-
-The :guilabel:`usa:states` layer has a declared :term:`SRS` (the projection GeoServer publishes the layer with) of EPSG:4326 and bounding box of ``-122.909, -42.294, 122.777, 42.398``. 
+For further information, please refer to the Readme.txt file included with the data bundle. 
 
 
 Base Maps
