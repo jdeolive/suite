@@ -1,4 +1,4 @@
-.. _apps.sdk.client.dev.viewer.layerextent:
+.. _webapps.sdk.dev.viewer.layerextent:
 
 Adding a Zoom to Layer Extent tool
 ==================================

@@ -1,4 +1,4 @@
-.. _apps.sdk.client.dev.editor.featuregrid:
+.. _webapps.sdk.dev.editor.featuregrid:
 
 Adding a feature grid
 =====================

@@ -1,4 +1,4 @@
-.. _apps.sdk.client.dev.editor.featureeditor:
+.. _webapps.sdk.dev.editor.featureeditor:
 
 Setting up a feature editor
 ===========================

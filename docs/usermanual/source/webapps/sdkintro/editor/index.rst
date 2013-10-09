@@ -1,4 +1,4 @@
-.. _apps.sdk.client.dev.editor:
+.. _webapps.sdk.dev.editor:
 
 Editing tools
 =============

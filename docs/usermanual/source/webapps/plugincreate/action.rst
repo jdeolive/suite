@@ -10,7 +10,7 @@ New application setup
 
 #. To begin, create a new application and run it in debug mode.
 
-   .. note:: Please see the section on :ref:`apps.sdk.client.script` for details about creating a new application. This tutorial will assume an application called "myapp".
+   .. note:: Please see the section on :ref:`webapps.sdk` for details about creating a new application. This tutorial will assume an application called "myapp".
 
    OS X / Linux:
 

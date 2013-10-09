@@ -1,4 +1,4 @@
-.. _apps.sdk.client.dev.editor.snapping:
+.. _webapps.sdk.dev.editor.snapping:
 
 Snapping features
 =================

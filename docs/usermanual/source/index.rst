@@ -9,7 +9,7 @@ Welcome! OpenGeo Suite is a full geospatial software stack that helps you compos
    introduction/index
    webmaps/index
    cartography/index
-   apps/index
+   webapps/index
    processing/index
    dataadmin/index
    sysadmin/index
@@ -21,11 +21,11 @@ OpenGeo Suite User Manual
 
 This User Manual will help you get the most out of OpenGeo Suite.
 
-:ref:`introduction`
-  Getting started with OpenGeo Suite
-
 :ref:`installation`
   Install OpenGeo Suite for your platform
+
+:ref:`introduction`
+  Getting started with OpenGeo Suite
 
 :ref:`webmaps`
   Publish your maps and data on the web
@@ -33,7 +33,7 @@ This User Manual will help you get the most out of OpenGeo Suite.
 :ref:`cartography`
   Visualize your data on the web
 
-:ref:`apps`
+:ref:`webapps`
   Building complete web-based applications using the Client SDK
 
 :ref:`processing`

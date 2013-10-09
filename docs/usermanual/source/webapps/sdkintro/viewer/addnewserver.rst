@@ -1,4 +1,4 @@
-.. _apps.sdk.client.dev.viewer.addnewserver:
+.. _webapps.sdk.dev.viewer.addnewserver:
 
 Adding an Add a New Server dialog
 =================================

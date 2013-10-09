@@ -1,4 +1,4 @@
-.. _apps.sdk.client.dev.viewer.geocoder:
+.. _webapps.sdk.dev.viewer.geocoder:
 
 Adding a Google Geocoder search field
 =====================================

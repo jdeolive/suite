@@ -1,14 +1,14 @@
-.. _apps.sdk.client.dev.basics:
+.. _webapps.sdk.dev.basics:
 
 Creating a viewer
 =================
 
-In this section we will create a viewer application using the client SDK.
+In this section we will create a viewer application using the webapp SDK.
 
 Background
 ----------
 
-The central object in the architecture of the client SDK is the **viewer** (`gxp.Viewer <../../../sdk-api/lib/widgets/Viewer.html>`_). Primarily, a viewer combines a map panel with tools, but it can do much more. 
+The central object in the architecture of the SDK is the **viewer** (`gxp.Viewer <../../../sdk-api/lib/widgets/Viewer.html>`_). Primarily, a viewer combines a map panel with tools, but it can do much more. 
 
 The main configuration options for a ``gxp.Viewer`` are:
 
@@ -43,7 +43,7 @@ Setting up a new project
 We will use the ``suite-sdk`` script to set up a new viewer application called
 "myviewer".
 
-.. note:: For more information on the ``suite-sdk`` script, please see the section on :ref:`apps.sdk.client.script`.
+.. note:: For more information on the ``suite-sdk`` script, please see the section on :ref:`webapps.sdk`.
 
 Run the following command, replacing ``path/to/myviewer`` with the desired name of and path to your application::
 
@@ -102,9 +102,9 @@ The ``gxp.Viewer`` instance is configured to create a viewport filled with a bor
 * The **Zoom** tool, which will create two buttons in the map top toolbar, to zoom in and zoom out with a factor 2 centered on the current map center.
 * The **Navigation History** tool, which will create two buttons in the map's top toolbar, to navigate through visited map extents.
 
-The viewer configuration defines two layer sources, a WMS-C (cacheable WMS) source to a local GeoServer (with the embedded GeoWebCache), and an OpenStreetMap source. Layer sources are also implemented as Ext plugins, so configured with a ``ptype``. The configuration for the map defines the initial map extent (centered on the USA) and the layers to load in the map, in this case an OSM base layer and the ``usa:states`` layer from an OpenGeo Suite's default GeoServer setup.  (See :ref:`apps.sdk.client.dev.basics.proxy` for how to link this application to a GeoServer instance.)  Finally, a zoom slider is defined. Note that this can also be done using ``mapItems``.
+The viewer configuration defines two layer sources, a WMS-C (cacheable WMS) source to a local GeoServer (with the embedded GeoWebCache), and an OpenStreetMap source. Layer sources are also implemented as Ext plugins, so configured with a ``ptype``. The configuration for the map defines the initial map extent (centered on the USA) and the layers to load in the map, in this case an OSM base layer and the ``usa:states`` layer from an OpenGeo Suite's default GeoServer setup.  (See :ref:`webapps.sdk.dev.basics.proxy` for how to link this application to a GeoServer instance.)  Finally, a zoom slider is defined. Note that this can also be done using ``mapItems``.
 
-.. _apps.sdk.client.dev.basics.proxy:
+.. _webapps.sdk.dev.basics.proxy:
 
 Proxying GeoServer
 ------------------

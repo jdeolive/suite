@@ -1,4 +1,4 @@
-.. _apps.sdk.client.dev.viewer.featureinfo:
+.. _webapps.sdk.dev.viewer.featureinfo:
 
 Adding a WMS GetFeatureInfo tool
 ================================

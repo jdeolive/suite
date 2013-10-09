@@ -5,7 +5,7 @@ Using WPS with OpenLayers and the Client SDK
 
 OpenLayers includes a Web Processing Service (WPS) client. With this client you can employ server processes in browser-based mapping applications. For example, you could perform certain geometry manipulations on the server that are not available in a browser environment. The WPS client also supports process chaining, which allows the server to perform more complex operations without the need to return the result to the client at each intermediate step.
 
-This tutorial will describe how to use a WPS process to manipulate a locally-created geometry in the browser, first using OpenLayers, and then by creating an interactive application using the :ref:`Client SDK <apps.sdk.client.dev>`.
+This tutorial will describe how to use a WPS process to manipulate a locally-created geometry in the browser, first using OpenLayers, and then by creating an interactive application using the :ref:`Client SDK <webapps.sdk.dev>`.
 
 
 Creating an OpenLayers.WPSClient instance
@@ -207,7 +207,7 @@ In this case, the ``JTS:buffer`` process doesn't produce multiple outputs, but i
 Building an interactive application
 -----------------------------------
 
-Using the :ref:`Client SDK <apps.sdk.client.dev>`, you can create a lightweight demo application that allows the user to draw geometries and execute the SplitPolygon and Intersection/Buffer processes as created above.
+Using the :ref:`Client SDK <webapps.sdk.dev>`, you can create a lightweight demo application that allows the user to draw geometries and execute the SplitPolygon and Intersection/Buffer processes as created above.
 
 To create our custom application, we must first create a minimal :file:`app.js` file and a custom ``app_wpsdemo`` plugin in its own :file:`WPSDemo.js` file. These files will then be copied into a template application.
 
@@ -249,7 +249,7 @@ Results
 
 After these files have been created and placed in the proper directory, the application can be tested.
 
-.. note:: Please see the :ref:`apps.sdk.client.script.debug` section for more information on launching this application.
+.. note:: Please see the :ref:`webapps.sdk.debug` section for more information on launching this application.
 
 After drawing two polygons, splitting them, dragging them around a bit, and then executing two different Intersection/Buffer processes, our map could look like this:
 

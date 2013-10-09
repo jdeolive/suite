@@ -1,48 +1,58 @@
-﻿.. _apps.sdk.client.script:
+﻿.. _webapps.sdk:
 
-Creating and deploying apps with the Client SDK
+Creating and deploying apps with the Webapp SDK
 ===============================================
 
-The OpenGeo Suite Client SDK provides tools for building web mapping applications backed by 
-the OpenGeo Suite.  The application development life-cycle are as follows:
+The OpenGeo Webapp SDK provides tools for building web mapping applications backed by OpenGeo Suite.  The application development life-cycle are as follows:
 
 #. **Creation** - Generating a new template application
 #. **Customization** - Adding features and functionality to the template application
 #. **Testing** - Deploying the application in a test mode to verify functionality and debug
 #. **Deployment** - Deploying the application in a production environment
 
-This tutorial will discuss creating, testing, and deploying of an application.  See the tutorial :ref:`apps.sdk.client.dev` for information on customizing your application.
+This tutorial will discuss creating, testing, and deploying of an application.  See the tutorial :ref:`webapps.sdk.dev` for information on customizing your application.
 
 Prerequisites:
 
-* The Client SDK should be installed onto a machine where the development will occur.  This is typically bundled with the OpenGeo Suite itself (under the :file:`sdk` subdirectory), but is available for download separately from http://opengeo.org/technology/sdk/ .
-* This machine requires a `Java Development Kit (JDK) <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_.  A standard Java Runtime Environment (JRE) is not sufficient.
-* This machine also requires `Apache Ant <http://ant.apache.org>`_ installed and on the path.  To verify this, type ``ant -version`` at a terminal prompt.
-* The instructions below assume that you have added the :file:`bin` directory of the Client SDK to your system path.  This will allow you to run the ``suite-sdk`` command from anywhere on your file system.
+* The Webapp SDK installed. See the next section for installation details.
 
-.. _apps.sdk.client.script.install:
+* A `Java Development Kit (JDK) <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_.  A standard Java Runtime Environment (JRE) is not sufficient.
+
+* `Apache Ant <http://ant.apache.org>`_ installed and on the ``PATH``.  To verify this, type ``ant -version`` at a terminal prompt.
+
+.. _webapps.sdk.install:
 
 SDK Installation
 ----------------
 
-The SDK doesn't require installation.  If the archive was downloaded from http://opengeo.org/technology/sdk/, it only needs to be extracted to a suitable place (such as :file:`/opt/opengeo/suite/sdk` or :file:`C:\\Program Files\\OpenGeo\\OpenGeo Suite\\sdk`).
+The SDK can be installed in one of two ways.  The first is as part of a regular OpenGeo Suite install. See the :ref:`installation` section for details.
 
-Once extracted, the script used will be inside the :file:`bin` directory and is named :file:`suite-sdk` (:file:`suite-sdk.cmd` on Windows).
+The second method involves installing the SDK standalone:
 
-.. _apps.sdk.client.script.create:
+#. Downloaded the SDK from http://boundlessgeo.com/solutions/solutions-software/software/. 
+
+#. Extract the archive to a suitable location on the file system.
+
+#. Ensure the SDK :file:`bin` is on the ``PATH``. 
+
+To verify the SDK is installed properly execute the command ``suite-sdk`` from 
+a command prompt.
+
+
+.. _webapps.sdk.create:
 
 Creating a new application
 --------------------------
 
-The Client SDK comes with an application template that can be useful for getting started developing with the Suite.  To create a new application based on this template, run the ``suite-sdk create`` command::
+The Webapp SDK comes with an application template that can be useful for getting started developing with the Suite.  To create a new application based on this template, run the ``suite-sdk create`` command::
 
   suite-sdk create path/to/myapp
 
 In the above command, the app will be called :file:`myapp` and will be placed in the :file:`path/to/myapp` directory.  This directory will contain all required client-side resources for your application.
 
-.. warning:: Be sure to not name your application :file:`geoserver`, :file:`geoexplorer`, :file:`manager`, or any other name that might cause a conflict when :ref:`apps.sdk.client.script.deploy`.
+.. warning:: Be sure to not name your application :file:`geoserver`, :file:`geoexplorer`, :file:`manager`, or any other name that might cause a conflict when :ref:`webapps.sdk.deploy`.
 
-.. _apps.sdk.client.script.debug:
+.. _webapps.sdk.debug:
 
 Testing the application
 -----------------------
@@ -71,7 +81,7 @@ This will make your application available for debugging at ``http://localhost:80
 Accessing GeoServer while testing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When deploying the application in the OpenGeo Suite, the application will have access to GeoServer at the relative URL of :file:`/geoserver`.  If a GeoServer is not available on that path, or to set up this relationship with a remote GeoServer while testing your application, you can proxy a remote GeoServer to make it look as if it were available locally.  To proxy a GeoServer located at ``http://example.com:8080/geoserver``, run the following command::
+When deploying the application in OpenGeo Suite, the application will have access to GeoServer at the relative URL of :file:`/geoserver`.  If a GeoServer is not available on that path, or to set up this relationship with a remote GeoServer while testing your application, you can proxy a remote GeoServer to make it look as if it were available locally.  To proxy a GeoServer located at ``http://example.com:8080/geoserver``, run the following command::
 
   suite-sdk debug -g http://example.com:8080/geoserver path/to/myapp 
 
@@ -85,7 +95,7 @@ Again, this would make your application available at ``http://localhost:8000/`` 
 
 The debug server and proxy are suitable for debugging purposes only.  Use the ``suite-sdk deploy`` command to prepare your application for production.
 
-.. _apps.sdk.client.script.deploy:
+.. _webapps.sdk.deploy:
 
 Deploying the application
 -------------------------
@@ -98,7 +108,7 @@ To deploy your application to your (remote) OpenGeo Suite instance, run the foll
 
 .. note::  Type ``suite-sdk deploy --help`` without any arguments to see a full list of possible arguments.
 
-The above command assumes your Suite instance is available at ``http://example.com:8080/``.  Using the ``-u`` and ``p`` options supplies the :ref:`remote manager credentials <apps.sdk.client.remotedeploy>` for the remote OpenGeo Suite.
+The above command assumes your Suite instance is available at ``http://example.com:8080/``.  Using the ``-u`` and ``p`` options supplies the :ref:`remote manager credentials <webapps.sdk.remotedeploy>` for the remote OpenGeo Suite.
 
 The container type also needs to be supplied by the ``-c`` flag (default is ``tomcat6x``).  See the following table for the default containers for the various installation types.
 
@@ -119,10 +129,10 @@ The container type also needs to be supplied by the ``-c`` flag (default is ``to
      - ``-c tomcat6x``
    * - Windows installer
      - Jetty 6
-     - ``-c jetty6x``
+     - ``-c jetty7x``
    * - Mac OS X installer
      - Jetty 6
-     - ``-c jetty6x``
+     - ``-c jetty7x``
 
 For a full list of supported containers and their deployment syntax, please see http://cargo.codehaus.org .
 

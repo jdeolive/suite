@@ -1,4 +1,4 @@
-.. _apps.sdk.client.dev.viewer.legend:
+.. _webapps.sdk.dev.viewer.legend:
 
 Adding a legend tool
 ====================

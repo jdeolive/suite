@@ -1,4 +1,4 @@
-.. _apps.sdk.client.dev.viewer.locale:
+.. _webapps.sdk.dev.viewer.locale:
 
 Changing the locale of the viewer
 =================================

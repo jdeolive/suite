@@ -1,9 +1,9 @@
-.. _apps.sdk.client.dev.styler:
+.. _webapps.sdk.dev.styler:
 
 Adding a Styler plugin
 ======================
 
-The Styler plugin makes it possible to edit layer styles. This uses the REST config module of the OpenGeo Suite's GeoServer.
+The Styler plugin makes it possible to edit layer styles. This uses the REST config module of OpenGeo Suite's GeoServer.
 
 .. note:: By default the Styler plugin will only work with the GeoServer of the same OpenGeo Suite instance where your app is deployed.
 

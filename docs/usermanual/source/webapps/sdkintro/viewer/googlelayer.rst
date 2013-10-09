@@ -1,4 +1,4 @@
-.. _apps.sdk.client.dev.viewer.googlelayer:
+.. _webapps.sdk.dev.viewer.googlelayer:
 
 Adding a Google base layer
 ==========================

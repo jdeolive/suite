@@ -1,4 +1,4 @@
-.. _apps.sdk.client.dev.viewer.projection:
+.. _webapps.sdk.dev.viewer.projection:
 
 Changing the projection of the viewer
 =====================================

@@ -1,9 +1,9 @@
-.. _apps.sdk.client.dev.editor.featuremanager:
+.. _webapps.sdk.dev.editor.featuremanager:
 
 Setting up a feature manager
 ============================
 
-Editing with the Client SDK always starts with setting up a "feature manager". In the `API documentation <../../../sdk-api/>`_, find the `gxp.plugins.FeatureManager <../../../sdk-api/lib/plugins/FeatureManager.html>`_ tool. This provides the "feature manager" functionality. The ``ptype`` for ``gxp.plugins.FeatureManager`` is ``gxp_featuremanager``. Open up :file:`app.js` in the application directory.  Add :file:`plugins/FeatureManager.js` to the list of dependencies at the top of the file.
+Editing with the SDK always starts with setting up a "feature manager". In the `API documentation <../../../sdk-api/>`_, find the `gxp.plugins.FeatureManager <../../../sdk-api/lib/plugins/FeatureManager.html>`_ tool. This provides the "feature manager" functionality. The ``ptype`` for ``gxp.plugins.FeatureManager`` is ``gxp_featuremanager``. Open up :file:`app.js` in the application directory.  Add :file:`plugins/FeatureManager.js` to the list of dependencies at the top of the file.
 
 .. code-block:: javascript
 

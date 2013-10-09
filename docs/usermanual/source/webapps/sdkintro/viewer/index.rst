@@ -1,4 +1,4 @@
-.. _apps.sdk.client.dev.viewer:
+.. _webapps.sdk.dev.viewer:
 
 Customizing the Viewer
 ======================
