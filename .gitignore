@@ -1,6 +1,9 @@
 # general stuff
 .DS_Store
 
+# build override files
+local.properties
+
 # Maven artifacts
 target/
 

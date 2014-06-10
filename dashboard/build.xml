@@ -1,0 +1,37 @@
+<project name="dashboard" default="build">
+
+    <import file="../build/common.xml"/>
+
+    <property name="war.dir" value="target/war"/>
+    <property name="war.src" value="src/main/webapp"/>
+
+    <target name="build" depends="init"  description="Build project">
+        <mkdir dir="${war.dir}"/>
+        <copy todir="${war.dir}">
+          <fileset dir="${war.src}">
+            <include name="**/*.html"/>
+          </fileset>
+          <filterset>
+            <filtersfile file="target/version.ini"/>
+          </filterset>
+        </copy>
+        <copy todir="${war.dir}">
+          <fileset dir="${war.src}">
+            <exclude name="**/*.html"/>
+          </fileset>
+        </copy>
+        <copy todir="${war.dir}" file="target/version.ini"/>
+        <jar destfile="target/${ant.project.name}.war"
+          basedir="${war.dir}"/>
+    </target>
+
+    <target name="clean" depends="destroy"  description="Clean project"/>
+
+    <target name="assemble"  description="Assemble project artifact">
+      <antcall target="assemble-artifact">
+        <param name="dir" value="target"/>
+        <param name="includes" value="dashboard.war"/>
+      </antcall>
+    </target>
+
+</project>

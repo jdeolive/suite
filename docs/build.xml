@@ -1,0 +1,54 @@
+<project name="docs" default="build">
+
+    <import file="../build/common.xml"/>
+
+    <target name="clean" depends="destroy-target"
+        description="Clean project">
+        <ant dir="usermanual" target="clean"/>
+        <ant dir="install" target="clean"/>
+        <ant dir="geoexplorer" target="clean"/>
+        <ant dir="geowebcache" target="clean"/>
+        <ant dir="geoserver" target="clean"/>
+        <ant dir="sdk-api" target="clean"/>
+        <ant dir="postgis" target="clean"/>
+    </target>
+
+    <target name="build"
+        description="Build all documentation modules">
+        <ant dir="usermanual"/>
+        <ant dir="install"/>
+        <ant dir="geoexplorer"/>
+        <ant dir="geowebcache"/>
+        <ant dir="geoserver"/>
+        <ant dir="sdk-api"/>
+        <ant dir="postgis"/>
+    </target>
+
+    <target name="assemble" depends="init"
+        description="Assmble documentation artifact">
+        <property name="doc.dir" value="target/opengeo-docs"/>
+        <mkdir dir="${doc.dir}"/>
+        <copy todir="${doc.dir}">
+            <fileset dir="usermanual/target/html" includes="**/*"/>
+        </copy>
+        <copy todir="${doc.dir}/geoserver">
+            <fileset dir="geoserver/target/html" includes="**/*"/>
+        </copy>
+        <copy todir="${doc.dir}/geowebcache">
+            <fileset dir="geowebcache/target/html" includes="**/*"/>
+        </copy>
+        <copy todir="${doc.dir}/geoexplorer">
+            <fileset dir="geoexplorer/target/html" includes="**/*"/>
+        </copy>
+        <copy todir="${doc.dir}/postgis">
+            <fileset dir="postgis/target/html" includes="**/*"/>
+        </copy>
+        <copy todir="${doc.dir}/sdk-api">
+            <fileset dir="sdk-api/target/html" includes="**/*"/>
+        </copy>
+        <antcall target="assemble-artifact">
+            <param name="dir" value="${doc.dir}"/>
+        </antcall>
+    </target>
+
+</project>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="install" default="build" basedir=".">
+
+  <import file="../../build/common.xml"/>
+
+  <target name="clean" depends="destroy"
+    description="Clean project">
+    <delete includeEmptyDirs="true">
+      <fileset dir="source" includes="**/*.rst"/>
+    </delete>
+  </target>
+
+  <target name="init-sources">
+    <copy todir="${basedir}/source">
+      <fileset dir="${basedir}/../../usermanual/source/installation/${doc.name}"/>
+    </copy>
+  </target>
+
+  <target name="build" depends="init,init-sources"
+    description="Build project">
+    <property environment="env"/>
+    <condition property="pdflatex-present">
+      <or>
+        <available file="pdflatex" filepath="${env.PATH}"/>
+        <available file="pdflatex.exe" filepath="${env.Path}"/>
+        <available file="pdflatex.exe" filepath="${env.PATH}"/>
+      </or>
+    </condition>
+    <antcall target="build-html"/>
+    <antcall target="build-text"/>
+    <antcall target="build-pdf"/>
+  </target>
+
+  <target name="build-html"
+    description="Build html docs">
+    <antcall target="sphinx">
+      <param name="dir" value="source"/>
+    </antcall>
+  </target>
+
+  <target name="build-text"
+    description="Build text docs">
+    <antcall target="sphinx">
+      <param name="dir" value="source"/>
+      <param name="builder" value="text"/>
+    </antcall>
+  </target>
+
+  <target name="build-pdf" depends="build-pdf-if, pdflatex-notpresent"
+    description="Build pdf docs"/>
+
+  <target name="build-pdf-if" if="pdflatex">
+    <antcall target="sphinx">
+      <param name="dir" value="source"/>
+      <param name="builder" value="latex"/>
+    </antcall>
+    <exec executable="make" failonerror="true" dir="${build.directory}/latex">
+      <arg line="all-pdf"/>
+    </exec>
+  </target>
+  <target name="pdflatex-notpresent" unless="pdflatex-present">
+      <echo message="No PDF generated because pdflatex is not on PATH.  This may make installer assembly fail."/>
+  </target>
+
+</project>

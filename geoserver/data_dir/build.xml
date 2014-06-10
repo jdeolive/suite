@@ -1,0 +1,25 @@
+<project name="geoserver.data_dir" default="build">
+  <import file="../../build/common.xml"/>
+
+  <property name="datapack.dir" value="externals/suite-data/default"/>
+
+  <target name="clean" depends="destroy">
+    <ant dir="${datapack.dir}" target="clean"/>
+  </target>
+
+  <target name="build" depends="clean">
+    <ant dir="${datapack.dir}"/>
+    <ant dir="${datapack.dir}" target="assemble"/>
+  </target>
+
+  <target name="assemble">
+    <mkdir dir="target"/>
+    <unzip src="${datapack.dir}/target/default.zip" dest="target/data_dir"/>
+    <antcall target="assemble_artifact">
+      <param name="name" value="data-dir"/>
+      <param name="dir" value="target"/>
+      <param name="includes" value="data_dir/**/*"/>
+    </antcall>
+  </target>
+
+</project>

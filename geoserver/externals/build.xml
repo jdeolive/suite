@@ -1,47 +1,9 @@
-<project name="build" default="build-all">
+<project name="geoserver.externals" default="build">
 
-   <property name="gs.dir" value="geoserver"/>
-   <property name="gs.version" value="2.5-SNAPSHOT"/>
-   <property name="gs.flags" value=""/>
+   <import file="../../build/common.xml"/>
 
-   <property name="gs-exts.dir" value="geoserver-exts"/>
-   <property name="gs-exts.flags" value=""/>
-
-   <property name="gt.dir" value="geotools"/>
-   <property name="gt.version" value="11-SNAPSHOT"/>
-   <property name="gt.flags" value=""/>
-
-   <property name="gwc.dir" value="geowebcache"/>
-   <property name="gwc.version" value="1.5.1"/>
-   <property name="gwc.branch" value="1.5.x"/>
-   <property name="gwc.flags" value=""/>
-
-   <property name="geoscript-js.dir" value="geoscript/js"/>
-   <property name="geoscript-js.flags" value=""/>
-   <property name="geoscript-py.dir" value="geoscript/py"/>
-   <property name="geoscript-py.flags" value=""/>
-
-   <condition property="mvn_exec" value="${mvn.exec}">
-     <isset property="mvn.exec"/>
-   </condition>
-   <condition property="mvn.exec" value="mvn.bat" else="mvn">
-     <and>
-       <not>
-         <isset property="mvn_exec"/>
-       </not>
-       <os family="windows"></os>
-     </and>
-   </condition>
-
-   <condition property="mvn_settings" value="-s ${mvn.settings}" else="">
-       <isset property="mvn.settings"/>
-   </condition>
-
-   <condition property="mvn_offline" value="-o" else="">
-     <isset property="mvn.offline"/>
-   </condition>
-
-   <target name="build-all" depends="build-gt, build-gwc, build-geoscript-js, build-geoscript-py, build-gs, build-gs-exts">
+   <target name="build" 
+      depends="init, build-gt, build-gwc, build-geoscript-js, build-geoscript-py, build-gs, build-gs-exts">
    </target>
 
    <target name="build-gt" unless="skip.gt"> 
@@ -51,7 +13,7 @@
      <antcall target="mvn">
         <param name="dir" value="${gt.dir}"/>
         <param name="flags" value="-DskipTests -Dall -P ogr,mbtiles,geopkg -Dpostgresql.jdbc.version=${postgresql.jdbc.version} -Dbuild.commit.id=${gt.rev} ${gt.flags}"/>
-        <param name="targets" value="clean install"/>
+        <param name="goals" value="clean install"/>
      </antcall>
    </target>
 
@@ -62,7 +24,7 @@
      <antcall target="mvn">
         <param name="dir" value="${gs.dir}/src"/>
         <param name="flags" value="-DskipTests -DconfigDirectory=${basedir}/${gs.dir}/data -Dbuild.commit.id=${gs.rev} -P proxy,printing,importer,jdbcconfig,csw,script,script-js,script-py,geopkg,allExtensions ${gs.flags} -Dgwc.version=${gwc.version}"/>
-        <param name="targets" value="clean install"/>
+        <param name="goals" value="clean install"/>
      </antcall>
    </target>
 
@@ -73,12 +35,12 @@
      <antcall target="mvn">
         <param name="dir" value="${gwc.dir}/geowebcache"/>
         <param name="flags" value="-DskipTests -Dgt.version=${gt.version} -Dbuild.branch=${gwc.branch} -Dbuild.commit.id=${gwc.rev}"/>
-        <param name="targets" value="clean install"/>
+        <param name="goals" value="clean install"/>
      </antcall>
      <antcall target="mvn">
         <param name="dir" value="${gwc.dir}/geowebcache"/>
         <param name="flags" value="-DgroupId=org.geowebcache -DartifactId=geowebcache -Dgt.version=${gt.version} -Dversion=${gwc.version} -Dpackaging=war -Dfile=web/target/geowebcache.war ${gwc.flags}"/>
-        <param name="targets" value="install:install-file"/>
+        <param name="goals" value="install:install-file"/>
      </antcall>
    </target>
 
@@ -86,7 +48,7 @@
      <antcall target="mvn">
         <param name="dir" value="${gs-exts.dir}"/>
         <param name="flags" value="-DskipTests -Dgs.version=${gs.version} -Dgt.version=${gt.version} ${gs-exts.flags}"/>
-        <param name="targets" value="clean install"/>
+        <param name="goals" value="clean install"/>
      </antcall>
    </target>
 
@@ -94,7 +56,7 @@
      <antcall target="mvn">
         <param name="dir" value="${geoscript-js.dir}"/>
         <param name="flags" value="-DskipTests -Dgt.version=${gt.version} ${geoscript-js.flags}"/>
-        <param name="targets" value="clean install"/>
+        <param name="goals" value="clean install"/>
      </antcall>
    </target>
 
@@ -102,15 +64,8 @@
      <antcall target="mvn">
         <param name="dir" value="${geoscript-py.dir}"/>
         <param name="flags" value="-DskipTests -Dgt.version=${gt.version} ${geoscript-py.flags}"/>
-        <param name="targets" value="clean install"/>
+        <param name="goals" value="clean install"/>
      </antcall>
    </target>
-
-  <target name="mvn">
-     <echo message="${mvn_exec} -nsu ${mvn_settings} ${mvn_offline} ${flags} ${targets}"/>
-     <exec executable="${mvn_exec}" dir="${dir}" failonerror="true">
-        <arg line="${mvn_settings} ${mvn_offline} ${flags} ${targets}"/>
-     </exec>
-  </target>
 
 </project>

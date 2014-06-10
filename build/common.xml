@@ -1,0 +1,189 @@
+<!--
+Common build targets.
+-->
+<project name="suite" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+    <!-- load relative build.properties first to override any settings -->
+    <property file="local.properties"/>
+    <property file="build.properties"/>
+
+    <!-- in order to load properties in this directory we need to store the 
+         path to this file, so that build.properties can be resolved -->
+    <dirname property="common.basedir" file="${ant.file.suite}"/>
+    <property file="${common.basedir}/local.properties"/>
+    <property file="${common.basedir}/build.properties"/>
+
+    <!--
+      Help task. 
+    -->
+    <target name="help" description="Print help">
+      <exec executable="ant">
+        <arg value="-p"/>
+      </exec>
+    </target>
+
+    <!-- 
+    Initializes build timestamps.
+    -->
+    <target name="init-time">
+        <tstamp>
+          <format property="suite.build_date" pattern="yyyy-MM-dd'T'hh:mm:ssZ"/>
+          <format property="suite.build_prettydate" pattern="E MMM dd, yyyy @ HH:mm z"/>
+        </tstamp>
+    </target>
+
+    <!-- 
+    Initializes git revision info.
+    -->
+    <target name="init-git">
+         <exec executable="git" outputproperty="suite.build_rev"
+            failifexecutionfails="false">
+            <arg line="rev-parse --short HEAD"/>
+        </exec>
+        <exec executable="git" outputproperty="suite.build_branch"
+            failifexecutionfails="false">
+            <arg line="rev-parse --abbrev-ref HEAD"/>
+        </exec>
+    </target>
+
+    <!-- 
+    Initializes maven executable.
+    -->
+    <target name="init-mvn">
+       <condition property="mvn.exe" value="mvn.bat" else="mvn">
+         <os family="windows"></os>
+       </condition>
+    </target>
+
+    <!--
+    Creates the target directory.
+    -->
+    <target name="init-target">
+      <mkdir dir="target"/>
+    </target>
+
+    <!--
+    Creates the target/version.ini file.
+    -->
+    <target name="init-buildinfo" depends="init-time,init-target,init-git">
+      <echo message="suite_version=${suite.version}${line.separator}" 
+          file="target/version.ini"/>
+      <echo message="build_branch=${suite.build_branch}${line.separator}" 
+          file="target/version.ini" append="true"/>
+      <echo message="build_rev=${suite.build_rev}${line.separator}" 
+          file="target/version.ini" append="true"/>
+      <echo message="build_date=${suite.build_date}${line.separator}" 
+          file="target/version.ini" append="true"/>
+      <echo message="build_prettydate=${suite.build_prettydate}${line.separator}" 
+            file="target/version.ini" append="true"/>
+    </target>
+
+    <!-- 
+    Initialization task. Every build file should call this.
+    -->
+    <target name="init" depends="init-buildinfo,init-mvn"/>
+
+    <!-- 
+    Ivy dependency resolution task.
+    -->
+    <target name="resolve">
+      <ivy:configure file="${common.basedir}/ivysettings.xml"/>
+      <ivy:resolve type="jar,bundle"/>
+      <ivy:report todir="target/ivy-report"/>
+    </target>
+
+    <!-- 
+    Ivy dependency retrieval task.
+
+    @param dir Directory to copy dependencies to, defaults to "${basedir}/lib". 
+    @param pattern Retrieval pattern, defaults to "${dir}/[artifact]-[revision].[ext]". 
+    -->
+    <target name="retrieve" depends="resolve">
+      <property name="dir" value="lib"/>
+      <property name="pattern" value="${dir}/[artifact]-[revision].[ext]"/>
+      <ivy:retrieve pattern="${pattern}" type="jar,bundle"/>
+    </target>
+
+    <!--
+    Destroys the target directory.
+    -->
+    <target name="destroy-target">
+        <delete dir="target"/>
+    </target>
+
+    <target name="destroy" depends="destroy-target"/>
+
+    <!--
+    Assembles a build artifact.
+
+    @param name The artifact name, default is name of project.
+    @param includes The pattern determine files to be included in the archive, default is **/*.
+    @param excludes The pattern determine files to be excluded from the archive.
+    @param dir The directory from which files is relative to, default is target.
+    -->
+    <target name="assemble-artifact" depends="init-git">
+        <property name="dir" value="target"/>
+        <property name="name" value="${ant.project.name}"/>
+        <property name="includes" value="**/*"/>
+        <property name="excludes" value=""/>
+
+        <property name="artifact_root"
+            value="${suite.build_root}/${suite.build_cat}/${name}"/>
+        <property name="artifact_dir" 
+            value="${artifact_root}/${suite.build_rev}"/>
+        <property name="artifact_file" 
+            value="${artifact_dir}/suite-${name}-${suite.build_rev}.zip"/>
+
+        <delete dir="${artifact_dir}"/>
+        <mkdir dir="${artifact_dir}"/>
+        <zip destfile="${artifact_file}">
+            <fileset dir="target" includes="version.ini"/>
+            <fileset dir="${dir}" includes="${includes}" excludes="${excludes}"/>
+        </zip>
+        <symlink resource="${artifact_dir}" link="${artifact_root}/${suite.build_name}"
+            overwrite="true" failonerror="false"/>
+    </target>
+
+  <!-- 
+  Runs a maven build.
+
+  @param dir Directory to build from.
+  @param goals Goals to execute.
+  @param flags Extra build flags.
+  -->
+  <target name="mvn">
+     <condition property="mvn_settings" value="-s ${mvn.settings}" else="">
+       <isset property="mvn.settings"/>
+     </condition>
+
+     <condition property="mvn_offline" value="-o" else="">
+       <isset property="mvn.offline"/>
+     </condition>
+
+     <echo message="${mvn.exe} ${mvn.flags} ${mvn_settings} ${mvn_offline} ${flags} ${goals}"/>
+     <exec executable="${mvn.exe}" dir="${dir}" failonerror="true">
+        <arg line="${mvn_settings} ${mvn_offline} ${mvn.flags} ${flags} ${goals}"/>
+     </exec>
+  </target>
+
+  <!-- 
+  Runs a sphinx build.
+
+  @param builder Doc builder, default is "html"
+  @param doctrees Directory to store doctrees, default is "target/doctrees"
+  @param srcdir The source directory, the default is ".".
+  @param outdir The output directory, the default is target/{builder}
+  @param flags Additional sphinx build flags.
+  -->
+  <target name="sphinx">
+      <property name="builder" value="html"/>
+      <property name="doctrees" value="${basedir}/target/doctrees"/>
+      <property name="srcdir" value="."/>
+      <property name="outdir" value="${basedir}/target/${builder}"/>
+      <property name="flags" value=""/>
+      <echo message="sphinx-build -A suite_version=${suite.version} ${sphinx.flags} ${flags} -b ${builder} -d ${doctrees} ${srcdir} ${outdir}"/>
+      <exec executable="sphinx-build" dir="${dir}">
+        <arg line="-A suite_version=${suite.version} ${sphinx.flags} ${flags} -b ${builder} -d ${doctrees} ${srcdir} ${outdir}"/>
+      </exec>
+  </target>
+</project>

@@ -1,0 +1,11 @@
+<project name="doc.usermanual" default="build">
+
+    <import file="../../build/common.xml"/>
+
+    <target name="build" depends="init">
+        <antcall target="sphinx">
+            <param name="dir" value="source"/>
+        </antcall>
+    </target>
+
+</project>
