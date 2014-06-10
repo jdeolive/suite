@@ -81,7 +81,7 @@ Common build targets.
     <!-- 
     Initialization task. Every build file should call this.
     -->
-    <target name="init" depends="init-buildinfo,init-mvn"/>
+    <target name="init" depends="init-buildinfo"/>
 
     <!-- 
     Ivy dependency resolution task.
@@ -147,11 +147,15 @@ Common build targets.
   <!-- 
   Runs a maven build.
 
-  @param dir Directory to build from.
-  @param goals Goals to execute.
-  @param flags Extra build flags.
+  @param dir Directory to build from, default is ${basedir}.
+  @param goals Goals to execute, default is "clean install".
+  @param flags Extra build flags, default is empty.
   -->
-  <target name="mvn">
+  <target name="mvn" depends="init-mvn">
+     <property name="dir" value="${basedir}"/>
+     <property name="flags" value=""/>
+     <property name="goals" value="clean install"/>
+
      <condition property="mvn_settings" value="-s ${mvn.settings}" else="">
        <isset property="mvn.settings"/>
      </condition>
