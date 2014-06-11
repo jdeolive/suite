@@ -22,7 +22,7 @@
   </target>
 
   <target name="assemble">
-    <antcall target="assemble_artifact">
+    <antcall target="assemble-artifact">
       <param name="name" value="data-dir"/>
       <param name="dir" value="target"/>
       <param name="includes" value="**/*"/>
