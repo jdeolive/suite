@@ -1,0 +1,30 @@
+<project name="suite" default="build">
+  <import file="build/common.xml"/>
+
+  <property name="modules.list" value="geoserver,geowebcache,geoexplorer,dashboard,jetty,docs,apps,recipes,sdk"/>
+
+  <target name="build" description="Builds project">
+    <for list="${modules.list}" param="mod">
+      <sequential>
+        <ant dir="@{mod}" target="build" inheritAll="false"/>
+      </sequential>
+    </for>
+  </target>
+
+  <target name="clean" description="Cleans project">
+    <for list="${modules.list}" param="mod">
+      <sequential>
+        <ant dir="@{mod}" target="clean" inheritAll="false"/>
+      </sequential>
+    </for>
+  </target>
+
+  <target name="assemble" description="Assembles project artifacts">
+    <for list="${modules.list}" param="mod">
+      <sequential>
+        <ant dir="@{mod}" target="assemble" inheritAll="false"/>
+      </sequential>
+    </for>
+  </target>
+
+</project>

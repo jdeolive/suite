@@ -1,0 +1,30 @@
+<project name="geoserver" default="build">
+  <import file="../build/common.xml"/>
+
+  <property name="modules.list" value="externals,data_dir,ext,app"/>
+
+  <target name="build" description="Builds project">
+    <for list="${modules.list}" param="mod">
+      <sequential>
+        <ant dir="@{mod}" target="build" inheritAll="false"/>
+      </sequential>
+    </for>
+  </target>
+
+  <target name="clean" description="Cleans project">
+    <for list="${modules.list}" param="mod">
+      <sequential>
+        <ant dir="@{mod}" target="clean" inheritAll="false"/>
+      </sequential>
+    </for>
+  </target>
+
+  <target name="assemble" description="Assembles project artifacts">
+    <sequential>
+      <for list="${modules.list}" param="mod">
+        <ant dir="@{mod}" target="assemble" inheritAll="false"/>
+      </for>
+    </sequential>
+  </target>
+
+</project>
