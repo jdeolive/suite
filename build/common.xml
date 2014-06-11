@@ -13,6 +13,12 @@ Common build targets.
     <property file="${common.basedir}/local.properties"/>
     <property file="${common.basedir}/build.properties"/>
 
+    <taskdef resource="net/sf/antcontrib/antlib.xml">
+      <classpath>
+        <pathelement location="${common.basedir}/ant-contrib-1.0b3.jar"/>
+      </classpath>
+    </taskdef>
+
     <!--
       Help task. 
     -->
@@ -124,18 +130,19 @@ Common build targets.
     <target name="assemble-artifact" depends="init-git">
         <property name="dir" value="target"/>
         <property name="name" value="${ant.project.name}"/>
+        <property name="path" value="${name}"/>
         <property name="includes" value="**/*"/>
         <property name="excludes" value=""/>
 
         <property name="artifact_root"
-            value="${suite.build_root}/${suite.build_cat}/${name}"/>
+            value="${suite.build_root}/${suite.build_cat}/${path}"/>
         <property name="artifact_dir" 
             value="${artifact_root}/${suite.build_rev}"/>
         <property name="artifact_file" 
             value="${artifact_dir}/suite-${name}-${suite.build_rev}.zip"/>
 
-        <delete dir="${artifact_dir}"/>
         <mkdir dir="${artifact_dir}"/>
+        <delete dir="${artifact_file}"/>
         <zip destfile="${artifact_file}">
             <fileset dir="target" includes="version.ini"/>
             <fileset dir="${dir}" includes="${includes}" excludes="${excludes}"/>

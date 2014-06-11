@@ -1,0 +1,30 @@
+<project name="geoserver.ext" default="build">
+    <import file="../../build/common.xml"/>
+
+    <property name="ext.list" value="arcsde,control-flow,css,csw,gdal,jp2k,libjpeg-turbo,oracle,sqlserver,wps"/>
+    <property name="ext.dir" value="../externals/geoserver/src/target/release"/>
+
+    <target name="build" depends="init" description="Build project">
+        <foreach list="${ext.list}" target="unpack-ext" param="ext"/>
+    </target>
+
+    <target name="clean" depends="destroy" description="Clean project"/>
+
+    <target name="assemble" description="Assemble project">
+        <foreach list="${ext.list}" target="assemble-ext" param="ext"/>
+    </target>
+
+    <target name="unpack-ext">
+        <mkdir dir="target/${ext}"/>
+        <unzip src="${ext.dir}/geoserver-${gs.version}-${ext}-plugin.zip"
+            dest="target/${ext}"/>
+    </target>
+
+    <target name="assemble-ext">
+        <antcall target="assemble-artifact">
+            <param name="name" value="${ext}"/>
+            <param name="path" value="geoserver${file.separator}ext"/>
+            <param name="dir" value="target/${ext}"/>
+        </antcall>
+    </target>
+</project>
