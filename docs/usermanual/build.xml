@@ -8,4 +8,6 @@
         </antcall>
     </target>
 
+    <target name="clean" depends="destroy"/>
+
 </project>
