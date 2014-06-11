@@ -24,7 +24,7 @@
   <target name="assemble">
     <antcall target="assemble-artifact">
       <param name="name" value="data-dir"/>
-      <param path="path" value="geoserver${file.separator}data-dir"/>
+      <param name="path" value="geoserver${file.separator}data-dir"/>
       <param name="dir" value="target"/>
       <param name="includes" value="**/*"/>
     </antcall>
