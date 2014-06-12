@@ -12,7 +12,7 @@
 # serve to show the default value.
 
 import sys, os, string
-from xml.dom import minidom
+sys.path.append('../../../build'); from build_properties import *
 
 # If your extensions are in another directory, add it here. If the directory
 # is relative to the documentation root, use os.path.abspath to make it
@@ -45,13 +45,7 @@ copyright = u'OpenGeo'
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = minidom.parse(
-        "../pom.xml"
-    ).getElementsByTagName(
-        "parent"
-    )[0].getElementsByTagName(
-        "version"
-    )[0].firstChild.nodeValue
+version = suite_version
 
 # The full version, including alpha/beta/rc tags.
 release = version

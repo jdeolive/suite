@@ -30,11 +30,11 @@
       <div class="suite_logo">
     {% endif %}
 
-      <a href="{{ theme_documentation_root }}/{{ project.lower() }}"></a></div>
+      <a href="{{ theme_doc_root }}/{{ suite_version }}/{{ project.lower() }}"></a></div>
     {% if theme_project_version %}
       <div class="component_version_info">Version {{ theme_project_version }}</div>
     {% endif %}
     <div class="back-to-suite">
-      <a href="{{ theme_documentation_root }}"><div class="back-to-suite-inner"></div></a>
+      <a href="{{ theme_doc_root }}/{{ suite_version }}"><div class="back-to-suite-inner"></div></a>
     </div>
 </div>

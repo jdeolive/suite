@@ -1,5 +1,6 @@
 # general stuff
 .DS_Store
+*.pyc
 
 # build override files
 local.properties
