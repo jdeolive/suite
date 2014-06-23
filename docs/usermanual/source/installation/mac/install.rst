@@ -63,20 +63,64 @@ You can check the server status and perform other tasks from the GeoServer icon 
 
 Once the server has fully started up a web browser will open and display the OpenGeo dashboard. 
 
-.. figure:: img/dashboard.png
-
-   OpenGeo Suite Dashboard
+.. todo:: Update Dashboard graphic
 
 .. note:: While it is possible to run the GeoServer application directly from the installer disk image it is recommended you copy it to :file:`/Applications` and run from there. 
+
+.. _installation.mac.install.extensions:
+
+GeoServer extensions
+^^^^^^^^^^^^^^^^^^^^
+
+Extensions to GeoServer are available in a folder called :guilabel:`GeoServer Extensions`.
+
+Double-click to open this folder and you will see individual folders for each extension.
+
+   .. figure:: img/ext_folders.png
+
+      GeoServer extension folders
+
+To install an extension:
+
+#. Select :guilabel:`Open Webapps Directory` from the GeoServer menu.
+
+   .. note: GeoServer must be running to see this menu.
+
+   .. figure:: img/ext_webappsmenu.png
+
+      Opening the webapps directory from the GeoServer menu
+
+#. In the Finder window that appears, navigate to :file:`geoserver/WEB-INF/lib`.
+
+#. For a given extension, copy the contents of that folder (not the folder itself) into :file:`geoserver/WEB-INF/lib`.
+
+   .. figure:: img/ext_copy1.png
+
+      Selecting the files for the WPS extension...
+
+   .. figure:: img/ext_copy2.png
+
+      ...and copying the files to :file:`geoserver/WEB-INF/lib`
+
+#. Quit and re-open GeoServer.
+
+   .. figure:: img/ext_quit.png
+
+      Quitting GeoServer
+
+.. note:: Read more about :ref:`GeoServer extensions <intro.extensions>`.
+
+.. _installation.mac.install.cli:
 
 CLI tools
 ^^^^^^^^^
 
 The CLI tools package contains all the command line tools for OpenGeo Suite:
 
-* The PostGIS data conversion utilities such as ``shp2pgsql``
-* The `GDAL/OGR <http://www.gdal.org/>`_ format translation utilities
-* The `PDAL <http://www.pointcloud.org/>`_ tools for working with LIDAR point cloud data
+* :ref:`Boundless SDK <webapps.sdk>`
+* PostGIS data conversion utilities such as ``shp2pgsql``
+* `GDAL/OGR <http://www.gdal.org/>`_ format translation utilities
+* `PDAL <http://www.pointcloud.org/>`_ tools for working with LIDAR point cloud data
 
 To install the CLI Tools:
 

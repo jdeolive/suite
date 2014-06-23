@@ -11,13 +11,10 @@ The ``pointcloud_postgis`` extension adds functions that allow you to use Point 
     CREATE EXTENSION pointcloud;
     CREATE EXTENSION pointcloud_postgis;
 
-Functions
----------
-
 The following is a list of functions that are available in databases with the ``pointcloud_postgis`` extension.
 
 ``PC_Intersects()``
-^^^^^^^^^^^^^^^^^^^
+-------------------
     
 **PC_Intersects(p pcpatch, g geometry)** returns **boolean**
 
@@ -35,7 +32,7 @@ Returns true if the bounds of the patch intersect the geometry.
     t
 
 ``PC_Intersection()``
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 **PC_Intersection(pcpatch, geometry)** returns **pcpatch**
 
@@ -59,7 +56,7 @@ Returns a PcPatch which only contains points that intersected the geometry.
      {"pcid":1,"pt":[-126.41,45.59,59,5]}
 
 ``Geometry()``
-^^^^^^^^^^^^^^
+--------------
 
 **Geometry(pcpoint)** returns **geometry**
 

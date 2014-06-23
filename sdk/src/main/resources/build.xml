@@ -15,14 +15,15 @@
     </target>
 
     <property name="sdk.home" location="."/>
-    <property name="app.proxy.geoserver" value=""/>
+    <property name="app.proxy.geoserver" value="http://localhost:8080/geoserver"/>
     <property name="app.port" value="9080"/>
     <property name="suite.domain" value="localhost"/>
     <property name="suite.port" value="8080"/>
     <property name="suite.container" value="tomcat6x"/>
     <property name="suite.username" value="manager"/>
     <property name="suite.password" value="geoserver"/>
-    <property name="sdk.build" location="${app.warpath}/build"/>
+    <property name="sdk.build" location="${java.io.tmpdir}/suite-sdk/build"/>
+    <property name="sdk.war" location="${app.warpath}"/>
     <property name="sdk.logfile" location="${java.io.tmpdir}/suite-sdk/error.log"/>
     <property name="app.template" value=""/>
     
@@ -68,7 +69,11 @@
     </target>
 
     <target name="create" depends="checkpath">
+        <condition property="app.template.exists">
+            <available file="${sdk.home}/src/main/resources/client/${app.template}" type="dir"/>
+        </condition>
         <fail message="Directory '${app.fullpath}' already exists.  Specify the name for a new app directory." if="app.exists"/>
+        <fail message="Template '${app.template}' is not available.  Specify the name of an existing template." unless="app.template.exists"/>
         <echo file="${sdk.logfile}" append="true" message="Creating application in '${app.fullpath}'.${line.separator}"/>
         <mkdir dir="${app.fullpath}"/>
         <copy todir="${app.fullpath}">
@@ -106,7 +111,7 @@
         <available file="${app.fullpath}/src/font-awesome" property="use.fa"/>
         <available file="${app.fullpath}/src/bootbox" property="use.bootbox"/>
         <available file="${app.fullpath}/src/ol3" property="use.ol3"/>
-        <available file="${app.fullpath}/src/ol3-components" property="use.ol3comp"/>
+        <available file="${app.fullpath}/src/css" property="use.css"/>
     </target>
 
     <target name="copy-app">
@@ -169,10 +174,10 @@
         </copy>
     </target>
 
-    <target name="copy-ol3comp" if="use.ol3comp">
-        <!-- copy ol3 components resources -->
-        <copy todir="${app.build}/src/ol3-components/css">
-            <fileset dir="${app.fullpath}/src/ol3-components/css"/>
+    <target name="copy-css" if="use.css">
+        <!-- copy css resources -->
+        <copy todir="${app.build}/src/css">
+            <fileset dir="${app.fullpath}/src/css"/>
         </copy>
     </target>
 
@@ -190,7 +195,7 @@
         </copy>
     </target>
 
-    <target name="build" depends="checkpath,copy-app,use-checks,copy-ext,copy-openlayers,copy-geoext,copy-gxp,copy-jquery,copy-bootstrap,copy-fa,copy-bootbox,copy-ol3,copy-ol3comp">
+    <target name="build" depends="checkpath,copy-app,use-checks,copy-ext,copy-openlayers,copy-geoext,copy-gxp,copy-jquery,copy-bootstrap,copy-fa,copy-bootbox,copy-ol3,copy-css">
         <fail message="Directory '${app.fullpath}' doesn't exist." unless="app.exists"/>
         <echo file="${sdk.logfile}" append="true" message="Building application resources for '${app.fullpath}'.${line.separator}"/>
         <!-- build app js -->
@@ -227,7 +232,7 @@
 
     <target name="package" depends="build">
         <echo file="${sdk.logfile}" append="true" message="Building application archive for '${app.fullpath}'.${line.separator}"/>
-        <war destfile="${sdk.build}/${app.name}.war" webxml="${sdk.build}/${app.name}/WEB-INF/web.xml">
+        <war destfile="${sdk.war}/${app.name}.war" webxml="${sdk.build}/${app.name}/WEB-INF/web.xml">
             <fileset dir="${sdk.build}/${app.name}"/>
         </war>
     </target>

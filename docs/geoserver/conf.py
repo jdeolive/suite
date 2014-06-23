@@ -39,13 +39,13 @@ master_doc = 'index'
 # General substitutions.
 project = u'GeoServer'
 manual = u'User Manual'
-copyright = u'2013, OpenPlans'
+copyright = u'CC BY 3.0'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = '2.5'
+version = '2.5.1'
 # The full version, including alpha/beta/rc tags.
 release = '2.5-SNAPSHOT'
 # Users don't need to see the "SNAPSHOT" notation when it's there
@@ -99,9 +99,11 @@ html_theme_path = ['../../themes']
 # documentation.
 html_theme_options = {
   #'sticky_navigation' : True  # Set to False to disable the sticky nav while scrolling.
-  'is_community': "true", # Community Docs flag for Suite component docs
-  'display_zendesk': "true", # Display link to report doc bugs to Suite Zendesk
-  'display_version': "true"  # Whether to show version number
+  'is_community': True, # Community Docs flag for Suite component docs
+  'display_zendesk': True, # Display link to report doc bugs to Suite Zendesk
+  'display_version': True,  # Whether to show version number
+  'suite_url': 'geoserver' # the url path within Suite e.g. sdk-api for opengeo-docs/sdk-api
+
 }
 
 if os.environ.get('HTML_THEME_PATH'):
@@ -112,7 +114,7 @@ if os.environ.get('HTML_THEME_PATH'):
 html_title = project + manual
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
-html_short_title = 'GeoServer' 
+html_short_title = 'GeoServer'
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
@@ -188,7 +190,7 @@ latex_documents = [
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
-latex_logo = '../../themes/geoserver/static/GeoServer_500.png'
+latex_logo = '../../themes/suite_rtd_theme/static/img/geoserver-logo-only.png'
 
 # For "manual" documents, if this is true, then toplevel headings are parts,
 # not chapters.
@@ -210,7 +212,7 @@ latex_elements = {
     urlcolor = [rgb]{0,0.46,0.63}
 	}
 
-	
+
 """
 }
 

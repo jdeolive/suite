@@ -8,7 +8,7 @@ This section discuss how to build complete web mapping applications from scratch
 .. toctree::
    :maxdepth: 2
 
+   install
    sdk
-   sdkintro/index
-   plugincreate/index
-   ol3
+   gxp/index
+   ol3/index

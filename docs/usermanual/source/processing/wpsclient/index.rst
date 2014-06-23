@@ -5,7 +5,7 @@ Using WPS with OpenLayers and the Boundless SDK
 
 OpenLayers includes a Web Processing Service (WPS) client. With this client you can employ server processes in browser-based mapping applications. For example, you could perform certain geometry manipulations on the server that are not available in a browser environment. The WPS client also supports process chaining, which allows the server to perform more complex operations without the need to return the result to the client at each intermediate step.
 
-This tutorial will describe how to use a WPS process to manipulate a locally-created geometry in the browser, first using OpenLayers, and then by creating an interactive application using the :ref:`Boundless SDK <webapps.sdk.dev>`.
+This tutorial will describe how to use a WPS process to manipulate a locally-created geometry in the browser, first using OpenLayers, and then by creating an interactive application using the :ref:`Boundless SDK <webapps.sdk>`.
 
 
 Creating an OpenLayers.WPSClient instance
@@ -207,7 +207,7 @@ In this case, the ``JTS:buffer`` process doesn't produce multiple outputs, but i
 Building an interactive application
 -----------------------------------
 
-Using the :ref:`Boundless SDK <webapps.sdk.dev>`, you can create a lightweight demo application that allows the user to draw geometries and execute the SplitPolygon and Intersection/Buffer processes as created above.
+Using the :ref:`Boundless SDK <webapps.sdk>`, you can create a lightweight demo application that allows the user to draw geometries and execute the SplitPolygon and Intersection/Buffer processes as created above.
 
 To create our custom application, we must first create a minimal :file:`app.js` file and a custom ``app_wpsdemo`` plugin in its own :file:`WPSDemo.js` file. These files will then be copied into a template application.
 

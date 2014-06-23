@@ -99,13 +99,14 @@ html_theme_options = {
   #'sticky_navigation' : True  # Set to False to disable the sticky nav while scrolling.
   'is_community': True, # Community Docs flag for Suite component docs
   'display_zendesk': True, # Display link to report doc bugs to Suite Zendesk
-  'display_version': True  # Whether to show version number
+  'display_version': True,  # Whether to show version number
+  'suite_url': 'geoexplorer' # the url path within Suite e.g. sdk-api for opengeo-docs/sdk-api
 }
 
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-html_title = project 
+html_title = project
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 html_short_title = 'GeoExplorer'
@@ -184,7 +185,7 @@ latex_documents = [
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
-# latex_logo = 'theme/_static/GeoServer_500.png'
+latex_logo = '../../themes/suite_rtd_theme/static/img/geoexplorer-logo-only.png'
 
 # For "manual" documents, if this is true, then toplevel headings are parts,
 # not chapters.

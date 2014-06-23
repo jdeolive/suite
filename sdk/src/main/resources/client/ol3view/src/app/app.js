@@ -31,7 +31,7 @@ var format = new ol.format.GML({featureNS: featureNS, featureType: featureType})
 // create a new popup with a close box
 // the popup will draw itself in the popup div container
 // autoPan means the popup will pan the map if it's not visible (at the edges of the map).
-var popup = new Boundless.Popup({
+var popup = new app.Popup({
   element: document.getElementById('popup'),
   closeBox: true,
   autoPan: true
@@ -66,7 +66,7 @@ $(popup).on('close', function() {
 // 2. default (overlays), which will use checkboxes
 var map = new ol.Map({
   controls: ol.control.defaults().extend([
-    new Boundless.LayersControl({
+    new app.LayersControl({
       groups: {
         background: {
           title: "Base Layers",

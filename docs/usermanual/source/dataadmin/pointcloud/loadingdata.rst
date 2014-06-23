@@ -5,59 +5,22 @@ Loading data
 
 The examples in the previous pages show how to form patches from arrays of doubles, and well-known binary. You can write your own loader using the uncompressed WKB format, or more simply you can load existing LIDAR files using the `PDAL <http://pointcloud.org>`_ processing and format conversion library.
 
-From WKB
---------
 
-If you are writing your own loading system and want to write into point cloud types, create well-known binary inputs in uncompressed format. If your schema indicates that your patch storage is compressed, Point Cloud will automatically compress your patch before storing it, so you can create patches in uncompressed WKB without worrying about the nuances of particular internal compression schemes.
+Loading with PDAL
+-----------------
 
-The only issues to watch when creating WKB patches are ensuring the data you write is sized according to the schema (use the specified dimension type) and ensuring that the endianness of the data matches the declared endianness of the patch.
+PDAL is a LIDAR conversion library that includes some useful commandline utilities for automating LIDAR loading and processing. The PDAL package was included in the :ref:`dataadmin.pointcloud.install` directions.
 
-.. todo:: Do we leave this in?
+.. note:: 
 
-From PDAL
----------
+   OpenGeo Suite includes PDAL builds for Linux and OSX, but not yet for Windows. Future releases
+   will include native Windows support.
 
-Build and Install PDAL
-^^^^^^^^^^^^^^^^^^^^^^
-
-Support for Point Cloud has been added to PDAL. It is in most recent builds, but if you want the latest version, you can `build from source <http://www.pointcloud.org/compilation/index.html>`_. 
-
-First, you will need to install the many, many dependencies of PDAL.
-
-#. Read the compilation instructions: http://www.pointcloud.org/compilation/index.html
-
-#. Read the dependency information: http://www.pointcloud.org/compilation/dependencies.html
-
-#. Install the "proj4" library: https://trac.osgeo.org/proj/
-
-#. Install the "geos" library: https://trac.osgeo.org/geos/
-
-#. Install the "geotiff" library: http://trac.osgeo.org/geotiff/
-
-#. Install the "gdal" library: http://gdal.org/
-
-#. Install the "liblas" library: http://liblas.org/
-
-Then, clone the PDAL repository:
-
-#. Clone into a source directory: ``git clone https://github.com/PDAL/PDAL PDAL``
-
-#. Make a build directory: ``mkdir PDAL-build``
-
-#. Enter the build directory: ``cd PDAL-build``
-
-#. Run CMake to find dependencies: ``cmake ../PDAL`` (or, see ``https://github.com/pramsey/PDAL/blob/master/pramsey-config.sh``)
-
-#. If dependencies are not found, manually set them: ``ccmake ../PDAL``
-#. Once CMake has found all dependencies, run the build: ``make all``
-#. And install the artifacts: ``make install``
- 
-If all the dependencies were found, you're ready to run a PDAL import into Point Cloud.
 
 Running ``pdal pipeline``
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-PDAL includes a `command line program <http://www.pointcloud.org/apps.html>`_ that allows both simple format translations and more complex "pipelines" of transformation. The ``pdal translate`` does simple format transformations. In order to load data into Pointcloud we use a "PDAL pipeline", by calling ``pdal pipeline``. A pipeline combines a format reader, and format writer, with filters that can alter or group the points together.
+PDAL includes a `command line program <http://www.pdal.io/apps.html>`_ that allows both simple format translations and more complex "`pipelines <http://www.pdal.io/pipeline.html>`_" of transformation. The ``pdal translate`` does simple format transformations. In order to load data into Pointcloud we use a "PDAL pipeline", by calling ``pdal pipeline``. A pipeline combines a format reader, and format writer, with filters that can alter or group the points together. The `PDAL stage reference <http://www.pdal.io/stages/index.html>`_ provides a listing of available stages and configuration options.
 
 PDAL pipelines are XML files, which nest together readers, filters, and writers into a processing chain that will be applied to the LIDAR data. 
 
@@ -129,6 +92,7 @@ You can use the "where" option to restrict a read to just an envelope, allowing 
         </Writer>
     </Pipeline>
 
+
 PDAL pgpointcloud reader/writer options
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -154,3 +118,11 @@ The PDAL **drivers.pgpointcloud.reader** for PostgreSQL Pointcloud takes the fol
 * **column**: The column name in the patch table to read from. [Optional: "pa"]
 * **where**: SQL where clause to constrain the query [Optional]
 * **spatialreference**: Overrides the database declared SRID [Optional]
+
+
+Loading from WKB
+----------------
+
+If you are writing your own loading system and want to write into point cloud types, create well-known binary inputs in uncompressed format, :ref:`dataadmin.pointcloud.binaryformats.uncompressed`. If your schema indicates that your patch storage is compressed, Point Cloud will automatically compress your patch before storing it, so you can create patches in uncompressed WKB without worrying about the nuances of particular internal compression schemes.
+
+The only issues to watch when creating WKB patches are ensuring the data you write is sized according to the schema (use the specified dimension type) and ensuring that the endianness of the data matches the declared endianness of the patch.

@@ -29,11 +29,11 @@ Certain JVM operating characteristics can be tuned to optimize performance when 
   
 * ``-server`` forces the use of the Java HotSpot Server VM
 * ``-Xms2048m -Xmx2048m`` sets the JVM to use 2048 megabytes (2 GB) of memory for the heap, and allocates it all on startup (the heap size should be adjusted to fit the actual memory available)
-* ``-XX:+UseParallelOldGC -XX:+UserParallelGC`` enables multi-threaded garbage collection, which improves performance if more than two cores are present
+* ``-XX:+UseParallelOldGC -XX:+UseParallelGC`` enables multi-threaded garbage collection, which improves performance if more than two cores are present
 * ``-XX:NewRatio=2`` tunes the JVM for handling a large number of short-lived objects
-* ``-XX:+AggressiveOpt`` enables experimental optimizations that will be defaults in future versions of the JVM
+* ``-XX:+AggressiveOpts`` enables experimental optimizations that will be defaults in future versions of the JVM
   
-The method of setting these parameters is container-specific.  For example, in Apache Tomcat, they are configured by defining them in the ``CATALINA_OPTS`` variable in a ``setenv`` script file located in the installation ``bin`` directory.
+The method of setting these parameters is container-specific.  For example, in Apache Tomcat, they are configured by defining them in the ``OPENGEO_OPTS`` variable in a ``setenv`` script file located in the installation ``bin`` directory.
 
 JAI and JAI Image I/O
 ---------------------

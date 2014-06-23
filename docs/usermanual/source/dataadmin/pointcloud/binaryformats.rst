@@ -25,6 +25,8 @@ Point binary
     uint32:   pcid (key to POINTCLOUD_SCHEMAS)
     uchar[]:  pointdata (interpret relative to pcid)
 
+.. _dataadmin.pointcloud.binaryformats.uncompressed: 
+
 Patch binary (uncompressed)
 ---------------------------
 

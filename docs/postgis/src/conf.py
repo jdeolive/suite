@@ -40,15 +40,15 @@ master_doc = 'index'
 # General substitutions.
 project = u'PostGIS'
 manual = u'User Manual'
-copyright = u'2011 PostGIS'
+copyright = u'CC BY-SA 3.0, Postgis.net'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = '1.5.2'
+version = '2.1.3'
 # The full version, including alpha/beta/rc tags.
-release = '1.5.2'
+release = '2.1.3'
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -99,7 +99,9 @@ html_theme_options = {
   #'sticky_navigation' : True  # Set to False to disable the sticky nav while scrolling.
   'is_community': True, # Community Docs flag for Suite component docs
   'display_zendesk': True, # Display link to report doc bugs to Suite Zendesk
-  'display_version': True  # Whether to show version number
+  'display_version': True,  # Whether to show version number
+  'suite_url': 'postgis' # the url path within Suite e.g. sdk-api for opengeo-docs/sdk-api
+
 }
 
 # The name for this set of Sphinx documents.  If None, it defaults to

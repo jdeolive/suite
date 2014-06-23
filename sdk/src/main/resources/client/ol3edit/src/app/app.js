@@ -27,7 +27,7 @@ var loadFeatures = function(response) {
 };
 
 // create a WFS BBOX loader helper
-var BBOXLoader = new Boundless.WFSBBOXLoader({
+var BBOXLoader = new app.WFSBBOXLoader({
   url: url,
   featurePrefix: featurePrefix,
   featureType: featureType,
@@ -60,7 +60,7 @@ var vector = new ol.layer.Vector({
 // create the map
 var map = new ol.Map({
   controls: ol.control.defaults().extend([
-    new Boundless.LayersControl({
+    new app.LayersControl({
       groups: {
         background: {
           title: "Base Layers",
@@ -115,7 +115,7 @@ var map = new ol.Map({
 
 // create a WFS transaction helper which can help us draw new features,
 // modify existing features and delete existing features.
-var transaction = new Boundless.TransactionHandler({
+var transaction = new app.TransactionHandler({
   source: vector.getSource(),
   geometryType: geometryType,
   geometryName: geometryName,
@@ -127,7 +127,7 @@ var transaction = new Boundless.TransactionHandler({
 });
 
 // create a feature table that will represent our features in a tabular form
-var table = new Boundless.FeatureTable({
+var table = new app.FeatureTable({
   id: 'features',
   fields: fields,
   showFeatureId: true,
@@ -138,6 +138,35 @@ var table = new Boundless.FeatureTable({
   offset: 37
 });
 
+// set table height based on responsive panel size
+var resizeTableHeight = function() {
+  var _window = $(window);
+  var window_h = _window.height(), 
+      window_w =  _window.width(), 
+      navbar_h = $('.navbar').height(),
+      table_container = $('#features-container'),
+      table = $('#features');
+
+  if (window_w < 768) { // table is beneath map
+    var table_height = window_h - $('#map').height();
+
+  } else { // table is right of map
+    var table_height = $('#map').height(); 
+  }
+  table.height(table_height);
+  table_container.height(table_height);
+}
+
+var turnOnCursor = function() {
+  $('#map').addClass('drawcursor');
+  $('#draw-btn').addClass('active');
+}
+
+var turnOffCursor = function() {
+  $('#map').removeClass('drawcursor');
+  $('#draw-btn').removeClass('active');
+}
+
 // delete the selected feature
 var deleteFeature = function() {
   transaction.deleteSelected();
@@ -146,4 +175,49 @@ var deleteFeature = function() {
 // draw a new feature
 var drawFeature = function() {
   transaction.activateInsert();
+  turnOnCursor();
+
+  transaction.draw_.on('drawend', turnOffCursor, this);
 };
+
+
+// add layers control collapse button
+var addLayersControlBtn = function() {
+  var layersControl =  $("#map .layers-control");
+
+  var btnString = '<button type="button" data-toggle="dropdown" class="layers-control-btn btn btn-default btn-sm"><i class="glyphicon glyphicon-minus"></button>';
+  var $btn = $($.parseHTML(btnString));
+  $btn.css('bottom', layersControl.height()-2);
+  $('#map').append($btn);
+
+  $btn.click(function () {
+    var iconDiv = $('.layers-control-btn > i.glyphicon');
+
+    if (iconDiv.hasClass('glyphicon-minus')) {
+      iconDiv.removeClass('glyphicon-minus')
+              .addClass('glyphicon-plus');
+    } else {
+      iconDiv.removeClass('glyphicon-plus')
+              .addClass('glyphicon-minus');
+    }
+    layersControl.toggle();
+  });
+
+}
+
+$(document).ready(function() {
+
+  addLayersControlBtn();
+
+  // add resize listener for table height, enables scroll-y
+  // on table for responsive and full view
+  var rszTimer;
+
+  $(window).resize(function(e) {
+    clearTimeout(rszTimer);
+    rszTimer = setTimeout(resizeTableHeight(), 100);
+  }).resize(); // call on first load
+
+});
+
+

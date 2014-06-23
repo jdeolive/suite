@@ -115,7 +115,8 @@ html_theme_options = {
   #'sticky_navigation' : True  # Set to False to disable the sticky nav while scrolling.
   'is_community': True, # Community Docs flag for Suite component docs
   'display_zendesk': True, # Display link to report doc bugs to Suite Zendesk
-  'display_version': True  # Whether to show version number
+  'display_version': True,  # Whether to show version number
+  'suite_url': 'sdk-api' # the url path within Suite e.g. sdk-api for opengeo-docs/sdk-api
 }
 
 # The name for this set of Sphinx documents.  If None, it defaults to
@@ -132,7 +133,7 @@ html_short_title = "Boundless SDK"
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
-html_favicon = '../../themes/suite_rtd_theme/static/img/boundlesssdk.ico'
+html_favicon = '../themes/suite_rtd_theme/static/img/boundlesssdk.ico'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

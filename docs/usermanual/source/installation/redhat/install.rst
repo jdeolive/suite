@@ -22,7 +22,11 @@ OpenGeo Suite for Red Hat has the following system requirements:
 Installation
 ------------
 
-.. note:: The commands in this section require root privileges. 
+This installation will add the OpenGeo Suite package repository and then install the appropriate packages. See the :ref:`Packages <installation.redhat.packages>` section for details about the possible packages to install.
+
+.. warning:: Mixing repositories is not recommended. If you already have a repository that contains some of the components of OpenGeo Suite (such as PostgreSQL) please remove them before installing OpenGeo Suite. 
+
+The commands in this section require root privileges. 
 
 #. Change to the ``root`` user:
 
@@ -57,7 +61,7 @@ Installation
 
    .. note:: The above will install all OpenGeo Suite packages. See the :ref:`Packages <installation.redhat.packages>` section for details of individual packages. 
 
-After intstallation
--------------------
+After installation
+------------------
 
 Installation is now complete. Please see the section on :ref:`installation.redhat.misc`.

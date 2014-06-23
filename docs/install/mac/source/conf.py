@@ -113,7 +113,7 @@ html_theme_path = ['../../../themes']
 # documentation.
 html_theme_options = {
   #'sticky_navigation' : True  # Set to False to disable the sticky nav while scrolling.
-  'is_community': True, # Community Docs flag for Suite component docs
+  'is_community': False, # Community Docs flag for Suite component docs
   'display_zendesk': True, # Display link to report doc bugs to Suite Zendesk
   'display_version': True  # Whether to show version number
 }

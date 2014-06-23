@@ -5,7 +5,7 @@ Welcome! OpenGeo Suite is a full geospatial software stack that helps you compos
 .. toctree::
    :hidden: 
 
-   self
+   whatsnew
    installation/index
    introduction/index
    webmaps/index
@@ -21,6 +21,9 @@ OpenGeo Suite User Manual
 -------------------------
 
 This User Manual will help you get the most out of OpenGeo Suite.
+
+:ref:`whatsnew`
+  See what's new in OpenGeo Suite |version|.
 
 :ref:`installation`
   Install OpenGeo Suite for your platform.

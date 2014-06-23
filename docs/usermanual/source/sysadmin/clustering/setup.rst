@@ -123,6 +123,35 @@ Session sharing
 
 Repeat this for each GeoServer in the cluster.
 
+Log separation
+--------------
+
+By default, a cluster will end up collecting all the log output from all the nodes into a single file without indicating which message came from which node.
+
+If this is not desired, you can split the logs into files distinct to each node. This property can be set via the standard methods of a JVM system variable, environment variable, or servlet context parameter.
+
+The variable to set is called ``GEOSERVER_LOG_LOCATION``::
+
+  GEOSERVER_LOG_LOCATION=[log_location]
+
+Or, as set in :file:`web.xml`:
+
+.. code-block:: xml
+
+   <context-param>
+     <param-name>GEOSERVER_LOG_LOCATION</param-name>
+     <param-value>[log_location]</param-value>
+   </context-param> 
+
+For example, on GeoServer node #1, you could set the following variable::
+
+  GEOSERVER_LOG_LOCATION=logs/geoserver_node1.log
+
+For node #2::
+
+  GEOSERVER_LOG_LOCATION=logs/geoserver_node2.log
+
+This way, each node will have its own log in the shared data directory, making administration and troubleshooting easier.
 
 Final verification
 ------------------

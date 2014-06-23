@@ -45,11 +45,14 @@ goto :eof
 set COMMAND="version"
 goto Run
 
+
 :Create
-:: Create takes no arguments
+:: Create takes only two arguments, all required
 if "x%~2"=="x" goto Usage
 if "%~2"=="-h" goto UsageCreate
 if "%~2"=="--help" goto UsageCreate
+if "x%~3"=="x" goto UsageCreate
+if "x%~4" NEQ "x" goto UsageCreate
 
 :: Determine if there are "extra" flags
 call :lastarg %*
@@ -63,16 +66,11 @@ if "%LAST_ARG:~0,1%"=="-" (
   goto UsageCreate
 )
 
-:: Make sure there are no trailing args
-call :argcount %*
 set COMMAND="%~1"
 set APP_PATH="%~2"
-if "%argC%"=="2" (
-  set ANT_ARGS=%ANT_ARGS% -Dapp.path=%APP_PATH%
-  goto Run
-) else (
-    goto UsageCreate
-)
+set APP_TEMPLATE="%~3"
+set ANT_ARGS=%ANT_ARGS% -Dapp.path=%APP_PATH% -Dapp.template=%APP_TEMPLATE%
+goto Run
 
 
 :Debug
@@ -179,31 +177,35 @@ echo List of commands:
 echo     create      Create a new application.
 echo     debug       Run an existing application in debug mode.
 echo     package     Create a WAR file.
-echo.    
+echo.
 echo See '%NAME% ^<command^> --help' for more detail on a specific command.
 echo.
 exit /b
 
 :UsageCreate
-echo Usage: %NAME% create ^<app-path^>
+echo Usage: %NAME% create ^<app-path^> ^<app-template^>
 echo.
-echo Create a new application.  A new directory will be created using the ^<app-path^> 
-echo argument (it must not already exist).
+echo Create a new application. A new directory will be created using the ^<app-path^> 
+echo argument (it must not already exist). Possible values for ^<app-template^> are:
+echo.
+echo     gxp        a template based on GXP, GeoExt and OpenLayers 2
+echo     ol3view    a template based on OpenLayers 3 and bootstrap for viewing
+echo     ol3edit    a template based on OpenLayers 3 and bootstrap for editing
 echo.
 exit /b
 
 :UsageDebug
 echo Usage: %NAME% debug [^<options^>] ^<app-path^>
 echo.
-echo Debug an existing application.  The ^<app-path^> argument must be the path to an
+echo Debug an existing application. The ^<app-path^> argument must be the path to an
 echo existing application.
 echo.
 echo List of options:
 echo.
-echo     -l ^| --local-port   port    Port for the local debug server.  Default is 
+echo     -l ^| --local-port   port    Port for the local debug server. Default is 
 echo                                 9080.
 echo.
-echo     -g ^| --geoserver    url     URL for a remote GeoServer to proxy.  The debug
+echo     -g ^| --geoserver    url     URL for a remote GeoServer to proxy. The debug
 echo                                 server will make the remote GeoServer available
 echo                                 from the "/geoserver" path within the 
 echo                                 application.
@@ -213,17 +215,16 @@ exit /b
 :UsagePackage
 echo Usage: %NAME% package ^<app-path^> ^<build-path^>
 echo.
-echo Package an existing application.  The ^<app-path^> argument must be the path to an
-echo existing application. The ^<build-path^> is the location where the package will be 
-echo created. A subdirectory called 'build' will be created, which will contain the WAR 
-echo file.
+echo Package an existing application. The ^<app-path^> argument must be the path to an
+echo existing application. The ^<build-path^> is the location where the WAR file package
+echo will be created.
 echo.
 exit /b
 
 
 :Run
 :: Create log files (in case they don't already exist)
-set LOG_DIR=%USERPROFILE%\.opengeo\logs
+set LOG_DIR=%TEMP%\suite-sdk
 set LOG_FILE=%LOG_DIR%\suite-sdk.log
 set ANT_LOG=%LOG_DIR%\ant.log
 
@@ -257,7 +258,6 @@ if %COMMAND%=="package" (
   echo.
 )
 
-
 call ant -e -f %SDK_HOME%\build.xml -Dsdk.logfile="%LOG_FILE%" -Dsdk.home=%SDK_HOME% -Dbasedir=. %COMMAND% %ANT_ARGS% 2>>"%ANT_LOG%"
 
 :: Handle results
@@ -267,11 +267,14 @@ IF %ERRORLEVEL% NEQ 0 (
     echo The '%NAME% create' command failed.
     echo.
     echo A common cause of this is the failure to create the provided directory:
-    echo %APP_PATH%
+    echo %APP_PATH%. Please ensure that the directory name is valid and that you
+    echo have permission to create this directory.
     echo.
-    echo Please ensure that the directory name is valid and that you have permission
-    echo to create this directory.  Please run '%NAME% create --help' for help on the 
-    echo usage.
+    echo Another common cause is that the ^<app-template^> value is invalid
+    echo ^(should be one of: gxp, ol3view or ol3edit^). Option specified was: 
+    echo %APP_TEMPLATE%
+    echo.
+    echo Please run '%NAME% create --help' for help on the usage.
     echo.
   )
   if %COMMAND%=="debug" (

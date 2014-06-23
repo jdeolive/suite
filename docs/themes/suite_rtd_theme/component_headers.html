@@ -22,15 +22,21 @@
     {% elif shorttitle == "Boundless SDK" %}
     <div id="header" class="selfclear sdk-header">
       <div class="community_logo sdk_logo">
+    {% elif shorttitle == "OpenLayers" %}
+    <div id="header" class="selfclear ol-header">
+      <div class="community_logo ol_logo">
     {% elif shorttitle == "GeoExplorer" %}
     <div id="header" class="selfclear ge-header">
       <div class="community_logo ge_logo">
+    {% elif shorttitle == "QGIS" %}
+    <div id="header" class="selfclear qgis-header">
+      <div class="community_logo qgis_logo">
     {% else %}
     <div id="header" class="selfclear">
       <div class="suite_logo">
     {% endif %}
 
-      <a href="{{ theme_doc_root }}/{{ suite_version }}/{{ project.lower() }}"></a></div>
+      <a href="{{ theme_documentation_root }}/{{ theme_suite_url.lower() }}"></a></div>
     {% if theme_project_version %}
       <div class="component_version_info">Version {{ theme_project_version }}</div>
     {% endif %}

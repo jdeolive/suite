@@ -110,3 +110,5 @@ PostgreSQL Configuration
 PostgreSQL configuration is controlled within the ``postgresql.conf`` file. This
 file is located at :file:`/var/lib/pgsql/9.3/data/postgresql.conf`. 
 
+You will want to ensure you can connect to the database, and that you have a user to 
+work with. Please see the section on :ref:`dataadmin.pgGettingStarted.firstconnect`.

@@ -5,16 +5,14 @@ OpenGeo Suite extensions
 
 OpenGeo Suite comes with a number of optional extensions or "add-ons". These add functionality to OpenGeo Suite, but may not be needed by most users. We recommend that you choose only the extensions that you need.
 
-These optional components can be selected during the :ref:`Windows installation process <installation.windows.install.components>` or by installing specific packages for :ref:`Ubuntu <installation.ubuntu.packages>` or :ref:`Red Hat-based <installation.redhat.packages>` systems). For users of OpenGeo Suite for Application Servers, please `contact Boundless <http://boundlessgeo.com/about-us/contact/>`_ to receive access to the extensions and how to install them.
+These optional components can be selected in different ways depending on your operating system:
 
-.. figure:: ../installation/windows/img/components.png
+* **Windows**: Extensions can be selected during the :ref:`Windows installation process <installation.windows.install.components>` or by rerunning the installer after OpenGeo Suite is installed.
+* **OS X**: Extensions can be added by :ref:`manually copying the extension files <installation.mac.install.extensions>` after OpenGeo Suite is installed.
+* **Ubuntu Linux**: Extensions can be installed via :ref:`packages <installation.ubuntu.packages>`.
+* **Red Hat-based Linux**: Extensions can be installed by via :ref:`packages <installation.redhat.packages>`.
 
-   Component installation on Windows
-
-.. todo:: May want to update this graphic eventually
-
-.. note:: If you have already installed OpenGeo Suite on Windows, you can add extensions to your deployment by running the installer again and selecting just the desired extensions.
-
+For users of OpenGeo Suite for Application Servers, please `contact Boundless <http://boundlessgeo.com/about-us/contact/>`_ to receive access to the extensions and information on how to install them.
 
 .. _intro.extensions.clustering:
 
@@ -51,8 +49,6 @@ For more information about CSS styling in GeoServer, please see the `GeoServer C
 
 .. warning:: The installation instructions in the GeoServer documentation do not apply to users of OpenGeo Suite. Users of OpenGeo Suite can install the extension in the standard way as indicated above.
 
-.. todo:: NEED TO UPDATE COMMUNITY DOCS
-
 
 .. _intro.extensions.csw:
 
@@ -65,6 +61,7 @@ For more information about CSW in GeoServer, please see the `GeoServer CSW docum
 
 .. warning:: The installation instructions in the GeoServer documentation do not apply to users of OpenGeo Suite. Users of OpenGeo Suite can install the extension in the standard way as indicated above.
 
+
 .. _intro.extensions.gdal:
 
 GDAL Image Formats
@@ -74,28 +71,24 @@ The GDAL Image Formats extension adds the ability for GeoServer to publish data 
 
 The instructions for enabling these formats may require a few additional steps from the standard extension installation instructions as indicated above. Please see the section on :ref:`installing GDAL image formats <installation.gdal>` for more information.
 
+
 .. _intro.extensions.geopackage:
 
 GeoPackage
 ----------
 
-The GeoPackage extension adds the ability for GeoServer to publish data from `GeoPackage <http://www.geopackage.org/>`_ sources (a data format based on SQLite).
-
-.. todo:: Need more info here.
-
+The GeoPackage extension adds the ability for GeoServer to publish data from `GeoPackage <http://www.geopackage.org/>`_ sources (a data format based on SQLite). Once this extension is added, GeoServer will show GeoPackage as one of its available data sources when adding a new store.
 
 .. _intro.extensions.mapmeter:
 
 Mapmeter
 --------
 
-The Mapmeter extension adds the ability to connect to Mapmeter. Mapmeter (http://mapmeter.com) is a cloud-based service that allows you to monitor and analyze your geospatial deployments in real-time. 
+The Mapmeter extension adds the ability to connect to Mapmeter. `Mapmeter <http://mapmeter.com>`_ is a cloud-based service that allows you to monitor and analyze your geospatial deployments in real-time.
 
-Mapmeter is available only to users of OpenGeo Suite.
+Mapmeter is available for OpenGeo Suite Enterprise clients, though free users can access a two-week trial of the service.
 
-.. todo:: For more information on using Mapmeter...
-
-.. todo:: Add a section in sysadmin for Mapmeter
+For more information on using Mapmeter, see the :ref:`sysadmin.mapmeter` section.
 
 
 .. _intro.extensions.mongodb:
@@ -103,9 +96,9 @@ Mapmeter is available only to users of OpenGeo Suite.
 MongoDB
 -------
 
-The MongoDB extension adds the ability for GeoServer to publish data from `MongoDB <http://www.mongodb.org/>`_ sources.
+The MongoDB extension adds the ability for GeoServer to publish data from `MongoDB <http://www.mongodb.org/>`_ sources. Once this extension is added, GeoServer will show MongoDB as one of its available data sources when adding a new store.
 
-.. todo:: Need more info here
+.. note:: This extension will only work when connecting to MongoDB databases at version 2.4 and above.
 
 
 .. _intro.extensions.wps:
@@ -123,6 +116,6 @@ For more information of WPS in OpenGeo Suite, please see the :ref:`processing` s
 Point Cloud
 -----------
 
-The Point Cloud extension adds support for the PostgreSQL/PostGIS Point Cloud functionality.
+The Point Cloud extension adds support for storing and working with point cloud data in PostgreSQL/PostGIS.
 
 For more information on Point Cloud, please see the :ref:`dataadmin.pointcloud` section.

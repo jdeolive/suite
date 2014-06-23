@@ -1,3 +1,5 @@
+.. _sysadmin.clustering.autoaws:
+
 How to set up an OpenGeo Suite cluster on AWS
 =============================================
 
@@ -5,25 +7,27 @@ This page will show how to automatically set up and configure a cluster of serve
 
 This script is available to Enterprise clients only. Please `contact us <http://boundlessgeo.com/about/contact-us/sales/>`_ to become an Enterprise client.
 
-.. todo:: Say more about what the scripts will do.
-
 Prerequisites
 -------------
 
-* Ubuntu or Red Hat-based Linux
-* Python 2.7 or higher
+* Machine running the script must use Ubuntu, Red Hat-based Linux or Mac OS X
+* Python 2.7 or higher (not guaranteed on Python 3)
 * Ansible 1.6.2 or higher (installed via `pip <https://pypi.python.org/pypi/pip>`_)
 * Java JDK 7 or higher (not a JRE)
 * AWS account with EC2 access
 * Super user access
-
-.. todo:: Python 3? Check these
 
 Setup
 -----
 
 Packages
 ^^^^^^^^
+
+#. *Mac OS X only:* Install ``pip``: 
+
+   .. code-block:: bash
+      
+      sudo easy_install pip
 
 #. Ansible must be installed via ``pip``. If you have Ansible installed through your standard package manager, run :command:`apt-get remove --purge ansible` first before running :command:`pip install ansible`.
 
@@ -127,7 +131,7 @@ The following are other setup tasks that don't fall under any specific category.
 
       export ANSIBLE_HOST_KEY_CHECKING=False
 
-#. Open :file:`/etc/ssh/ssh_config` in a text editor.
+#. Open :file:`$HOME/ssh_config` in a text editor.
 
 #. Add the following line to the bottom of the file::
 
@@ -140,15 +144,9 @@ Clustering script
 
 #. Download and extract the clustering script archive to a directory.
 
-   .. note:: If you are an Enterprise client and do not have the script, please `send us a note and let us know <http://boundlessgeo.com/about/contact-us/>`_.
+   .. note:: If you are an Enterprise client and do not have the script, please `let us know <http://boundlessgeo.com/about/contact-us/>`_.
 
 #. Open the file :file:`roles/aws/vars/main.yml` in a text editor.
-
-#. Change the line that starts with ``ec2_bin_path`` to contain the path :file:`$EC2_HOME/bin`::
-
-     ec2_bin_path: $EC2_HOME/bin
-
-   .. todo:: If the env var works, why not bake it into the script by default? Current default is ec2_bin_path: /Users/ecarter/aws/tools/ec2-api-tools-1.6.13.0/bin
 
 #. Change the line that starts with ``aws_keypair`` to contain the name of your key file (omitting the ``.pem`` extension)::
 
@@ -165,10 +163,22 @@ With setup complete, you can now launch the cluster.
 
    .. code-block:: bash
 
-      ansible-playbook aws-launch.yml -i hosts -e "use_aws=true" --private-key=key.pem
+      ansible-playbook aws-launch.yml -i hosts.aws -e "use_aws=true" --private-key=key.pem
 
    substituting the name and path of the key file as downloaded in a previous step for :file:`key.pem`.
 
+#. During the script, there will be a pause where you are asked to set up your SSH configuration. Add the following to the :file:`$HOME/.ssh/config`
+
+   .. code-block:: bash
+     
+      Host 10.1.2?.*
+         IdentityFile key.pem
+         User ubuntu
+         Port 22
+         ProxyCommand ssh -o "ControlMaster no" -p 22 -i key.pem ec2-user@INSTANCE_IP -W %h:%p
+ 
+   subsituting the the name of the key file for :file:`key.pem`, and the IP given by the script for ``INSTANCE_IP``.
+   
 #. Details on the cluster created, including AWS-specific information, will be available in the log file :file:`/tmp/informationoutput`.
 
 Troubleshooting
@@ -176,7 +186,7 @@ Troubleshooting
 
 * If you encounter errors while running the script, you can run the script in "debug mode" by appending ``-vvvv`` to the command. The individual commands run by the script will be displayed in the terminal.
 
-* Try running the script again. Sometimes, due to issues with AWS connectivity, a script may fail the first time but succeed the second.
+* Try running the script again. Sometimes, due to issues with AWS connectivity, a script may fail the first time but succeed the second. (There is a fix checked into the latest development version of Ansible which should fix a lot of these problems)
 
 Shutting down the cluster
 -------------------------
@@ -196,3 +206,7 @@ To shut down the cluster:
 #. Open the `AWS VPC console <https://console.aws.amazon.com/vpc/home>`_.
 
 #. Find the VPC (or VPCs) created by the script and :guilabel:`Delete` them.
+
+#. Open the `AWS RDS console <https://console.aws.amazon.com/rds/home>`_.
+
+#. Find the RDS instances created by the script and :guilabel:`Delete` them.

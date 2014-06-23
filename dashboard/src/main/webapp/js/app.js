@@ -27,19 +27,20 @@ function onLoad() {
           break;
       }
       active_tab.show();
-      $(this).addClass("active");
-
-      // highlight clicked link
-      if (previous_link) {
-        previous_link.removeClass("active");
-      }
-      previous_link = $(this);
     });
+
   }
 
   setUpTabs('#gslink');
   setUpTabs('.homelink');
   setUpTabs('.aboutlink');
+
+  $('.nav a').click(function(e) {
+    if ($(this).attr("id") !== '_documentationlink') {
+      e.preventDefault();
+      $(this).tab('show');
+    }
+  });
 
 
   // set up getting started stepchoose-detail-inner show/hide
@@ -76,11 +77,8 @@ function onLoad() {
   });
 
   // Add version info to all version spans
-  var proj_version = $('#version').html();
-  if (proj_version == "${project.version}") {
-    proj_version = SUITE_VERSION;
-    $('#version').html("");
-  }
+  var proj_version = $('.version').html();
+  proj_version = SUITE_VERSION;
   $('.version').html(proj_version);
 
   // Add version to all docs links
@@ -92,7 +90,6 @@ function onLoad() {
       this.href = docs_version + path;
        this.target = '_blank';
     });
-<<<<<<< HEAD
 */
 
   // Remove non-static info

@@ -40,7 +40,7 @@ master_doc = 'index'
 # General substitutions.
 project = u'GeoWebCache'
 manual = u'User Manual'
-copyright = u'2011 OpenGeo'
+copyright = u'CC BY-SA 3.0'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
@@ -53,6 +53,9 @@ gwc_ver = pom.getElementsByTagName('gwc.version')[0].firstChild.nodeValue
 version = gwc_ver.split("-")[0]
 # The full version, including alpha/beta/rc tags.
 release = gwc_ver
+
+# Users don't need to see the "SNAPSHOT" notation when it's there
+release.replace('-SNAPSHOT','.x')
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -187,7 +190,7 @@ latex_documents = [
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
-latex_logo = '../../theme/_static/geowebcache_logo.png'
+latex_logo = '../../themes/suite_rtd_theme/static/img/geowebcache-logo-only.png'
 
 # For "manual" documents, if this is true, then toplevel headings are parts,
 # not chapters.
