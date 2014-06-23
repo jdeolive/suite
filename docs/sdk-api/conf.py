@@ -12,7 +12,7 @@
 # serve to show the default.
 
 import sys, os, string
-sys.path.append('../../../build'); from build_properties import *
+sys.path.append('../../build'); from build_properties import *
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -45,13 +45,7 @@ copyright = u' 2014 Boundless'
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = minidom.parse(
-        "../pom.xml"
-    ).getElementsByTagName(
-        "parent"
-    )[0].getElementsByTagName(
-        "version"
-    )[0].firstChild.nodeValue
+version = suite_version
 
 # The full version, including alpha/beta/rc tags.
 release = version

@@ -2,7 +2,7 @@
 
     <import file="../build/common.xml"/>
 
-    <property name="modules.list" value="usermanual,install,geoexplorer,geowebcache,geoserver,sdk-api,postgis"/>
+    <property name="modules.list" value="usermanual,install,geoexplorer,geowebcache,geoserver,sdk-api,postgis,openlayers,qgis"/>
 
     <target name="clean" depends="destroy-target"
         description="Clean project">
@@ -25,15 +25,24 @@
         description="Assmble documentation artifact">
         <property name="doc.dir" value="target/opengeo-docs"/>
         <mkdir dir="${doc.dir}"/>
+        <copy todir="${doc.dir}">
+            <fileset dir="usermanual/target/html" includes="**/*"/>
+            <fileset dir="target" includes="version.ini"/>
+        </copy>
 
         <for list="${modules.list}" param="mod">
             <sequential>
                 <if>
-                    <not>
-                        <equals arg1="@{mod}" arg2="install"/>
-                    </not>
+                    <and>
+                        <not>
+                            <equals arg1="@{mod}" arg2="install"/>
+                        </not>
+                        <not>
+                            <equals arg1="@{mod}" arg2="usermanual"/>
+                        </not>
+                    </and>
                     <then>
-                        <copy todir="${doc.dir}">
+                        <copy todir="${doc.dir}/@{mod}">
                             <fileset dir="@{mod}/target/html" includes="**/*"/>
                         </copy>
                     </then>
@@ -41,7 +50,8 @@
             </sequential>
         </for>
         <antcall target="assemble-artifact">
-            <param name="dir" value="${doc.dir}"/>
+            <param name="dir" value="target"/>
+            <param name="includes" value="opengeo-docs/**/*"/>
         </antcall>
     </target>
 

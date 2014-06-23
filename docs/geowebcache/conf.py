@@ -45,17 +45,12 @@ copyright = u'CC BY-SA 3.0'
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
 #
-# Find gwc version from pom.xml
-pom_path = "../../../pom.xml"
-pom = minidom.parse(pom_path)
-gwc_ver = pom.getElementsByTagName('gwc.version')[0].firstChild.nodeValue
 # The short X.Y version.
-version = gwc_ver.split("-")[0]
-# The full version, including alpha/beta/rc tags.
-release = gwc_ver
+version = gwc_version
 
+# The full version, including alpha/beta/rc tags.
 # Users don't need to see the "SNAPSHOT" notation when it's there
-release.replace('-SNAPSHOT','.x')
+release = gwc_version_short
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:

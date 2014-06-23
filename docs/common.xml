@@ -1,0 +1,51 @@
+<project name="docs" default="build">
+
+  <import file="../build/common.xml"/>
+  
+  <target name="check-pdf">
+    <property environment="env"/>
+    <condition property="pdflatex.isPresent">
+      <or>
+        <available file="pdflatex" filepath="${env.PATH}"/>
+        <available file="pdflatex.exe" filepath="${env.Path}"/>
+        <available file="pdflatex.exe" filepath="${env.PATH}"/>
+      </or>
+    </condition>
+  </target>
+
+  <target name="build-html"
+    description="Build html docs">
+    <antcall target="sphinx">
+      <param name="dir" value="source"/>
+    </antcall>
+  </target>
+
+  <target name="build-text"
+    description="Build text docs">
+    <antcall target="sphinx">
+      <param name="dir" value="source"/>
+      <param name="builder" value="text"/>
+    </antcall>
+  </target>
+
+  <target name="build-pdf" depends="check-pdf"
+    description="Build pdf docs">
+    <if>
+        <equals arg1="${pdflatext.isPresent}" arg2="true"/>
+        <then>
+          <sequential>
+            <antcall target="sphinx">
+              <param name="dir" value="source"/>
+              <param name="builder" value="latex"/>
+            </antcall>
+            <exec executable="make" failonerror="true" dir="${build.directory}/latex">
+              <arg line="all-pdf"/>
+            </exec>
+          </sequential>
+        </then>
+        <else>
+            <echo message="No PDF generated because pdflatex is not on PATH.  This may make installer assembly fail."/>
+        </else>
+    </if>
+  </target>
+</project>

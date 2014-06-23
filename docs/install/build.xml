@@ -1,6 +1,6 @@
 <project name="docs.install" default="build">
 
-    <import file="../../build/common.xml"/>
+    <import file="../common.xml"/>
 
     <target name="clean" description="Clean project">
         <ant dir="windows" target="clean"/>
