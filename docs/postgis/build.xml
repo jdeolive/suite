@@ -2,20 +2,18 @@
 
     <import file="../../build/common.xml"/>
 
-    <!-- TODO: move this to main properties file where other versions are defined -->
-    <property name="pgdoc.version" value="2.0.1"/>
-    <property name="pgdoc.dir" value="target/html/postgis"/>
+    <property name="doc.dir" value="target/html/postgis"/>
 
     <target name="build" depends="init">
         <antcall target="sphinx">
             <param name="dir" value="src"/>
         </antcall>
 
-        <get src="http://data.opengeo.org/suite/postgis-docs-${pgdoc.version}.zip" dest="doc.zip" 
+        <get src="http://data.opengeo.org/suite/postgis-docs-${pg.version}.zip" dest="doc.zip" 
             usetimestamp="true"/>
-        <mkdir dir="${pgdoc.dir}"/>
-        <unzip src="doc.zip" dest="${pgdoc.dir}"/>
-        <copy file="style.css" todir="${pgdoc.dir}/html" overwrite="true"/>
+        <mkdir dir="${doc.dir}"/>
+        <unzip src="doc.zip" dest="${doc.dir}"/>
+        <copy file="style.css" todir="${doc.dir}/html" overwrite="true"/>
     </target>
 
     <target name="clean" depends="destroy"/>
