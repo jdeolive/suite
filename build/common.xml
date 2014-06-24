@@ -127,28 +127,21 @@ Common build targets.
     @param excludes The pattern determine files to be excluded from the archive.
     @param dir The directory from which files is relative to, default is target.
     -->
-    <target name="assemble-artifact" depends="init-git">
+    <target name="assemble-artifact" depends="init-target,init-git">
         <property name="dir" value="target"/>
         <property name="name" value="${ant.project.name}"/>
         <property name="path" value="${name}"/>
         <property name="includes" value="**/*"/>
         <property name="excludes" value=""/>
 
-        <property name="artifact_root"
-            value="${suite.build_root}/${suite.build_cat}/${path}"/>
-        <property name="artifact_dir" 
-            value="${artifact_root}/${suite.build_rev}"/>
         <property name="artifact_file" 
-            value="${artifact_dir}/suite-${name}-${suite.build_rev}.zip"/>
+            value="target/suite-${name}-${suite.build_rev}.zip"/>
 
-        <mkdir dir="${artifact_dir}"/>
-        <delete dir="${artifact_file}"/>
+        <delete file="${artifact_file}"/>
         <zip destfile="${artifact_file}">
             <fileset dir="target" includes="version.ini"/>
             <fileset dir="${dir}" includes="${includes}" excludes="${excludes}"/>
         </zip>
-        <symlink resource="${artifact_dir}" link="${artifact_root}/${suite.build_name}"
-            overwrite="true" failonerror="false"/>
     </target>
 
   <!-- 
