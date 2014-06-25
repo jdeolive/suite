@@ -201,7 +201,7 @@ case $COMMAND in
 esac
 
 # create log file (in case it doesn't already exist)
-LOG_FILE=$TEMP/suite-sdk/suite-sdk.log
+LOG_FILE=/tmp/suite-sdk/suite-sdk.log
 LOG_DIR=$(dirname -- "$LOG_FILE")
 
 mkdir -p "$LOG_DIR" &> /dev/null
