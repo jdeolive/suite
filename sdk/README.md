@@ -1,3 +1,4 @@
-# Boundless SDK Builder
+# Suite Webapp SDK
 
-Builds a zip archive that contains all the resources for Boundless SDK.
+This module is the Suite Client/Webapp/etc... SDK that produces a runnable command line
+tool for building web applications with the Suite.

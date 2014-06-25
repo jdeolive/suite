@@ -18,6 +18,9 @@ Some modules require additional packages:
 * [JSTools](https://github.com/whitmo/jstools) - Latest
 * [Sphinx](http://sphinx.pocoo.org/) - 1.0+ (the full build requires LaTeX support)
 
+Ensure that all the above are installed so that the associated executables are on the 
+`PATH` of the user building the suite. 
+
 ## Quickstart
 
 1. Clone the repository:
@@ -48,7 +51,7 @@ All top level modules have a `build.xml` that defines the following targets:
 
 1. `build` - Builds the project, the result of this is something deployable in the development environment. This target is the default.
 1. `clean` - Cleans the project deleting all build artifacts. 
-1. `assemble` - Assembles the project into a zip archive suitable for deployment.
+1. `assemble` - Assembles the project into a zip archive suitable for deployment in production. This is the artifact consumed by installer builders. 
 1. `publish` - Publishes the zip archive to a final location.
 1. `all` - Runs all the above targets.
 
@@ -78,21 +81,22 @@ parameterized into build properties. The default [build.properties](build/build.
 contains a list of default values. Often these default properties must be overridden to 
 cater to the environment (eg. Windows vs Unix) or to cater to specifics of a particular module. 
 
-There are two ways to override build properties. 
+There are two ways to override build properties: 
 
-1. The first is to specify them directly to the and build command with the Java system property (-D) syntax. For example:
+1. The first is to specify them directly to the ant build command with the Java system property (-D) syntax. For example:
 
           % ant -Dsuite.build_cat=release build
 
 1. Creating a file named `local.properties` either at the global level or at the module level. The global `local.properties` is located in the [build](build) directory next to 
-`build.properties`. Module specific `local.properties` files are located next to the module `build.xml` file. Naturally the module specific overrides properties from the global file. 
+`build.properties`. Module specific `local.properties` files are located next to the module `build.xml` file. Naturally the module specific local properties file overrides properties from its global counterpart. 
 
 Using any combination of the above method it should never be necessary to modify the `build.properties` file directly. 
 
 ## Modules
 
-The suite repository is composed of the following modules.
+The suite repository is composed of the following modules:
 
+* [apps](apps/README.md)
 * [dashboard](dashboard/README.md)
 * [docs](docs/README.md)
 * [geoexplorer](geoexplorer/README.md)
@@ -103,54 +107,3 @@ The suite repository is composed of the following modules.
 * [webapp-sdk](sdk/README.md)
 
 Consult the module README files for module specific information. 
-
-Build Environment
------------------
-
-If you don't build GeoTools, GeoServer, or GeoWebCache locally on a regular 
-basis you can skip this section.
-
-The suite builds its own internal versions of many components like GeoTools and 
-GeoServer. To keep these builds separate it is recommended that you set up an 
-virtual environment for the suite build. 
-
-Tools like `virtualenv <http://pypi.python.org/pypi/virtualenv>`_ and `virtualenvwrapper <http://www.doughellmann.com/projects/virtualenvwrapper/>`_
-are useful for creating virtual environments with configuration specific to a   particular project. It is recommended that you set up a  "virtualenv" 
-specifically for the suite. In that virtualenv you can configure custom settings for maven, etc...
-
-
-Repository Setup
-----------------
-
-The suite repository contains submodules that pull in external dependencies. 
-After cloning the repository you must initialize the submodules::
-
-  % git clone git://github.com/opengeo/suite.git suite
-  % cd suite
-  % git submodule init
-  % git submodule sync
-  % git submodule update
-
-Building
---------
-
-If you are building the suite locally for the first time you *must* do a full 
-build::
-
-  % mvn clean install -Dfull
-
-The above command will build everything, including all external dependencies.
-Dropping the ``-Dfull`` flag will only build the core suite components::
-
-  % mvn clean install
-
-To build a distribution a full build must first be completed. After which the 
-following command is used::
-
-  % mvn assembly:attached 
-
-Resulting artifacts will be located in the ``target`` directory. 
-
-The build and assembly commands can also be merged into one::
-
-  % mvn clean install assembly:attached -Dfull
