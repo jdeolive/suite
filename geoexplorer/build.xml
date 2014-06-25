@@ -108,6 +108,9 @@
       </antcall>
   </target>
 
+  <target name="publish" description="Publish project artifact"
+    depends="publish-artifact"/>
+
   <property name="app.proxy.geoserver" value=""/>
   <property name="app.port" value="9080"/>
 

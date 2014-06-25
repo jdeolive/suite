@@ -34,4 +34,6 @@
       </antcall>
     </target>
 
+    <target name="publish" depends="publish-artifact"/>
+
 </project>

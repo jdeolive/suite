@@ -27,4 +27,12 @@
     </for>
   </target>
 
+  <target name="publish" description="Publishes project artifacts">
+    <for list="${modules.list}" param="mod">
+      <sequential>
+        <ant dir="@{mod}" target="publish" inheritAll="false"/>
+      </sequential>
+    </for>
+  </target>
+
 </project>

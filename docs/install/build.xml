@@ -2,24 +2,32 @@
 
     <import file="../common.xml"/>
 
+    <property name="docs.install.modules" value="windows,mac,ubuntu,redhat,war"/>
+
     <target name="clean" description="Clean project">
-        <ant dir="windows" target="clean"/>
-        <ant dir="mac" target="clean"/>
-        <ant dir="ubuntu" target="clean"/>
-        <ant dir="redhat" target="clean"/>
-        <ant dir="war" target="clean"/>
+        <for list="${docs.install.modules}" param="mod">
+            <sequential>
+                <ant dir="@{mod}" target="clean"/>
+            </sequential>
+        </for>
     </target>
 
     <target name="build" description="Build project">
-        <ant dir="windows"/>
-        <ant dir="mac"/>
-        <ant dir="ubuntu"/>
-        <ant dir="redhat"/>
-        <ant dir="war"/>
+         <for list="${docs.install.modules}" param="mod">
+            <sequential>
+                <ant dir="@{mod}" target="build"/>
+            </sequential>
+        </for>
     </target>
 
     <target name="assemble" depends="init"
         description="Assemble project artifact">
+        <for list="${docs.install.modules}" param="mod">
+            <sequential>
+                <ant dir="@{mod}" target="assemble"/>
+            </sequential>
+        </for>
     </target>
 
+    <target name="publish"/>
 </project>

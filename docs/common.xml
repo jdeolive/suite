@@ -1,4 +1,4 @@
-<project name="docs" default="build">
+<project name="docs.common" default="build">
 
   <import file="../build/common.xml"/>
   
@@ -48,4 +48,7 @@
         </else>
     </if>
   </target>
+
+  <target name="assemble"/>
+  <target name="publish"/>
 </project>

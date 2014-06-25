@@ -14,6 +14,10 @@
         <foreach list="${ext.list}" target="assemble-ext" param="ext"/>
     </target>
 
+    <target name="publish" description="Publish project">
+        <foreach list="${ext.list}" target="publish-ext" param="ext"/>
+    </target>
+
     <target name="unpack-ext">
         <mkdir dir="target/${ext}"/>
         <unzip src="${ext.dir}/geoserver-${gs.version}-${ext}-plugin.zip"
@@ -23,8 +27,14 @@
     <target name="assemble-ext">
         <antcall target="assemble-artifact">
             <param name="name" value="${ext}"/>
-            <param name="path" value="geoserver${file.separator}ext"/>
             <param name="dir" value="target/${ext}"/>
+        </antcall>
+    </target>
+
+    <target name="publish-ext">
+        <antcall target="publish-artifact">
+            <param name="name" value="${ext}"/>
+            <param name="path" value="geoserver${file.separator}ext"/>
         </antcall>
     </target>
 </project>

@@ -22,4 +22,7 @@
         </antcall>
     </target>
 
+    <target name="publish" description="Publishes project artifact"
+        depends="publish-artifact"/>
+
 </project>

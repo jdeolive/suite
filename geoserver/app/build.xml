@@ -29,6 +29,7 @@
     <antcall target="assemble-artifact">
       <param name="includes" value="*.war"/>
     </antcall>
-
   </target>
+
+  <target name="publish" depends="publish-artifact"/>
 </project>

@@ -44,11 +44,13 @@ The suite repository is made up a number of modules (ie projects). During develo
 typically modules are built individually as opposed to all at once. The primary build 
 tool for suite is Ant. For some modules the ant script delegates to the modules native build tool such as Maven or Sphinx. 
 
-All top level modules have a `build.xml` that defines the following three targets:
+All top level modules have a `build.xml` that defines the following targets:
 
 1. `build` - Builds the project, the result of this is something deployable in the development environment. This target is the default.
 1. `clean` - Cleans the project deleting all build artifacts. 
 1. `assemble` - Assembles the project into a zip archive suitable for deployment.
+1. `publish` - Publishes the zip archive to a final location.
+1. `all` - Runs all the above targets.
 
 Building for development purposes typically looks like:
 
@@ -57,6 +59,10 @@ Building for development purposes typically looks like:
 Building for deployment purposes typically looks like:
 
     ant clean build assemble
+
+Or to build everything:
+
+    ant all
 
 The [build](build) directory contains common build files used by modules.
 

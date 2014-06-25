@@ -2,16 +2,16 @@
 
     <import file="../build/common.xml"/>
 
-    <property name="modules.list" value="usermanual,install,geoexplorer,geowebcache,geoserver,sdk-api,postgis,openlayers,qgis"/>
+    <property name="docs.modules" value="usermanual,install,geoexplorer,geowebcache,geoserver,sdk-api,postgis,openlayers,qgis"/>
 
     <target name="clean" depends="destroy-target"
         description="Clean project">
-        <foreach list="${modules.list}" target="clean-mod" param="mod"/>
+        <foreach list="${docs.modules}" target="clean-mod" param="mod"/>
     </target>
 
     <target name="build"
         description="Build all documentation modules">
-        <foreach list="${modules.list}" target="build-mod" param="mod"/>
+        <foreach list="${docs.modules}" target="build-mod" param="mod"/>
     </target>
 
     <target name="clean-mod">
@@ -30,7 +30,7 @@
             <fileset dir="target" includes="version.ini"/>
         </copy>
 
-        <for list="${modules.list}" param="mod">
+        <for list="${docs.modules}" param="mod">
             <sequential>
                 <if>
                     <and>
@@ -53,6 +53,10 @@
             <param name="dir" value="target"/>
             <param name="includes" value="opengeo-docs/**/*"/>
         </antcall>
+    </target>
+
+    <target name="publish" depends="init">
+        <antcall target="publish-artifact"/>
     </target>
 
 </project>

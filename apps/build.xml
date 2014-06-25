@@ -21,4 +21,6 @@
             <param name="includes" value="${war.file}"/>
         </antcall>
     </target>
+
+    <target name="publish" depends="publish-artifact"/>
 </project>

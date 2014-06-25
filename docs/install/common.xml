@@ -23,4 +23,14 @@
     <antcall target="build-pdf"/>
   </target>
 
+  <target name="assemble">
+    <antcall target="assemble-artifact">
+      <param name="name" value="readme-${doc.name}"/>
+      <param name="dir" value="target/text"/>
+      <param name="includes" value="*.txt"/>
+    </antcall>
+  </target>
+
+  <target name="publish" />
+
 </project>

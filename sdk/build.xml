@@ -104,4 +104,7 @@
     </antcall>
   </target>
 
+  <target name="publish" description="Publish project artifact"
+    depends="publish-artifact"/>
+
 </project>

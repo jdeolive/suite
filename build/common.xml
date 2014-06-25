@@ -93,8 +93,10 @@ Common build targets.
     Ivy dependency resolution task.
     -->
     <target name="resolve">
+      <property name="type" value="jar,bundle"/>
+      <echo message="type=${type}"/>
       <ivy:configure file="${common.basedir}/ivysettings.xml"/>
-      <ivy:resolve type="jar,bundle"/>
+      <ivy:resolve type="${type}"/>
       <ivy:report todir="target/ivy-report"/>
     </target>
 
@@ -106,8 +108,9 @@ Common build targets.
     -->
     <target name="retrieve" depends="resolve">
       <property name="dir" value="lib"/>
+      <property name="type" value="jar,bundle"/>
       <property name="pattern" value="${dir}/[artifact]-[revision].[ext]"/>
-      <ivy:retrieve pattern="${pattern}" type="jar,bundle"/>
+      <ivy:retrieve pattern="${pattern}" type="${type}"/>
     </target>
 
     <!--
@@ -130,7 +133,6 @@ Common build targets.
     <target name="assemble-artifact" depends="init-target,init-git">
         <property name="dir" value="target"/>
         <property name="name" value="${ant.project.name}"/>
-        <property name="path" value="${name}"/>
         <property name="includes" value="**/*"/>
         <property name="excludes" value=""/>
 
@@ -142,6 +144,36 @@ Common build targets.
             <fileset dir="target" includes="version.ini"/>
             <fileset dir="${dir}" includes="${includes}" excludes="${excludes}"/>
         </zip>
+    </target>
+
+    <!--
+    Publishes a build artifact.
+
+    @param name The artifact name, default is name of project.
+    @param includes The pattern determine files to be included in the archive, default is **/*.
+    @param excludes The pattern determine files to be excluded from the archive.
+    @param dir The directory from which files is relative to, default is target.
+    -->
+    <target name="publish-artifact" depends="init-git">
+        <property name="name" value="${ant.project.name}"/>
+        <property name="path" value="${name}"/>
+
+        <!--
+        <property name="artifact_root"
+            value="${suite.build_root}/${suite.build_cat}/${path}"/>
+        <property name="artifact_dir" 
+            value="${artifact_root}/${suite.build_rev}"/>
+        -->
+        <property name="artifact_dir" 
+            value="${suite.build_root}/${suite.build_cat}/${path}"/>
+        <property name="artifact_file" 
+            value="suite-${name}-${suite.build_rev}.zip"/>
+        <mkdir dir="${artifact_dir}"/>
+        <copy file="target/${artifact_file}" todir="${artifact_dir}" 
+          overwrite="true"/>  
+        <symlink resource="${artifact_dir}/${artifact_file}" 
+          link="${artifact_dir}/suite-${name}-${suite.build_name}.zip" 
+          overwrite="true" failonerror="false"/>
     </target>
 
   <!-- 
@@ -190,4 +222,9 @@ Common build targets.
         <arg line="-A suite_version=${suite.version} ${sphinx.flags} ${flags} -b ${builder} -d ${doctrees} ${srcdir} ${outdir}"/>
       </exec>
   </target>
+
+  <!--
+  Psudeo task that calls the main life cycle tasks in order.  
+  -->
+  <target name="all" depends="clean,build,assemble,publish"/>
 </project>

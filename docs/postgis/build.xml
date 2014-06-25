@@ -1,6 +1,6 @@
 <project name="docs.postgis" default="build">
 
-    <import file="../../build/common.xml"/>
+    <import file="../common.xml"/>
 
     <property name="doc.dir" value="target/html/postgis"/>
 
