@@ -3,6 +3,15 @@ Common build targets.
 -->
 <project name="common" xmlns:ivy="antlib:org.apache.ivy.ant">
 
+    <!-- handle environment variable overrides -->
+    <property environment="env"/>
+    <condition property="suite.build_cat" value="${env.BUILD_CAT}">
+      <isset property="env.BUILD_CAT"/>
+    </condition>
+    <condition property="suite.build_name" value="${env.BUILD_NAME}">
+      <isset property="env.BUILD_NAME"/>
+    </condition>
+
     <!-- load relative build.properties first to override any settings -->
     <property file="local.properties"/>
     <property file="build.properties"/>
