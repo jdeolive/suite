@@ -11,11 +11,15 @@
     <target name="clean" depends="destroy" description="Clean project"/>
 
     <target name="assemble" description="Assemble project">
-        <foreach list="${ext.list}" target="assemble-ext" param="ext"/>
+        <antcall target="assemble-artifact">
+            <param name="name" value="geoserver-ext"/>
+        </antcall>
     </target>
 
     <target name="publish" description="Publish project">
-        <foreach list="${ext.list}" target="publish-ext" param="ext"/>
+        <antcall target="publish-artifact">
+            <param name="name" value="geoserver-ext"/>
+        </antcall>
     </target>
 
     <target name="unpack-ext">
@@ -24,17 +28,4 @@
             dest="target/${ext}"/>
     </target>
 
-    <target name="assemble-ext">
-        <antcall target="assemble-artifact">
-            <param name="name" value="${ext}"/>
-            <param name="dir" value="target/${ext}"/>
-        </antcall>
-    </target>
-
-    <target name="publish-ext">
-        <antcall target="publish-artifact">
-            <param name="name" value="${ext}"/>
-            <param name="path" value="geoserver${file.separator}ext"/>
-        </antcall>
-    </target>
 </project>
