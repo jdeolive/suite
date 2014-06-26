@@ -167,15 +167,14 @@ Common build targets.
         <property name="name" value="${ant.project.name}"/>
         <property name="path" value="${name}"/>
 
-        <property name="artifact_root" value="${suite.build_root}/${suite.build_cat}/${path}"/>
-        <property name="artifact_dir" value="${artifact_root}/${suite.build_rev}"/>
-        <delete dir="${artifact_dir}"/>
-        <mkdir dir="${artifact_dir}"/>
-
+        <property name="artifact_dir" 
+          value="${suite.build_root}/${suite.build_branch}/${suite.build_cat}/${path}"/>
         <property name="artifact_file" 
             value="suite-${name}-${suite.build_rev}.zip"/>
-        <copy file="target/${artifact_file}" todir="${artifact_dir}"/>  
-        <symlink resource="${artifact_dir}" link="${artifact_root}/${suite.build_name}" 
+
+        <mkdir dir="${artifact_dir}"/>
+        <copy file="target/${artifact_file}" todir="${artifact_dir}" overwrite="true"/>  
+        <symlink resource="${artifact_dir}" link="${artifact_dir}/suite-${name}-${suite.build_name}.zip" 
           overwrite="true" failonerror="false"/>
     </target>
 
