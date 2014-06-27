@@ -55,10 +55,23 @@ Common build targets.
             failifexecutionfails="false">
             <arg line="rev-parse --short HEAD"/>
         </exec>
-        <exec executable="git" outputproperty="suite.build_branch"
-            failifexecutionfails="false">
-            <arg line="rev-parse --abbrev-ref HEAD"/>
-        </exec>
+
+        <!-- initialize git branch, first grab from GIT_BRANCH variable, and 
+             if not set fall back to rev-parse -->
+        <condition property="suite.build_branch" value="${env.GIT_BRANCH}">
+          <isset property="env.GIT_BRANCH"/>
+        </condition>
+        <if>
+          <not>
+            <isset property="suite.build_branch"/>
+          </not>
+          <then>
+            <exec executable="git" outputproperty="suite.build_branch"
+              failifexecutionfails="false">
+              <arg line="rev-parse --abbrev-ref HEAD"/>
+            </exec>
+          </then>
+        </if>
     </target>
 
     <!-- 
