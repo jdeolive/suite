@@ -1,6 +1,6 @@
 <project name="update-versions" default="update">
  
-  <property name="rootdir" value="${ant.file.udate-verisons}/../../"/>
+  <property name="rootdir" value="${ant.file.update-verisons}/../../"/>
 
   <target name="check-args">
     <fail message="from version not specified" unless="from"/>
