@@ -4,6 +4,7 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.vfs.VFS;
 import org.geoserver.catalog.Catalog;
 import org.geoserver.catalog.DataStoreInfo;
 import org.geoserver.catalog.impl.CatalogImpl;
@@ -19,6 +20,8 @@ import org.junit.Test;
 import org.opengeo.app.JSONObj;
 import org.opengeo.app.JSONWrapper;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -30,6 +33,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -85,7 +90,7 @@ public class BundleExporterTest {
                 .featureType("stuff", "geom:Point:srid=4326,name:String,id:Integer", features);
 
         exporter = new BundleExporter(cat, new ExportOpts(cat.getWorkspaceByName("foo")));
-        exporter.export();
+        exporter.export(null);
 
         Path root = exporter.root();
 
@@ -121,7 +126,7 @@ public class BundleExporterTest {
                 .featureType("widgets", "geom:Point:srid=4326,name:String,id:Integer", widgets);
 
         exporter = new BundleExporter(cat, new ExportOpts(cat.getWorkspaceByName("foo")));
-        exporter.export();
+        exporter.export(null);
         Path root = exporter.root();
 
         assertPathExists(root, "workspaces");
@@ -155,12 +160,11 @@ public class BundleExporterTest {
 
     @Test
     public void testBundleInfo() throws Exception {
-
         catCreator.workspace("foo");
 
         exporter = new BundleExporter(cat,
             new ExportOpts(cat.getWorkspaceByName("foo")).name("blah"));
-        exporter.export();
+        exporter.export(null);
 
         assertPathExists(exporter.root(), "bundle.json");
 
@@ -170,7 +174,34 @@ public class BundleExporterTest {
             JSONObj obj = JSONWrapper.read(in).toObject();
             assertEquals("blah", obj.str("name"));
         }
+    }
 
+    @Test
+    public void testZipBundle() throws Exception {
+        catCreator.workspace("foo");
+        exporter = new BundleExporter(cat,
+            new ExportOpts(cat.getWorkspaceByName("foo")).name("blah"));
+
+        ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        exporter.export(bout);
+
+        ZipInputStream zin = new ZipInputStream(new ByteArrayInputStream(bout.toByteArray()));
+        ZipEntry entry = null;
+
+        boolean foundBundle = false;
+        boolean foundWorkspace = false;
+
+        while (((entry = zin.getNextEntry()) != null)) {
+            if (entry.getName().equals("bundle.json")) {
+                foundBundle = true;
+            }
+            if (entry.getName().endsWith("workspace.xml")) {
+                foundWorkspace = true;
+            }
+        }
+
+        assertTrue(foundBundle);
+        assertTrue(foundWorkspace);
     }
 
     void assertPathExists(Path root, String path) {

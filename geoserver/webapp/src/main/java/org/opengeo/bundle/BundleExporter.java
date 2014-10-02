@@ -19,6 +19,7 @@ import org.geoserver.catalog.util.CloseableIterator;
 import org.geoserver.config.GeoServerDataDirectory;
 import org.geoserver.config.util.XStreamPersister;
 import org.geoserver.config.util.XStreamPersisterFactory;
+import org.geoserver.data.util.IOUtils;
 import org.geoserver.ows.util.OwsUtils;
 import org.geoserver.platform.GeoServerResourceLoader;
 import org.geotools.data.DataAccessFactory;
@@ -33,7 +34,6 @@ import org.geotools.geopkg.GeoPackage;
 import org.geotools.geopkg.GeoPkgDataStoreFactory;
 import org.geotools.util.logging.Logging;
 import org.opengeo.GeoServerInfo;
-import org.opengeo.app.IO;
 import org.opengeo.app.JSONObj;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.FeatureType;
@@ -61,6 +61,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipOutputStream;
 
 import static org.geoserver.catalog.Predicates.*;
 
@@ -99,7 +100,7 @@ public class BundleExporter {
         return root;
     }
 
-    public void export() throws Exception {
+    public void export(OutputStream output) throws Exception {
         WorkspaceInfo workspace = options.workspace();
 
         persistBundleInfo();
@@ -112,6 +113,16 @@ public class BundleExporter {
                 StoreInfo store = sit.next();
 
                 persist(store);
+            }
+        }
+
+        if (output != null) {
+            ZipOutputStream zout = new ZipOutputStream(output);
+            try {
+                IOUtils.zipDirectory(root.toFile(), zout, null);
+            }
+            finally {
+                zout.flush();
             }
         }
     }
