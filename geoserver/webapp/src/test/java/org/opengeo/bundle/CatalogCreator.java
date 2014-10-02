@@ -15,6 +15,7 @@ import org.geoserver.importer.StyleGenerator;
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFactorySpi;
 import org.geotools.data.DataUtilities;
+import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureWriter;
 import org.geotools.data.Transaction;
 import org.geotools.data.h2.H2DataStoreFactory;
@@ -108,7 +109,7 @@ public class CatalogCreator {
 
             Map<String,Serializable> map = Maps.newHashMap();
             map.put(H2DataStoreFactory.DBTYPE.key, "h2");
-            map.put(H2DataStoreFactory.DATABASE.key, new File(dir, name +".db"));
+            map.put(H2DataStoreFactory.DATABASE.key, new File(dir, name +".db").getPath());
             map.put(H2DataStoreFactory.NAMESPACE.key, namespace.getURI());
 
             return dataStore(name, map, new H2DataStoreFactory());
@@ -144,6 +145,7 @@ public class CatalogCreator {
             throws IOException {
             return new FeatureTypeCreator(name, spec, data, this);
         }
+
     }
 
     static class FeatureTypeCreator extends Creator {
@@ -180,7 +182,10 @@ public class CatalogCreator {
             CatalogBuilder builder = builder();
             builder.setStore(parent.store);
 
-            FeatureTypeInfo featureType = builder.buildFeatureType(dataStore.getFeatureSource(name));
+            FeatureSource source = dataStore.getFeatureSource(name);
+            FeatureTypeInfo featureType = builder.buildFeatureType(source);
+            builder.setupBounds(featureType, source);
+
             LayerInfo layer = builder.buildLayer(featureType);
 
             StyleGenerator styleGen = new StyleGenerator(catalog);
@@ -194,6 +199,10 @@ public class CatalogCreator {
 
             catalog.add(featureType);
             catalog.add(layer);
+        }
+
+        public DataStoreCreator store() {
+            return parent;
         }
     }
 }

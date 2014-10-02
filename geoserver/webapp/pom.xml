@@ -22,6 +22,7 @@
 
   <properties>
     <gs.version>2.6-SNAPSHOT</gs.version>
+    <gt.version>12-SNAPSHOT</gt.version>
     <jetty.version>7.6.13.v20130916</jetty.version>
     <spring.version>3.2.10.RELEASE</spring.version>
     <spring.security.version>3.2.4.RELEASE</spring.security.version>
@@ -166,6 +167,11 @@
       <groupId>org.opengeo</groupId>
       <artifactId>gs-ysld</artifactId>
       <version>${gs.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.geotools</groupId>
+      <artifactId>gt-geopkg</artifactId>
+      <version>${gt.version}</version>
     </dependency>
     <dependency>
       <groupId>org.geoserver</groupId>
