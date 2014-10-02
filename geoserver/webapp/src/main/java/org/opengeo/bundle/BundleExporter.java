@@ -1,10 +1,8 @@
 package org.opengeo.bundle;
 
 import com.google.common.collect.Maps;
-import com.google.common.io.PatternFilenameFilter;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
 import org.geoserver.catalog.Catalog;
 import org.geoserver.catalog.CatalogInfo;
 import org.geoserver.catalog.CoverageInfo;
@@ -17,17 +15,14 @@ import org.geoserver.catalog.ResourceInfo;
 import org.geoserver.catalog.StoreInfo;
 import org.geoserver.catalog.StyleInfo;
 import org.geoserver.catalog.WorkspaceInfo;
-import org.geoserver.catalog.impl.DataStoreInfoImpl;
 import org.geoserver.catalog.util.CloseableIterator;
 import org.geoserver.config.GeoServerDataDirectory;
 import org.geoserver.config.util.XStreamPersister;
 import org.geoserver.config.util.XStreamPersisterFactory;
 import org.geoserver.ows.util.OwsUtils;
 import org.geoserver.platform.GeoServerResourceLoader;
-import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.geotools.data.DataAccessFactory;
 import org.geotools.data.DataAccessFactory.Param;
-import org.geotools.data.DataStoreFactorySpi;
 import org.geotools.data.DataUtilities;
 import org.geotools.data.FileDataStoreFactorySpi;
 import org.geotools.data.property.PropertyDataStoreFactory;
@@ -37,7 +32,9 @@ import org.geotools.geopkg.FeatureEntry;
 import org.geotools.geopkg.GeoPackage;
 import org.geotools.geopkg.GeoPkgDataStoreFactory;
 import org.geotools.util.logging.Logging;
+import org.opengeo.GeoServerInfo;
 import org.opengeo.app.IO;
+import org.opengeo.app.JSONObj;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.FeatureType;
 import org.opengis.feature.type.GeometryDescriptor;
@@ -45,7 +42,6 @@ import org.opengis.filter.Filter;
 import org.vfny.geoserver.util.DataStoreUtils;
 
 import java.io.BufferedOutputStream;
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
@@ -57,7 +53,6 @@ import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -104,7 +99,10 @@ public class BundleExporter {
         return root;
     }
 
-    public void export(WorkspaceInfo workspace) throws Exception {
+    public void export() throws Exception {
+        WorkspaceInfo workspace = options.workspace();
+
+        persistBundleInfo();
         persist(workspace);
 
         try (
@@ -116,6 +114,33 @@ public class BundleExporter {
                 persist(store);
             }
         }
+    }
+
+    void persistBundleInfo() throws IOException {
+        JSONObj obj = new JSONObj();
+        obj.put("name", options.name());
+
+        JSONObj meta = obj.putObject("metadata");
+        try {
+            GeoServerInfo info = new GeoServerInfo(catalog.getResourceLoader());
+
+            GeoServerInfo.BuildInfo suiteInfo = info.suite();
+            meta.putObject("suite").put("version", suiteInfo.version()).put("revision", suiteInfo.revision());
+
+            GeoServerInfo.BuildInfo gsInfo = info.geoserver();
+            meta.putObject("geoserver").put("version", suiteInfo.version()).put("revision", suiteInfo.revision());
+
+        } catch (Exception e) {
+            throw new IOException(e);
+        }
+
+        try (
+            OutputStream out = new BufferedOutputStream(new FileOutputStream(root.resolve("bundle.json").toFile()));
+        ) {
+            obj.write(out);
+            out.flush();
+        }
+
     }
 
     void persist(WorkspaceInfo ws) throws IOException {

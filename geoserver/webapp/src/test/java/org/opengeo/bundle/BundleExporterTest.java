@@ -16,6 +16,8 @@ import org.geotools.util.logging.Logging;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.opengeo.app.JSONObj;
+import org.opengeo.app.JSONWrapper;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -58,8 +60,6 @@ public class BundleExporterTest {
         cat.addListener(new GeoServerPersister(resourceLoader, new XStreamPersisterFactory().createXMLPersister()));
 
         catCreator = new CatalogCreator(cat);
-        exporter = new BundleExporter(cat, new ExportOpts());
-        System.out.println(exporter.root());
     }
 
     @After
@@ -84,7 +84,8 @@ public class BundleExporterTest {
             .property("bar")
                 .featureType("stuff", "geom:Point:srid=4326,name:String,id:Integer", features);
 
-        exporter.export(cat.getWorkspaceByName("foo"));
+        exporter = new BundleExporter(cat, new ExportOpts(cat.getWorkspaceByName("foo")));
+        exporter.export();
 
         Path root = exporter.root();
 
@@ -119,7 +120,8 @@ public class BundleExporterTest {
                 .featureType("stuff", "geom:Point:srid=4326,name:String,id:Integer", stuff).store()
                 .featureType("widgets", "geom:Point:srid=4326,name:String,id:Integer", widgets);
 
-        exporter.export(cat.getWorkspaceByName("foo"));
+        exporter = new BundleExporter(cat, new ExportOpts(cat.getWorkspaceByName("foo")));
+        exporter.export();
         Path root = exporter.root();
 
         assertPathExists(root, "workspaces");
@@ -149,6 +151,26 @@ public class BundleExporterTest {
 
         assertEquals("geopkg", store.getConnectionParameters().get("dbtype"));
         assertEquals("workspaces/foo/data/bar.gpkg", store.getConnectionParameters().get("database"));
+    }
+
+    @Test
+    public void testBundleInfo() throws Exception {
+
+        catCreator.workspace("foo");
+
+        exporter = new BundleExporter(cat,
+            new ExportOpts(cat.getWorkspaceByName("foo")).name("blah"));
+        exporter.export();
+
+        assertPathExists(exporter.root(), "bundle.json");
+
+        try (
+            FileInputStream in =  new FileInputStream(exporter.root().resolve("bundle.json").toFile());
+        ) {
+            JSONObj obj = JSONWrapper.read(in).toObject();
+            assertEquals("blah", obj.str("name"));
+        }
+
     }
 
     void assertPathExists(Path root, String path) {
