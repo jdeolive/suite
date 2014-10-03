@@ -246,6 +246,11 @@ Common build targets.
      <echo message="${mvn.exe} ${mvn.flags} ${mvn_settings} ${mvn_offline} ${flags} ${goals}"/>
      <exec executable="${mvn.exe}" dir="${dir}" failonerror="true">
         <arg line="${mvn_settings} ${mvn_offline} ${mvn.flags} ${flags} ${goals}"/>
+        <arg line="-Dsuite.version=${suite.version}"/>
+        <arg line="-Dsuite.build_branch=${suite.build_branch}"/>
+        <arg line="-Dsuite.build_rev=${suite.build_rev}"/>
+        <arg line="-Dsuite.build_date='${suite.build_date}'"/>
+        <arg line="-Dsuite.build_prettydate='${suite.build_prettydate}'"/>
      </exec>
   </target>
 

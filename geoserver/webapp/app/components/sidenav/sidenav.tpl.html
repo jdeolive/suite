@@ -1,7 +1,7 @@
 <div id="sidebar-wrapper">
   <ul class="sidebar-nav" ng-show="session.active">
     <li class="sidebar-toggle">
-      <a href="" ng-click="toggleSide=!toggleSide" id="menu-toggle"
+      <a href="" ng-click="toggleSide=!toggleSide;onResize();" id="menu-toggle"
         ng-class="{'f-right': !toggleSide}"
         alt="{{toggleSide ? 'Open' : 'Close'}} sidebar"
         title="{{toggleSide ? 'Open' : 'Close'}} sidebar">
@@ -35,7 +35,7 @@
           ng-init="toggleWkspc=false">
           <a href="" ng-click="toggleWkspc=!toggleWkspc;
             onWorkspaceClick(workspace);" alt="{{ workspace.name }}"
-            title="{{ workspace.name }}>
+            title="{{ workspace.name }}">
             <i ng-class="{'icon-folder': !toggleWkspc, 'icon-folder-open':
               toggleWkspc,}"></i> <span class="txt">{{ workspace.name }}</span>
           </a>

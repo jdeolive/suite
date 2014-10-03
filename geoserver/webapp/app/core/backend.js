@@ -34,8 +34,15 @@ angular.module('gsApp.core.backend',[])
         },
 
         import: {
-          getUrl: function(workspace) {
+          getImportUrl: function(workspace) {
             return importRoot + workspace;
+          },
+          update: function(workspace, id, content) {
+            return http({
+              method: 'PUT',
+              url: importRoot + workspace + '/' + id,
+              data: content
+            });
           }
         },
 
@@ -77,6 +84,35 @@ angular.module('gsApp.core.backend',[])
             isArray: true
           }
         }),
+
+        workspace: {
+          get: function(workspace) {
+            return http({
+              method: 'GET',
+              url: apiRoot+'/workspaces/'+workspace
+            });
+          },
+          create: function(workspace, content) {
+            return http({
+              method: 'POST',
+              url: apiRoot+'/workspaces',
+              data: content
+            });
+          },
+          update: function(workspace, patch) {
+            return http({
+              method: 'PUT',
+              url: apiRoot+'/workspaces/'+workspace,
+              data: patch
+            });
+          },
+          delete: function(workspace) {
+            return http({
+              method: 'DELETE',
+              url: apiRoot+'/workspaces/'+workspace
+            });
+          }
+        },
 
         // Stubbing in for now
         datastores: {
@@ -215,6 +251,19 @@ angular.module('gsApp.core.backend',[])
                '&srs=EPSG:4326&format=application/openlayers';
               return url;
             }
+          }
+        },
+
+        icons: {
+          get: function(workspace) {
+            return http({
+              method: 'GET',
+              url: apiRoot+'/icons/'+workspace
+            });
+          },
+          getIconURL: function(workspace, iconfile) {
+            var url = gsRoot+'/'+workspace+'/styles/'+iconfile;
+            return url;
           }
         }
       };
