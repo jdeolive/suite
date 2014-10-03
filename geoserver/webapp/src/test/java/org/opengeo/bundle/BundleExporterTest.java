@@ -40,43 +40,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-public class BundleExporterTest {
-
-    Path dataDir;
-
-    Catalog cat;
-    CatalogCreator catCreator;
+public class BundleExporterTest extends BundleTestSupport {
 
     BundleExporter exporter;
-
-    @Before
-    public void quietLogging() {
-        Logger log = Logging.getLogger("org.geoserver.platform");
-        log.setLevel(Level.OFF);
-    }
-
-    @Before
-    public void setUp() throws IOException {
-        dataDir = Files.createTempDirectory(Paths.get("target"), "bundle");
-        GeoServerResourceLoader resourceLoader = new GeoServerResourceLoader(dataDir.toFile());
-
-        cat = new CatalogImpl();
-        cat.setResourceLoader(resourceLoader);
-        cat.addListener(new GeoServerPersister(resourceLoader, new XStreamPersisterFactory().createXMLPersister()));
-
-        catCreator = new CatalogCreator(cat);
-    }
-
-    @After
-    public void tearDown() throws IOException {
-        try {
-            cat.dispose();
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-        FileUtils.deleteDirectory(dataDir.toFile());
-    }
 
     @Test
     public void testSimple() throws Exception {
@@ -85,7 +51,7 @@ public class BundleExporterTest {
         features.add(featureData("geom", geo("POINT(1 1)"), "name", "one", "id", 1));
         features.add(featureData("geom", geo("POINT(2 2)"), "name", "two", "id", 2));
 
-        catCreator.workspace("foo")
+        new CatalogCreator(cat).workspace("foo")
             .property("bar")
                 .featureType("stuff", "geom:Point:srid=4326,name:String,id:Integer", features);
 
@@ -93,10 +59,12 @@ public class BundleExporterTest {
         exporter.export(null);
 
         Path root = exporter.root();
+        System.out.println(root);
 
         assertPathExists(root, "workspaces");
         assertPathExists(root, "workspaces/foo");
         assertPathExists(root, "workspaces/foo/workspace.xml");
+        assertPathExists(root, "workspaces/foo/namespace.xml");
         assertPathExists(root, "workspaces/foo/bar");
         assertPathExists(root, "workspaces/foo/bar/datastore.xml");
         assertPathExists(root, "workspaces/foo/bar/stuff");
@@ -106,6 +74,12 @@ public class BundleExporterTest {
         assertPathExists(root, "workspaces/foo/styles/stuff.xml");
         assertPathExists(root, "workspaces/foo/styles/stuff.sld");
         assertPathExists(root, "workspaces/foo/data/bar/stuff.properties");
+
+        // ensure the exported store config points to the properties
+        DataStoreInfo store = new XStreamPersisterFactory().createXMLPersister()
+                .load(new FileInputStream(root.resolve("workspaces/foo/bar/datastore.xml").toFile()), DataStoreInfo.class);
+
+        assertEquals("file:workspaces/foo/data/bar", store.getConnectionParameters().get("directory"));
     }
 
     @Test
@@ -120,7 +94,7 @@ public class BundleExporterTest {
         widgets.add(featureData("geom", geo("POINT(1 1)"), "name", "anvil", "id", 1));
         widgets.add(featureData("geom", geo("POINT(2 2)"), "name", "dynamite", "id", 2));
 
-        catCreator.workspace("foo")
+        new CatalogCreator(cat).workspace("foo")
             .database("bar")
                 .featureType("stuff", "geom:Point:srid=4326,name:String,id:Integer", stuff).store()
                 .featureType("widgets", "geom:Point:srid=4326,name:String,id:Integer", widgets);
@@ -132,6 +106,7 @@ public class BundleExporterTest {
         assertPathExists(root, "workspaces");
         assertPathExists(root, "workspaces/foo");
         assertPathExists(root, "workspaces/foo/workspace.xml");
+        assertPathExists(root, "workspaces/foo/namespace.xml");
         assertPathExists(root, "workspaces/foo/bar/datastore.xml");
         assertPathExists(root, "workspaces/foo/bar/stuff/featuretype.xml");
         assertPathExists(root, "workspaces/foo/bar/stuff/layer.xml");
@@ -155,12 +130,12 @@ public class BundleExporterTest {
             .load(new FileInputStream(root.resolve("workspaces/foo/bar/datastore.xml").toFile()), DataStoreInfo.class);
 
         assertEquals("geopkg", store.getConnectionParameters().get("dbtype"));
-        assertEquals("workspaces/foo/data/bar.gpkg", store.getConnectionParameters().get("database"));
+        assertEquals("file:workspaces/foo/data/bar.gpkg", store.getConnectionParameters().get("database"));
     }
 
     @Test
     public void testBundleInfo() throws Exception {
-        catCreator.workspace("foo");
+        new CatalogCreator(cat).workspace("foo");
 
         exporter = new BundleExporter(cat,
             new ExportOpts(cat.getWorkspaceByName("foo")).name("blah"));
@@ -178,7 +153,7 @@ public class BundleExporterTest {
 
     @Test
     public void testZipBundle() throws Exception {
-        catCreator.workspace("foo");
+        new CatalogCreator(cat).workspace("foo");
         exporter = new BundleExporter(cat,
             new ExportOpts(cat.getWorkspaceByName("foo")).name("blah"));
 
@@ -207,22 +182,4 @@ public class BundleExporterTest {
     void assertPathExists(Path root, String path) {
         assertTrue(root.resolve(path).toFile().exists());
     }
-
-    Map<String,Object> featureData(Object... kvp) {
-        if (kvp.length % 2 != 0) {
-            throw new IllegalArgumentException("method takes even number of arguments");
-        }
-
-        LinkedHashMap<String,Object> map = new LinkedHashMap<>();
-        for (int i = 0; i < kvp.length; i+=2) {
-            map.put(kvp[i].toString(), kvp[i+1]);
-        }
-
-        return map;
-    }
-
-    Geometry geo(String wkt) throws ParseException {
-        return new WKTReader().read(wkt);
-    }
-
 }

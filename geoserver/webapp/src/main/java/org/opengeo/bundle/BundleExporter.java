@@ -11,6 +11,7 @@ import org.geoserver.catalog.DataStoreInfo;
 import org.geoserver.catalog.FeatureTypeInfo;
 import org.geoserver.catalog.Info;
 import org.geoserver.catalog.LayerInfo;
+import org.geoserver.catalog.NamespaceInfo;
 import org.geoserver.catalog.ResourceInfo;
 import org.geoserver.catalog.StoreInfo;
 import org.geoserver.catalog.StyleInfo;
@@ -34,6 +35,7 @@ import org.geotools.geopkg.GeoPackage;
 import org.geotools.geopkg.GeoPkgDataStoreFactory;
 import org.geotools.util.logging.Logging;
 import org.opengeo.GeoServerInfo;
+import org.opengeo.app.IO;
 import org.opengeo.app.JSONObj;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.FeatureType;
@@ -43,9 +45,12 @@ import org.vfny.geoserver.util.DataStoreUtils;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.MalformedURLException;
@@ -61,6 +66,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import static org.geoserver.catalog.Predicates.*;
@@ -94,6 +100,8 @@ public class BundleExporter {
 
         // config serializer
         xsp = new XStreamPersisterFactory().createXMLPersister();
+        xsp.setExcludeIds();
+        xsp.setReferenceByName(true);
     }
 
     public Path root() {
@@ -101,6 +109,7 @@ public class BundleExporter {
     }
 
     public void export(OutputStream output) throws Exception {
+        //TODO: layer groups
         WorkspaceInfo workspace = options.workspace();
 
         persistBundleInfo();
@@ -125,6 +134,10 @@ public class BundleExporter {
                 zout.flush();
             }
         }
+    }
+
+    public void cleanup() throws IOException {
+        FileUtils.deleteDirectory(root.toFile());
     }
 
     void persistBundleInfo() throws IOException {
@@ -157,6 +170,11 @@ public class BundleExporter {
     void persist(WorkspaceInfo ws) throws IOException {
         File dir = exportDataDir.get(ws).dir();
         persist(ws, exportDataDir.config(ws).file());
+
+        NamespaceInfo ns = catalog.getNamespaceByPrefix(ws.getName());
+        if (ns != null) {
+            persist(ns, exportDataDir.config(ns).file());
+        }
     }
 
     void persist(StoreInfo s) throws IOException {
@@ -165,6 +183,7 @@ public class BundleExporter {
         // create a "data" directory under the workspace
         File wsDataDir = exportDataDir.get(s.getWorkspace()).get("data").dir();
 
+        //TODO: wms store
         File file = null;
         if (s instanceof CoverageStoreInfo) {
             file = exportDataDir.config((CoverageStoreInfo)s).file();
@@ -190,17 +209,17 @@ public class BundleExporter {
                 // update the store configuration to point to the newly copied files
                 File newFileRef = null;
                 if (dataFile.file.isDirectory()) {
-                    newFileRef = wsDataDir;
+                    newFileRef = storeDataDir;
                 }
                 else {
-                    newFileRef = new File(wsDataDir, dataFile.file.getName());
+                    newFileRef = new File(storeDataDir, dataFile.file.getName());
                 }
 
                 Path newPath = root.relativize(newFileRef.toPath());
 
                 // TODO: convert back to whatever format the parameter expects
                 DataStoreInfo clone = copy(ds, catalog.getFactory().createDataStore(), DataStoreInfo.class);
-                clone.getConnectionParameters().put(dataFile.param.key, newPath.toString());
+                clone.getConnectionParameters().put(dataFile.param.key, "file:"+newPath.toString());
 
                 s = clone;
             }
@@ -222,7 +241,7 @@ public class BundleExporter {
                 Map<String,Serializable> params = Maps.newHashMap();
 
                 params.put(GeoPkgDataStoreFactory.DBTYPE.key, "geopkg");
-                params.put(GeoPkgDataStoreFactory.DATABASE.key, root.relativize(gpkg.getFile().toPath()).toString());
+                params.put(GeoPkgDataStoreFactory.DATABASE.key, "file:"+root.relativize(gpkg.getFile().toPath()).toString());
                 params.put(GeoPkgDataStoreFactory.NAMESPACE.key,
                     (Serializable) GeoPkgDataStoreFactory.NAMESPACE.lookUp(oldParams));
 
