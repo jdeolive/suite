@@ -57,20 +57,8 @@ public class ImportController extends AppController {
         // get the directory for uploaded files, relative to the workspace
         File uploadsDir = dataDir().get(ws).get("uploads").dir();
 
-        // create an uploader to handle the form upload
-        DiskFileItemFactory diskFactory = new DiskFileItemFactory();
-        diskFactory.setSizeThreshold(1024*1024*256); // TODO: make this configurable
-
-        ServletFileUpload upload = new ServletFileUpload(diskFactory);
-
-        // filter out only file fields
-        Iterator<FileItem> files = Iterables.filter(upload.parseRequest(request), new Predicate<FileItem>() {
-            @Override
-            public boolean apply(@Nullable FileItem input) {
-                return !input.isFormField() && input.getName() != null;
-            }
-        }).iterator();
-
+        // get the uploaded files
+        Iterator<FileItem> files = doFileUpload(request);
         if (!files.hasNext()) {
             throw new BadRequestException("Request must contain a single file");
         }
