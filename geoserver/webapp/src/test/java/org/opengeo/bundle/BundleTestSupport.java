@@ -19,7 +19,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -74,6 +76,22 @@ public class BundleTestSupport {
         }
 
         return map;
+    }
+
+    protected List<Map<String,Object>> stuff() throws Exception {
+        List<Map<String,Object>> stuff = new ArrayList<>();
+        stuff.add(featureData("geom", geo("POINT(0 0)"), "name", "zero", "id", 0));
+        stuff.add(featureData("geom", geo("POINT(1 1)"), "name", "one", "id", 1));
+        stuff.add(featureData("geom", geo("POINT(2 2)"), "name", "two", "id", 2));
+        return stuff;
+    }
+
+    protected List<Map<String,Object>> widgets() throws Exception {
+        List<Map<String,Object>> widgets = new ArrayList<>();
+        widgets.add(featureData("geom", geo("POINT(0 0)"), "name", "bomb", "id", 0));
+        widgets.add(featureData("geom", geo("POINT(1 1)"), "name", "anvil", "id", 1));
+        widgets.add(featureData("geom", geo("POINT(2 2)"), "name", "dynamite", "id", 2));
+        return widgets;
     }
 
     protected Geometry geo(String wkt) throws ParseException {

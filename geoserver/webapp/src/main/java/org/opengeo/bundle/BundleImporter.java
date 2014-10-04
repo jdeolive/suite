@@ -14,7 +14,11 @@ import org.geoserver.config.util.XStreamPersister;
 import org.geoserver.config.util.XStreamPersisterFactory;
 import org.geoserver.data.util.IOUtils;
 import org.geoserver.platform.GeoServerResourceLoader;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileFilter;
@@ -22,8 +26,11 @@ import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Imports GeoServer config/data bundle.
@@ -47,6 +54,9 @@ public class BundleImporter {
     Catalog catalog;
     ImportOpts options;
 
+    WorkspaceInfo workspace;
+    NamespaceInfo namespace;
+
     Path root;
     GeoServerDataDirectory importDataDir;
     GeoServerDataDirectory targetDataDir;
@@ -56,6 +66,8 @@ public class BundleImporter {
     public BundleImporter(Catalog catalog, ImportOpts options) throws IOException {
         this.catalog = catalog;
         this.options = options;
+        workspace = options.workspace();
+        namespace = catalog.getNamespaceByPrefix(workspace.getName());
 
         // temp directory to unpack
         root = Files.createTempDirectory(null);
@@ -69,26 +81,28 @@ public class BundleImporter {
         xsp.setCatalog(catalog);
     }
 
-    public void run(InputStream input) throws IOException {
-        // unpack
-        IOUtils.decompress(input, root.toFile());
-
-        // global styles
-        File styleRoot = root.resolve("styles").toFile();
-        if (styleRoot.exists()) {
-            loadStyles(styleRoot);
+    public Path unzip(Path zip) throws IOException {
+        try (
+            InputStream in = new BufferedInputStream(new FileInputStream(zip.toFile()));
+        ) {
+            IOUtils.decompress(in, root.toFile());
         }
+        return root;
+    }
 
-        // workspaces
-        File wsRoot = root.resolve("workspaces").toFile();
-        for (File dir : wsRoot.listFiles(DIRECTORY)) {
-            loadWorkspace(dir);
-        }
+    public void run() throws IOException {
+        loadWorkspace(root.toFile());
+//        // workspaces
+//        File wsRoot = root.resolve("workspaces").toFile();
+//        for (File dir : wsRoot.listFiles(DIRECTORY)) {
+//            loadWorkspace(dir);
+//        }
     }
 
     void loadStyles(File styleDir) throws IOException {
         for (File f : styleDir.listFiles(CONFIG_FILE)) {
             StyleInfo s = depersist(f, StyleInfo.class);
+            s.setWorkspace(workspace);
 
             //TODO: copy over sld file?
             catalog.add(s);
@@ -96,16 +110,16 @@ public class BundleImporter {
     }
 
     void loadWorkspace(File wsDir) throws IOException {
-        WorkspaceInfo ws = depersist(new File(wsDir, "workspace.xml"), WorkspaceInfo.class);
-        catalog.add(ws);
-
-        NamespaceInfo ns = depersist(new File(wsDir, "namespace.xml"), NamespaceInfo.class);
-        catalog.add(ns);
+//        WorkspaceInfo ws = depersist(new File(wsDir, "workspace.xml"), WorkspaceInfo.class);
+//        catalog.add(ws);
+//
+//        NamespaceInfo ns = depersist(new File(wsDir, "namespace.xml"), NamespaceInfo.class);
+//        catalog.add(ns);
 
         // data directory
         File dataDir = new File(wsDir, "data");
         if (dataDir.exists()) {
-            FileUtils.copyDirectory(dataDir, targetDataDir.get(ws, "data").dir());
+            FileUtils.copyDirectory(dataDir, targetDataDir.get(workspace, "data").dir());
         }
 
         // styles
@@ -118,11 +132,11 @@ public class BundleImporter {
 
         // stores
         for (File dir : wsDir.listFiles(DIRECTORY)) {
-            loadStore(dir, wsDir, ws, ns);
+            loadStore(dir, wsDir);
         }
     }
 
-    void loadStore(File storeDir, File wsDir, WorkspaceInfo ws, NamespaceInfo ns) throws IOException {
+    void loadStore(File storeDir, File wsDir) throws IOException {
         //TODO: wms store
         File file = new File(storeDir, "datastore.xml");
         if (!file.exists()) {
@@ -136,16 +150,36 @@ public class BundleImporter {
         }
 
         StoreInfo s = depersist(file, StoreInfo.class);
-        s.setWorkspace(ws);
+        s.setWorkspace(workspace);
+        updateConnectionParams(s);
         catalog.add(s);
 
         for (File dir : storeDir.listFiles(DIRECTORY)) {
-            loadResource(dir, s, ns);
+            loadResource(dir, s);
         }
 
     }
 
-    void loadResource(File resourceDir, StoreInfo s, NamespaceInfo ns) throws IOException {
+    void updateConnectionParams(StoreInfo s) {
+        // update workspace relative paths
+        // update namespace uri
+        LinkedHashMap<String,Serializable> map = new LinkedHashMap<>();
+        for (Map.Entry<String,Serializable> e : s.getConnectionParameters().entrySet()) {
+            Serializable value = e.getValue();
+            if (value instanceof String && value.toString().contains("%WORKSPACE%")) {
+                value = value.toString().replace("%WORKSPACE%", "workspaces/"+workspace.getName());
+            }
+            if ("namespace".equalsIgnoreCase(e.getKey())) {
+                value = namespace.getName();
+            }
+            map.put(e.getKey(), value);
+        }
+
+        s.getConnectionParameters().clear();
+        s.getConnectionParameters().putAll(map);
+    }
+
+    void loadResource(File resourceDir, StoreInfo s) throws IOException {
         // TODO: wms layer
         File file = new File(resourceDir, "featuretype.xml");
         if (!file.exists()) {
@@ -160,12 +194,63 @@ public class BundleImporter {
 
         ResourceInfo r = depersist(file, ResourceInfo.class);
         r.setStore(s);
-        r.setNamespace(ns);
+        r.setNamespace(namespace);
         catalog.add(r);
 
-        LayerInfo l = depersist(new File(resourceDir, "layer.xml"), LayerInfo.class);
+        File layerFile = new File(resourceDir, "layer.xml");
+        LayerInfo l = depersist(layerFile, LayerInfo.class);
         l.setResource(r);
+
+        // have to do a bit more hacking to get the style to resolve properly since it's reference is
+        // encoded by name, basically parse the layer.xml and pull out the name and resolve it
+        // manually
+        resolveStyles(l, layerFile);
+
         catalog.add(l);
+    }
+
+    void resolveStyles(LayerInfo l, File layerFile) throws IOException {
+        Document doc = null;
+        try {
+            doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(layerFile);
+        }
+        catch(Exception e) {
+            throw new IOException(e);
+        }
+
+        if (l.getDefaultStyle() == null) {
+            NodeList defaultStyles = doc.getDocumentElement().getElementsByTagName("defaultStyle");
+            if (defaultStyles.getLength() > 0) {
+                String styleName = pullStyleName((Element) defaultStyles.item(0));
+                if (styleName != null) {
+                    l.setDefaultStyle(catalog.getStyleByName(workspace, styleName));
+                }
+            }
+        }
+
+        NodeList styles = doc.getDocumentElement().getElementsByTagName("styles");
+        if (styles.getLength() > 0) {
+            l.getStyles().clear();
+            for (int i = 0; i < styles.getLength(); i++) {
+                Element e = (Element) styles.item(i);
+                String styleName = pullStyleName(e);
+                if (styleName != null) {
+                    StyleInfo style = catalog.getStyleByName(workspace, styleName);
+                    if (style != null) {
+                        l.getStyles().add(style);
+                    }
+                }
+            }
+        }
+    }
+
+    String pullStyleName(Element e) {
+        NodeList names = e.getElementsByTagName("name");
+        if (names.getLength() > 0) {
+            String styleName = names.item(0).getTextContent();
+            return styleName;
+        }
+        return null;
     }
 
     <T> T depersist(File file, Class<T> type) throws IOException {

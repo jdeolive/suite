@@ -151,6 +151,8 @@ public class CatalogCreator {
     static class FeatureTypeCreator extends Creator {
 
         DataStoreCreator parent;
+        FeatureTypeInfo featureType;
+        LayerInfo layer;
 
         FeatureTypeCreator(String name, String spec, Iterable<Map<String,Object>> data, DataStoreCreator parent)
             throws IOException {
@@ -183,22 +185,44 @@ public class CatalogCreator {
             builder.setStore(parent.store);
 
             FeatureSource source = dataStore.getFeatureSource(name);
-            FeatureTypeInfo featureType = builder.buildFeatureType(source);
+            featureType = builder.buildFeatureType(source);
             builder.setupBounds(featureType, source);
 
-            LayerInfo layer = builder.buildLayer(featureType);
+            catalog.add(featureType);
 
-            StyleGenerator styleGen = new StyleGenerator(catalog);
-            styleGen.setWorkspace( parent.parent.workspace);
+        }
 
-            StyleInfo style = styleGen.createStyle(featureType);
+        public FeatureTypeCreator layer() throws IOException {
+            return layer(false);
+        }
 
+        public FeatureTypeCreator layer(boolean globalStyle) throws IOException {
+            layer = builder().buildLayer(featureType);
+
+            StyleInfo style = newStyle(globalStyle);
             layer.setDefaultStyle(style);
 
             catalog.add(style);
-
-            catalog.add(featureType);
             catalog.add(layer);
+
+            return this;
+        }
+
+        public FeatureTypeCreator style(boolean global) throws IOException {
+            StyleInfo style = newStyle(global);
+            catalog.add(style);
+
+            layer.getStyles().add(style);
+            return this;
+        }
+
+        StyleInfo newStyle(boolean global) throws IOException {
+            StyleGenerator styleGen = new StyleGenerator(catalog);
+            if (!global) {
+                styleGen.setWorkspace(parent.parent.workspace);
+            }
+
+            return styleGen.createStyle(featureType);
         }
 
         public DataStoreCreator store() {

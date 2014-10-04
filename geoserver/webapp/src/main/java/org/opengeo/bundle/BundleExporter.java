@@ -1,9 +1,12 @@
 package org.opengeo.bundle;
 
 import com.google.common.collect.Maps;
+import com.thoughtworks.xstream.converters.MarshallingContext;
+import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.geoserver.catalog.Catalog;
+import org.geoserver.catalog.CatalogBuilder;
 import org.geoserver.catalog.CatalogInfo;
 import org.geoserver.catalog.CoverageInfo;
 import org.geoserver.catalog.CoverageStoreInfo;
@@ -35,7 +38,6 @@ import org.geotools.geopkg.GeoPackage;
 import org.geotools.geopkg.GeoPkgDataStoreFactory;
 import org.geotools.util.logging.Logging;
 import org.opengeo.GeoServerInfo;
-import org.opengeo.app.IO;
 import org.opengeo.app.JSONObj;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.FeatureType;
@@ -45,12 +47,9 @@ import org.vfny.geoserver.util.DataStoreUtils;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.MalformedURLException;
@@ -66,7 +65,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import static org.geoserver.catalog.Predicates.*;
@@ -80,22 +78,28 @@ public class BundleExporter {
 
     Catalog catalog;
 
-    Path root;
+    Path temp, work;
+
     GeoServerDataDirectory sourceDataDir;
     GeoServerDataDirectory exportDataDir;
 
     XStreamPersister xsp;
 
     ExportOpts options;
+    WorkspaceInfo workspace;
 
     public BundleExporter(Catalog catalog, ExportOpts options) throws IOException {
         this.catalog = catalog;
         this.options = options;
+        this.workspace = options.workspace();
 
         // create a temp directory for the export
-        root = Files.createTempDirectory(null);
+        temp = Files.createTempDirectory(null);
+        work = temp.resolve("work");
+        work.toFile().mkdirs();
+
         sourceDataDir = new GeoServerDataDirectory(catalog.getResourceLoader());
-        exportDataDir = new GeoServerDataDirectory(new GeoServerResourceLoader(root.toFile()));
+        exportDataDir = new GeoServerDataDirectory(new GeoServerResourceLoader(work.toFile()));
         //exportDataDir.setConfigFileExtension("json");
 
         // config serializer
@@ -105,18 +109,26 @@ public class BundleExporter {
     }
 
     public Path root() {
-        return root;
+        return exportDataDir.get(workspace).dir().toPath();
     }
 
-    public void export(OutputStream output) throws Exception {
+    public Path work() {
+        return work;
+    }
+
+    /**
+     * Runs the export.
+     *
+     * @return The path pointing to the root directory of the bundle.
+     */
+    public Path run() throws Exception {
         //TODO: layer groups
-        WorkspaceInfo workspace = options.workspace();
 
         persistBundleInfo();
         persist(workspace);
 
         try (
-            CloseableIterator<StoreInfo> sit = catalog.list(StoreInfo.class, equal("workspace", workspace))
+                CloseableIterator<StoreInfo> sit = catalog.list(StoreInfo.class, equal("workspace", workspace))
         ) {
             while (sit.hasNext()) {
                 StoreInfo store = sit.next();
@@ -125,19 +137,38 @@ public class BundleExporter {
             }
         }
 
-        if (output != null) {
-            ZipOutputStream zout = new ZipOutputStream(output);
+        return root();
+    }
+
+    /**
+     * Packages up the export as a zip file.
+     *
+     * @return The path pointing to the zip file.
+     */
+    public Path zip() throws IOException {
+        Path zip = temp.resolve(options.name()+".zip");
+        try (
+            OutputStream out =
+                new BufferedOutputStream(new FileOutputStream(zip.toFile()));
+        ) {
+            ZipOutputStream zout = new ZipOutputStream(out);
             try {
-                IOUtils.zipDirectory(root.toFile(), zout, null);
+                IOUtils.zipDirectory(root().toFile(), zout, null);
             }
             finally {
                 zout.flush();
+                zout.close();
+                out.flush();
             }
         }
+        return zip;
     }
 
+    /**
+     * Cleans up the temporary space used by the bundle export.
+     */
     public void cleanup() throws IOException {
-        FileUtils.deleteDirectory(root.toFile());
+        FileUtils.deleteDirectory(temp.toFile());
     }
 
     void persistBundleInfo() throws IOException {
@@ -158,8 +189,9 @@ public class BundleExporter {
             throw new IOException(e);
         }
 
+        File wsDir = exportDataDir.get(workspace).dir();
         try (
-            OutputStream out = new BufferedOutputStream(new FileOutputStream(root.resolve("bundle.json").toFile()));
+            OutputStream out = new BufferedOutputStream(new FileOutputStream(new File(wsDir, "bundle.json")));
         ) {
             obj.write(out);
             out.flush();
@@ -168,7 +200,6 @@ public class BundleExporter {
     }
 
     void persist(WorkspaceInfo ws) throws IOException {
-        File dir = exportDataDir.get(ws).dir();
         persist(ws, exportDataDir.config(ws).file());
 
         NamespaceInfo ns = catalog.getNamespaceByPrefix(ws.getName());
@@ -215,11 +246,13 @@ public class BundleExporter {
                     newFileRef = new File(storeDataDir, dataFile.file.getName());
                 }
 
-                Path newPath = root.relativize(newFileRef.toPath());
 
                 // TODO: convert back to whatever format the parameter expects
                 DataStoreInfo clone = copy(ds, catalog.getFactory().createDataStore(), DataStoreInfo.class);
-                clone.getConnectionParameters().put(dataFile.param.key, "file:"+newPath.toString());
+
+                //clone.getConnectionParameters().put(dataFile.param.key, "file:%WORKSPACE%/"+newPath.toString());
+                clone.getConnectionParameters().put(dataFile.param.key, toWorkspaceRelativePath(newFileRef));
+
 
                 s = clone;
             }
@@ -241,7 +274,7 @@ public class BundleExporter {
                 Map<String,Serializable> params = Maps.newHashMap();
 
                 params.put(GeoPkgDataStoreFactory.DBTYPE.key, "geopkg");
-                params.put(GeoPkgDataStoreFactory.DATABASE.key, "file:"+root.relativize(gpkg.getFile().toPath()).toString());
+                params.put(GeoPkgDataStoreFactory.DATABASE.key, toWorkspaceRelativePath(gpkg.getFile()));
                 params.put(GeoPkgDataStoreFactory.NAMESPACE.key,
                     (Serializable) GeoPkgDataStoreFactory.NAMESPACE.lookUp(oldParams));
 
@@ -266,6 +299,11 @@ public class BundleExporter {
                 persist(resource);
             }
         }
+    }
+
+    String toWorkspaceRelativePath(File newFileRef) {
+        Path newPath = root().relativize(newFileRef.toPath());
+        return "file:%WORKSPACE%/" + newPath.toString();
     }
 
     FileParam isFileBased(DataStoreInfo ds) throws IOException {
@@ -468,21 +506,37 @@ public class BundleExporter {
     }
 
     void persist(LayerInfo l) throws IOException {
-        persist(l, exportDataDir.config(l).file());
         persist(l.getDefaultStyle());
         for (StyleInfo s : l.getStyles()) {
             persist(s);
         }
+        persist(l, exportDataDir.config(l).file());
     }
 
     void persist(StyleInfo s) throws IOException {
+        // grab the stylsheet
+        File styleFile = sourceDataDir.style(s).file();
+
+        // if the style is global, convert it to a workpace local one
+        if (s.getWorkspace() == null) {
+            s = convertToWorkspaceLocal(s);
+        }
+
         File dir = exportDataDir.get(s).dir();
         dir.mkdirs();
 
         persist(s, exportDataDir.config(s).file());
-        FileUtils.copyFileToDirectory(sourceDataDir.style(s).file(), dir);
+        FileUtils.copyFileToDirectory(styleFile, dir);
 
         //TODO: grab all of the icons
+    }
+
+    StyleInfo convertToWorkspaceLocal(StyleInfo s) {
+        StyleInfo newStyle = catalog.getFactory().createStyle();
+        new CatalogBuilder(catalog).updateStyle(newStyle, s);
+
+        newStyle.setWorkspace(options.workspace());
+        return newStyle;
     }
 
     void persist(CatalogInfo info, File file) throws IOException {
