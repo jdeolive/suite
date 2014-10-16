@@ -107,7 +107,7 @@ public class ImportController extends ApiController {
     }
 
     @RequestMapping(value = "/{wsName}/{id}", method = RequestMethod.GET)
-    public @ResponseBody JSONObj get(@PathVariable String wsName, Long id) throws Exception {
+    public @ResponseBody JSONObj get(@PathVariable String wsName, @PathVariable Long id) throws Exception {
         ImportContext imp = findImport(id);
 
         JSONObj result = new JSONObj();

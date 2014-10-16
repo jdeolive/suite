@@ -1,0 +1,11 @@
+<div class="data-import-details">
+  <div ng-if="import.imported.length > 0">
+    <h3>Imported Layers</h3>
+    <div ng-grid="completedGridOpts"></div>
+  </div>
+
+  <div ng-if="import.pending.length > 0">
+    <h3>Pending Layers</h3>
+    <div ng-grid="pendingGridOpts" class="pending-layers"></div>
+  </div>
+</div>

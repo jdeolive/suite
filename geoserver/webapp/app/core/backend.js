@@ -37,8 +37,14 @@ angular.module('gsApp.core.backend',[])
         },
 
         import: {
-          getImportUrl: function(workspace) {
+          url: function(workspace) {
             return importRoot + workspace;
+          },
+          get: function(workspace, id) {
+            return http({
+              method: 'GET',
+              url: importRoot + workspace + '/' + id
+            });
           },
           update: function(workspace, id, content) {
             return http({
