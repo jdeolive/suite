@@ -60,7 +60,7 @@
     <gs.version>2.8-SNAPSHOT</gs.version>
     <gt.version>14-SNAPSHOT</gt.version>
     <jetty.version>7.6.13.v20130916</jetty.version>
-    <spring.version>3.2.10.RELEASE</spring.version>
+    <spring.version>3.2.15.RELEASE</spring.version>
     <spring.security.version>3.2.4.RELEASE</spring.security.version>
     <jackson.version>2.1.1</jackson.version>
     <marlin.version>0.7.3-Unsafe</marlin.version>
