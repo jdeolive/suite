@@ -310,6 +310,11 @@
       <artifactId>gt-complex</artifactId>
       <version>${gt.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.opennrm</groupId>
+      <artifactId>opennrm-geoserver</artifactId>
+      <version>${gs.version}</version>
+    </dependency>
 
     <!-- Jetty test deps so that we can start GeoServer from an IDE as well -->
     <dependency>
