@@ -37,7 +37,7 @@ public class AppDispatcher extends DispatcherServlet {
         super.init(config);
         appHandler = new ResourceHttpRequestHandler();
 
-        ServletContextResource composerRoot = new ServletContextResource(config.getServletContext(), "/composer/**");
+        ServletContextResource composerRoot = new ServletContextResource(config.getServletContext(), "/composer/");
         appHandler.setApplicationContext(getWebApplicationContext());
         appHandler.setLocations((List)Arrays.asList(composerRoot));
 
