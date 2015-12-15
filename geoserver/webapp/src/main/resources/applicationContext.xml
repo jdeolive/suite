@@ -11,11 +11,11 @@
     http://www.springframework.org/schema/mvc
     http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 
-    <bean id="opengeoTheme" class="org.geoserver.web.HeaderContribution">
+    <!--bean id="opengeoTheme" class="org.geoserver.web.HeaderContribution">
         <property name="scope" value="com.boundlessgeo.geoserver.web.OpenGeoTheme"/>
         <property name="CSSFilename" value="css/opengeo.css"/>
         <property name="faviconFilename" value="favicon/favicon.ico"/>
-    </bean>
+    </bean-->
     
     <bean class="com.boundlessgeo.geoserver.catalog.UploadDeleteCatalogListener">
       <constructor-arg ref="catalog"/>
