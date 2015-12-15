@@ -63,6 +63,8 @@
             <bean class="com.boundlessgeo.geoserver.api.converters.JSONMessageConverter"/>
             <bean class="com.boundlessgeo.geoserver.api.converters.YsldMessageConverter"/>
             <bean class="com.boundlessgeo.geoserver.api.converters.ResourceMessageConverter"/>
+            <bean class="org.opennrm.geoserver.api.JSONConverter"/>
+            <bean class="org.opennrm.geoserver.api.LayerConverter"/>
         </mvc:message-converters>
     </mvc:annotation-driven>
 </beans>
