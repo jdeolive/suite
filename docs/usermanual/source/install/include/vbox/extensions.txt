@@ -1,0 +1,17 @@
+All :ref:`intro.extensions` are downloaded as part of the virtual machine.
+
+To install an extension:
+
+#. Open a terminal (as described above).
+
+#. Run the following command::
+
+     apt-get install <package>
+
+   where ``<package>`` is the name of the package.
+
+   .. note:: See :ref:`install.ubuntu.packages.list` for a list of package names.
+
+   .. warning:: You may receive a warning that packages cannot be authenticated. This is expected, and you may safely proceed.
+
+#. Depending on the extension, you may need to restart the server.

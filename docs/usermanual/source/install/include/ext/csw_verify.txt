@@ -1,0 +1,11 @@
+To verify that the extension has been installed properly:
+
+#. Log in to the GeoServer web interface.
+
+#. In the list of :guilabel:`Services`, you should see an entry for :guilabel:`CSW`.
+
+   .. figure:: /install/include/ext/img/csw_servicelink.png
+
+      CSW in the list of services
+
+   If you don't see this entry, the extension did not install correctly.

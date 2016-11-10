@@ -1,20 +1,20 @@
-<project name="geoserver" default="build">
+<project name="geoserver-suite" default="build">
   <import file="../build/common.xml"/>
 
-  <property name="geoserver.modules" value="externals,data_dir,ext,webapp"/>
-
-  <target name="build" description="Builds project">
-    <for list="${geoserver.modules}" param="mod">
-      <sequential>
-        <ant dir="@{mod}" target="build" inheritAll="false"/>
-      </sequential>
-    </for>
-  </target>
+  <property name="geoserver.modules" value="geotools,geowebcache,geoserver,data_dir,externals,geoserver-community,webapp"/>
 
   <target name="clean" description="Cleans project">
     <for list="${geoserver.modules}" param="mod">
       <sequential>
         <ant dir="@{mod}" target="clean" inheritAll="false"/>
+      </sequential>
+    </for>
+  </target>
+
+  <target name="build" description="Builds project">
+    <for list="${geoserver.modules}" param="mod">
+      <sequential>
+        <ant dir="@{mod}" target="build" inheritAll="false"/>
       </sequential>
     </for>
   </target>
@@ -34,5 +34,4 @@
       </sequential>
     </for>
   </target>
-
 </project>

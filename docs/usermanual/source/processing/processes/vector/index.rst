@@ -3,7 +3,7 @@
 Vector processes
 ================
 
-This section describes some of the vector processes available with OpenGeo Suite.
+This section describes some of the vector processes available with Boundless Suite.
 
 .. toctree::
    :maxdepth: 2

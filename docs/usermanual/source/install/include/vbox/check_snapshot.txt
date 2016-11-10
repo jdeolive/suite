@@ -1,0 +1,46 @@
+While not required, it can be useful to create a snapshot of the virtual machine now and at various other times (say, before a major configuration change). This can help reduce downtime if there is a server issue. We'll start by taking an initial snapshot.
+
+#. Shut down the virtual machine.
+
+   .. code-block:: console
+
+      sudo poweroff
+
+#. In the VirtualBox Manager, select the virtual machine, and click the :guilabel:`Snapshots` button on the top right of the console. 
+
+   .. figure:: /install/include/vbox/img/vbox_snapshotmenu.png
+
+      Snapshot menu
+
+#. Click the :guilabel:`Take Snapshot` button (the camera icon above the :guilabel:`Current State`).
+
+#. Enter a snapshot name. For the first snapshot, a good name might be :kbd:`Initial installation`.
+
+   .. figure:: /install/include/vbox/img/vbox_newsnapshot.png
+
+      Creating a new snapshot
+
+#. Click :guilabel:`OK`.
+
+#. Restart the virtual machine.
+
+Restore a previous snapshot
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Should you ever encounter a system error that you are unable to recover from, you can always revert the virtual machine to a recent snapshot and restart the course from that position. **This should only be done if all other troubleshooting options have been exhausted.**
+
+To restore a previous snapshot:
+
+#. Shut down the virtual machine.
+
+#. Click the :guilabel:`Snapshots` button on the top right of the console. 
+
+#. Click to select the snapshot in the list, then right-click and select :guilabel:`Restore Snapshot` button.
+
+   .. figure:: /install/include/vbox/img/vbox_snapshotmenurestore.png
+
+      Restoring a snapshot
+
+#. The snapshot will be restored.
+
+#. Restart the virtual machine.

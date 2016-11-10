@@ -1,11 +1,9 @@
 .. _sysadmin.clustering.autovm:
 
-How to set up an OpenGeo Suite cluster in a virtual environment
-===============================================================
+How to set up a Boundless Suite cluster in a virtual environment
+=================================================================
 
 This page will show how to automatically set up and configure a cluster of servers on `VMware <http://vmware.com>`_ or other virtual environment.
-
-This script is available to Enterprise clients only. Please `contact us <http://boundlessgeo.com/about/contact-us/sales/>`__ to become an Enterprise client.
 
 Prerequisites
 -------------
@@ -61,7 +59,7 @@ Clustering script
 
 #. Download and extract the clustering script archive to a directory.
 
-   .. note:: If you are an Enterprise client and do not have the script, please `let us know <http://boundlessgeo.com/about/contact-us/>`_.
+   .. note:: Please `contact us <http://boundlessgeo.com/about/contact-us/>`_ for access to this script.
 
 #. Open the file :file:`hosted_vars/main.yml` in a text editor.
 

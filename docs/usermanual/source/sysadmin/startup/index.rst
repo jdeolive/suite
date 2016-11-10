@@ -3,60 +3,43 @@
 How to add startup parameters for GeoServer
 ===========================================
 
-GeoServer allows global configuration settings to be provided as Java system properties for use during the startup process. Java system properties can be supplied on the command line using ``-D`` (and are of the form ``-Dproperty=value`` or ``-D property=value``).
+GeoServer allows global configuration settings to be provided as Java system properties for use during the startup process. Java system properties can be supplied on the command line using ``-D`` and are of one of the following forms:
+
+* ``-Dproperty=value``
+* ``-D property=value``
 
 This section shows how to set the Java system properties used during startup.
 
-Jetty
------
+.. note:: We recommend using Tomcat for deployment. Other application servers may have similar configuration.
 
-OpenGeo Suite for Windows and OS X both use the Jetty application server. Startup flags are all contained in a file called :file:`start.ini`.
+.. note:: You can view existing Java options (:guilabel:`system-properties`) and environment variables (:guilabel:`system-environment`) on the GeoServer Detailed Status Page at http://localhost:8080/geoserver/rest/about/status.
 
-On Windows, this file is contained in :file:`jetty\\start.ini` inside the root of the installation directory. For example, :file:`C:\\Program Files\\Boundless\\OpenGeo\\jetty\\start.ini`.
 
-To access the :file:`start.ini` file on OS X, click :guilabel:`Open Webapps` from the GeoServer menu. The file is one level up in the directory tree.
+Linux packages
+--------------
 
-.. figure:: img/startini.png
-
-   A sample start.ini file
-
-This file contains a mix of JVM parameters (such as memory settings) and system properties. There is a section titled :guilabel:`other geoserver options` where startup options can go, but the specific order is not important. Each option must be on its own line.
+To set Java options, create a file in the :file:`/etc/tomcat8/suite-opts` directory.  
 
 For example, to revert to the legacy handling of CRS values in GeoJSON WFS output:
 
-#. Open :file:`start.ini` in a text editor. (You will need to open it with administrator privileges.)
+#. Create the file :file:`legacyCRS` in :file:`/etc/tomcat8/suite-opts`
 
-#. Add the following line::
+#. Add the line :guilabel:`-DGEOSERVER_GEOJSON_LEGACY_CRS=true`
 
-    -DGEOSERVER_GEOJSON_LEGACY_CRS=true
+#. Save the file and restart Tomcat.
 
-#. Save and close the file.
+Windows Tomcat
+--------------
 
-#. Restart GeoServer.
-
-Tomcat
-------
-
-When using OpenGeo Suite with Tomcat, we recommend you add the startup options to the :file:`setenv.sh` (Linux) or :file:`setenv.bat` (Windows) script file. This file is typically found in the :file:`bin` directory of the Tomcat installation, for example :file:`/usr/share/tomcat7/bin`.
-
-.. note:: If this file doesn't exist, you can create it in the same directory as the other Tomcat startup scripts such as :file:`catalina.sh` (Linux) or :file:`catalina.bat` (Windows).
-
-Inside this file, the startup options will be added to the ``JAVA_OPTS`` environment variable so they will be picked up during the startup process. 
+To set Java options, use the Windows Tomcat Configuration Manager (see :ref:`install.windows.tomcat`), :guilabel:`Java` Tab, :guilabel:`Java Options` section.
 
 For example, to revert to the legacy handling of CRS values in GeoJSON WFS output:
 
-#. Open :file:`setenv.sh` (Linux) or :file:`setenv.bat` (Windows) in a text editor. (You will need to open it with administrator privileges.)
+#. Open the Windows Tomcat Configuration Manager and go to the :guilabel:`Java` Tab.
 
-#. Add the following line:
+#. In the :guilabel:`Java Options` add :guilabel:`-DGEOSERVER_GEOJSON_LEGACY_CRS=true`, then click :guilabel:`Apply`.
 
-   * Linux::
+    .. figure:: /sysadmin/startup/img/win_tomcat_add_java_opt.png
 
-       export JAVA_OPTS="$JAVA_OPTS -DGEOSERVER_GEOJSON_LEGACY_CRS=true"
+#. Stop and Start Tomcat (via the :guilabel:`General` tab).
 
-   * Windows::
-
-       set JAVA_OPTS=%JAVA_OPTS% -DGEOSERVER_GEOJSON_LEGACY_CRS=true
-
-#. Save and close the file.
-
-#. Restart GeoServer.

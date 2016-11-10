@@ -3,7 +3,7 @@
 Process reference
 =================
 
-This section will highlight some of the common WPS processes available with OpenGeo Suite, and describe how those processes operate.   
+This section will highlight some of the common WPS processes available with Boundless Suite, and describe how those processes operate.   
 
 .. todo:: "It is not a comprehensive listing of all processes." If we include this statement, we have to say where the comprehensive list is. 
 

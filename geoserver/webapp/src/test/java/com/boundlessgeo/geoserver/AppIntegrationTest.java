@@ -14,6 +14,7 @@ import com.boundlessgeo.geoserver.json.JSONObj;
 import com.boundlessgeo.geoserver.util.NameUtil;
 import com.boundlessgeo.geoserver.util.RecentObjectCache;
 
+import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -33,11 +34,11 @@ import org.geoserver.config.GeoServerInfo;
 import org.geoserver.config.SettingsInfo;
 import org.geoserver.data.test.SystemTestData;
 import org.geoserver.importer.Importer;
-import org.geoserver.ows.util.ResponseUtils;
 import org.geoserver.platform.GeoServerExtensions;
 import org.geoserver.platform.resource.Resource;
 import org.geoserver.rest.util.RESTUtils;
 import org.geoserver.test.GeoServerSystemTestSupport;
+import org.geoserver.web.GeoServerApplication;
 import org.geoserver.ysld.YsldHandler;
 import org.geotools.data.DataAccess;
 import org.geotools.data.FeatureSource;
@@ -76,6 +77,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 
 public class AppIntegrationTest extends GeoServerSystemTestSupport {
@@ -420,7 +422,8 @@ public class AppIntegrationTest extends GeoServerSystemTestSupport {
         result = ctrl.update("gs", id, getUpdateTasks(result), request);
         result = pollImport(ctrl, "gs", id, "complete", request);
         assertNotNull(result);
-        
+        //Apparently the catalog is time-sensitive now...
+        Thread.sleep(100);
         LayerInfo l = catalog.getLayerByName("gs:point_20space");
         StoreInfo s = catalog.getStoreByName("gs", "point_space", StoreInfo.class);
         assertNotNull(l);
@@ -594,6 +597,13 @@ public class AppIntegrationTest extends GeoServerSystemTestSupport {
         
         return null;
     }
+    
+    @Test
+    public void testImporterBeans() {
+        //This will throw an exception if multiple beans are visible to geoserver
+        GeoServerExtensions.bean(Importer.class, applicationContext);
+    }
+    
     @Test
     public void testImportInfo() throws IOException {
         Catalog catalog = getCatalog();
@@ -778,9 +788,9 @@ public class AppIntegrationTest extends GeoServerSystemTestSupport {
                 .put("workspace", "cgf");
         
 
-        com.mockrunner.mock.web.MockHttpServletResponse resp =
+        MockHttpServletResponse resp =
             putAsServletResponse("/app/api/maps/cgf/map1/copy", obj.toString(), MediaType.APPLICATION_JSON_VALUE);
-        assertEquals(200,resp.getStatusCode());
+        assertEquals(200,resp.getStatus());
 
         assertNotNull(catalog.getLayerGroupByName("cgf:map2"));
         assertNotNull(catalog.getLayerByName("cgf:renamedLayer"));
@@ -798,9 +808,9 @@ public class AppIntegrationTest extends GeoServerSystemTestSupport {
             .put("name", "PrimitiveGeoFeature")
             .put("workspace", "sf");
 
-        com.mockrunner.mock.web.MockHttpServletResponse resp =
+        MockHttpServletResponse resp =
             postAsServletResponse("/app/api/layers/sf", obj.toString(), MediaType.APPLICATION_JSON_VALUE);
-        assertEquals(201,resp.getStatusCode());
+        assertEquals(201,resp.getStatus());
 
         assertNotNull(catalog.getLayerByName("sf:foo"));
     }
@@ -817,9 +827,9 @@ public class AppIntegrationTest extends GeoServerSystemTestSupport {
             .put("store", "sf")
             .put("workspace", "sf");
 
-        com.mockrunner.mock.web.MockHttpServletResponse resp =
+        MockHttpServletResponse resp =
                 postAsServletResponse("/app/api/layers/sf", obj.toString(), MediaType.APPLICATION_JSON_VALUE);
-        assertEquals(201, resp.getStatusCode());
+        assertEquals(201, resp.getStatus());
 
         assertNotNull(catalog.getLayerByName("sf:foo"));
     }
@@ -837,9 +847,9 @@ public class AppIntegrationTest extends GeoServerSystemTestSupport {
                 .put("store", "usa")
                 .put("workspace", "cdf");
 
-        com.mockrunner.mock.web.MockHttpServletResponse resp =
+        MockHttpServletResponse resp =
             postAsServletResponse("/app/api/layers/cdf", obj.toString(), MediaType.APPLICATION_JSON_VALUE);
-        assertEquals(201, resp.getStatusCode());
+        assertEquals(201, resp.getStatus());
 
         assertNotNull(catalog.getLayerByName("cdf:foo"));
 
@@ -854,9 +864,9 @@ public class AppIntegrationTest extends GeoServerSystemTestSupport {
         
         String sldName = layer.getDefaultStyle().getName();
         
-        com.mockrunner.mock.web.MockHttpServletResponse resp =
+        MockHttpServletResponse resp =
                 putAsServletResponse("/app/api/layers/sf/PrimitiveGeoFeature/style", "title: ysld", YsldHandler.MIMETYPE);
-        assertEquals(200,resp.getStatusCode());
+        assertEquals(200,resp.getStatus());
 
         layer = catalog.getLayerByName("sf:PrimitiveGeoFeature");
         assertNotNull(layer.getDefaultStyle());
@@ -995,5 +1005,35 @@ public class AppIntegrationTest extends GeoServerSystemTestSupport {
         assertEquals("unique", NameUtil.unique("unique", pointMap.getClass(), catalog));
         assertEquals("unique", NameUtil.unique("unique", pointStyle.getClass(), catalog));
         
+    }
+    
+    @Test
+    public void testGetRenderingTransforms() throws Exception {
+        JSON json = getAsJSON(("/app/api/serverInfo/renderingTransforms"));
+        if (json instanceof JSONObject) {
+            //getAsJson returned an exception message
+            fail(json.toString());
+        }
+        JSONArray arr = (JSONArray) json;
+        //Make sure we get something from each factory
+        boolean hasHeatmap = false;
+        boolean hasBuffer = false;
+        boolean hasContour = false;
+        
+        for(Object o : arr.toArray()) {
+            String name = ((JSONObject)o).getString("name");
+            if ("vec:Heatmap".equals(name)) {
+                hasHeatmap = true;
+            }
+            if ("geo:buffer".equals(name)) {
+                hasBuffer = true;
+            }
+            if ("ras:Contour".equals(name)) {
+                hasContour = true;
+            }
+        }
+        assertTrue(hasHeatmap);
+        assertTrue(hasBuffer);
+        assertTrue(hasContour);
     }
 }

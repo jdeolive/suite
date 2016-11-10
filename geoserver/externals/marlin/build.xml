@@ -1,0 +1,19 @@
+<project name="marlin" default="build">
+  <import file="../../../build/common.xml"/>
+  <target name="clean">
+    <antcall target="mvn">
+      <param name="goals" value="clean"/>
+    </antcall>
+  </target>
+  <target name="build">
+    <antcall target="mvn">
+      <param name="goals" value="install"/>
+    </antcall>
+  </target>
+  <target name="assemble">
+    <ant target="assemble-extension" inheritAll="false"/>
+  </target>
+  <target name="publish">
+    <ant target="publish-extension" inheritAll="false"/>
+  </target>
+</project>

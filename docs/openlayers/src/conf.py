@@ -104,7 +104,7 @@ html_theme_options = {
   #'is_community': True, # Community Docs flag for Suite component docs
   'display_zendesk': True, # Display link to report doc bugs to Suite Zendesk
   'display_version': True, # Whether to show version number
-  'suite_url': 'openlayers' # the url path within Suite e.g. sdk-api for opengeo-docs/sdk-api
+  'suite_url': 'openlayers' # the url path within Suite e.g. sdk-api for suite-docs/sdk-api
 }
 
 # The name for this set of Sphinx documents.  If None, it defaults to

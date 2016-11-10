@@ -1,0 +1,14 @@
+To verify that the extension has been installed properly:
+
+#. Log in to the GeoServer web interface.
+
+#. Click :guilabel:`Stores` then :guilabel:`Add new store`.
+
+#. In the list of :guilabel:`Raster Data Stores`, you should see an entry for :guilabel:`GRIB`.
+
+   .. figure:: /install/include/ext/img/grib_storelink.png
+
+      GRIB in the list of raster stores
+
+   If you don't see this entry, the extension did not install correctly.
+   

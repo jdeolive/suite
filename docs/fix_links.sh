@@ -17,5 +17,5 @@ doc_dir=$1
 base_url=$2
 
 pushd $doc_dir > /dev/null
-find . -name "*.html" -exec sed -i '' "s#class=\"abs-link\" href=\"/opengeo-docs#href=\"$base_url#g" {} \;
+find . -name "*.html" -exec sed -i '' "s#class=\"abs-link\" href=\"/suite-docs#href=\"$base_url#g" {} \;
 popd

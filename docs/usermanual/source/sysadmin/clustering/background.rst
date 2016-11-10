@@ -3,7 +3,7 @@
 Background
 ==========
 
-This page will discuss the theory and technology underlying the clustering extension for GeoServer in OpenGeo Suite.
+This page will discuss the theory and technology underlying the clustering extension for GeoServer in Boundless Suite.
 
 What is clustering?
 -------------------
@@ -53,6 +53,4 @@ This broadcasting also allows for HTTP session sharing, which is how multiple Ge
 Technical details
 -----------------
 
-The clustering extension is technically not one extension, but two: **JDBCConfig**, which provides the support for data directories in a database, and **Cluster**, which handles the broadcasting. JDBCConfig is a community GeoServer extension. Cluster is exclusive to OpenGeo Suite.
-
-Cluster uses `Hazelcast <http://hazelcast.com>`_, a library that allows nodes in a cluster to link together automatically.
+The clustering extension when used properly also uses the :ref:`JDBCConfig extension <intro.extensions.jdbcconfig>` , which provides the support for data directories in a database. Clustering uses `Hazelcast <http://hazelcast.com>`_, a library that allows nodes in a cluster to link together automatically.

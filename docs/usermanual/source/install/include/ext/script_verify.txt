@@ -1,0 +1,9 @@
+To verify that the extension has been installed properly:
+
+#. Open your GeoServer data directory.
+
+   .. note:: If unsure of the location of the GeoServer data directory, log in to the GeoServer web interface and click :guilabel:`Server Status`. The location of the :guilabel:`Data directory` will be displayed at the top.
+
+#. There should be a directory called :file:`scripts` created. This is where scripts can be created.
+
+   If you don't see this directory or these files, the extension did not install correctly.

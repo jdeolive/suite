@@ -1,0 +1,13 @@
+To verify that the extension has been installed properly:
+
+#. Log in to the GeoServer web interface.
+
+#. Under :guilabel:`Services`, click :guilabel:`WMS`.
+
+#. Scroll to the bottom of the page and look for a section titled :guilabel:`INSPIRE`.
+
+   .. figure:: /install/include/ext/img/inspire_config.png
+
+      INSPIRE in the list of WMS configuration options
+
+   If you don't see this entry, the extension did not install correctly.

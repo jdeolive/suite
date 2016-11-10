@@ -21,7 +21,7 @@
              description="Build html docs">
        <antcall target="sphinx">
          <param name="dir" value="source"/>
-         <param name="flags" value="-q -W"/>
+         <param name="flags" value="-q -W -j ${cores.count}"/>
        </antcall>
      </target>
 
@@ -30,7 +30,7 @@
        <antcall target="sphinx">
          <param name="dir" value="source"/>
          <param name="builder" value="text"/>
-         <param name="flags" value="-q -W"/>
+         <param name="flags" value="-q -W -j ${cores.count}"/>
        </antcall>
      </target>
   

@@ -12,8 +12,17 @@
     <target name="init-sources">
         <mkdir dir="src"/>
         <copy todir="src">
-          <fileset dir="../../geoserver/externals/geoserver/doc/en/user/source" includes="**/*"/>
+          <fileset dir="../../geoserver/geoserver/geoserver/doc/en/user/source" includes="**/*"/>
         </copy>
+        <replace dir="src" token="/../../../../src/"
+          value="/../../../geoserver/geoserver/geoserver/src/">
+          <include name="**/*.rst" />
+        </replace>
+        <replace dir="src" token="../../../../../../../data/"
+          value="../../../../../../geoserver/geoserver/geoserver/data/">
+          <include name="**/*.rst" />
+        </replace>
+        
         <copy file="conf.py" tofile="src/conf.py" overwrite="true"/>
     </target>
 

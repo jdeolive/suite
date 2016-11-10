@@ -16,7 +16,7 @@ The metadata is managed by the *postgres* user account and stored in the followi
 
    *Spatial metadata schema relationships*
 
-As PostGIS 2.0+ (OpenGeo Suite 3.0+) uses a view based on the system catalogs rather than a table to record geometry column metadata, the view is always current, updated automatically when a new spatial table is created. 
+As PostGIS uses a view based on the system catalogs rather than a table to record geometry column metadata, the view is always current, updated automatically when a new spatial table is created. 
 
 .. note:: PostGIS 1.X managed metadata in tables, not views, and used a number of the system utility functions, such as ``populate_geometry_columns()``. In PostGIS 2.X running these utility functions is no longer required.
 

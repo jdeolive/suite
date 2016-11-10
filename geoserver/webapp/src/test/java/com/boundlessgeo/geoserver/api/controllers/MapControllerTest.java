@@ -283,8 +283,8 @@ public class MapControllerTest {
             .workspace("foo", "http://scratch.org", true)
                 .map("map")
                     .defaults()
-                    .layer("one").style().point().layer().coverage().defaults().store("store").map()
-                    .layer("two").style().point().layer().featureType().defaults().store("store")
+                    .layer("one").style().point().layer().coverage().defaults().store("store_one").map()
+                    .layer("two").style().point().layer().featureType().defaults().store("store_two")
             .geoServer().build(geoServer);
 
         MvcResult result = mvc.perform(get("/api/maps/foo/map/layers"))

@@ -21,14 +21,17 @@ def clean_snapshot(ver):
 def short_version(ver):
     return ver.split('-')[0]
 
+def x_version(ver):
+    return ver + '.x'
+
 suite_version = clean_snapshot(cp.get('build', 'suite.version'))
 suite_version_short = short_version(cp.get('build', 'suite.version'))
 
-gs_version = clean_snapshot(cp.get('build', 'gs.version'))
-gs_version_short = short_version(cp.get('build', 'gs.version'))
+gs_version = x_version(cp.get('build', 'gs.major_version'))
+gs_version_short = cp.get('build', 'gs.major_version')
 
-gwc_version = clean_snapshot(cp.get('build', 'gwc.version'))
-gwc_version_short = short_version(cp.get('build', 'gwc.version'))
+gwc_version = x_version(cp.get('build', 'gwc.major_version'))
+gwc_version_short = cp.get('build', 'gwc.major_version')
 
 pg_version = clean_snapshot(cp.get('build', 'pg.version'))
 pg_version_short = short_version(cp.get('build', 'pg.version'))

@@ -1,0 +1,87 @@
+<project name="geoserver.geomesa" default="build">
+
+  <import file="../../../../build/common.xml"/>
+
+  <property name="geomesa.dir" value="../geomesa"/>
+
+  <target name="clean" unless="skip.geomesa" description="Clean GeoMesa">
+    <delete dir="target"/>
+    <antcall target="mvn">
+      <param name="dir" value="."/>
+      <param name="goals" value="clean"/>
+    </antcall>
+  </target>
+
+  <target name="build" unless="skip.geomesa" description="Build GeoMesa">
+     <antcall target="mvn">
+        <param name="dir" value="."/>
+        <param name="flags" value="-DskipTests"/>
+        <param name="goals" value="install"/>
+     </antcall>
+  </target>
+
+  <target name="assemble" unless="skip.geomesa" description="Assemble GeoMesa">
+    <delete dir="target/geomesa-accumulo"/>
+    <mkdir dir="target/geomesa-accumulo"/>
+    <!-- Extract main plugin jars -->
+    <untar compression="gzip" dest="target/geomesa-accumulo">
+      <fileset dir="${geomesa.dir}/geomesa-gs-plugin/geomesa-accumulo-gs-plugin/target"
+               includes="geomesa-accumulo-gs-plugin-*-install.tar.gz"/>
+      <patternset>
+        <!-- exclude non-jar files and any jars that are already provided by the core webapp -->
+        <exclude name="*.txt"/>
+        <exclude name="*.TXT"/>
+        <exclude name="*.ini"/>
+        <exclude name="commons-pool-*.jar"/>
+        <exclude name="gt-app-schema-resolver-*.jar"/>
+        <exclude name="gt-complex-*.jar"/>
+        <exclude name="gt-geojson-*.jar"/>
+        <exclude name="gt-geopkg-??-SNAPSHOT.jar"/>
+        <exclude name="gt-jdbc-h2-*.jar"/>
+        <exclude name="gt-process-??-SNAPSHOT.jar"/>
+        <exclude name="gt-process-feature-*.jar"/>
+        <exclude name="gt-process-geometry-*.jar"/>
+        <exclude name="gt-process-raster-*.jar"/>
+        <exclude name="gt-xsd-kml-*.jar"/>
+        <exclude name="httpclient-*.jar"/>
+        <exclude name="httpcore-*.jar"/>
+        <exclude name="imageio-ext-geocore-*.jar"/>
+        <exclude name="imageio-ext-imagereadmt-*.jar"/>
+        <exclude name="jackson-annotations-*.jar"/>
+        <exclude name="jackson-core-*.jar"/>
+        <exclude name="jackson-databind-*.jar"/>
+        <exclude name="joda-time-*.jar"/>
+        <exclude name="json-simple-*.jar"/>
+        <exclude name="sqlite-jdbc-*.jar"/>
+        <!-- exclude conflicting jars between geomesa and other extensions -->
+        <exclude name="gt-imageio-ext-gdal-*.jar"/>
+      </patternset>
+    </untar>
+    <!-- Copy excluded dependencies -->
+    <copy todir="target/geomesa-accumulo" overwrite="true">
+      <fileset dir="target/accumulo-dependencies-bin"/>
+    </copy>
+    <antcall target="assemble-extension" inheritAll="false">
+      <param name="name" value="geomesa-accumulo"/>
+    </antcall>
+    <!-- Distributed Runtime -->
+    <delete dir="target/geomesa-accumulo-distributed-runtime"/>
+    <mkdir dir="target/geomesa-accumulo-distributed-runtime"/>
+    <copy todir="target/geomesa-accumulo-distributed-runtime" overwrite="true">
+      <fileset dir="${geomesa.dir}/geomesa-accumulo/geomesa-accumulo-distributed-runtime/target"
+               includes="geomesa-accumulo-distributed-runtime-*.jar"/>
+    </copy>
+    <antcall target="assemble-artifact" inheritAll="false">
+      <param name="name" value="geomesa-accumulo-distributed-runtime"/>
+    </antcall>
+  </target>
+
+  <target name="publish" unless="skip.geomesa">
+    <antcall target="publish-extension" inheritAll="false">
+      <param name="name" value="geomesa-accumulo"/>
+    </antcall>
+    <antcall target="publish-artifact" inheritAll="false">
+      <param name="name" value="geomesa-accumulo-distributed-runtime"/>
+    </antcall>
+  </target>
+</project>

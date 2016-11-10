@@ -7,7 +7,7 @@ Here is a simple example of a YSLD style containing a single rule inside a singl
 
    name: style_example
    title: An example of YSLD styling
-   abstract: Used in the User Manual of OpenGeo Suite
+   abstract: Used in the User Manual of Boundless Suite
    feature-styles:
    - rules:
      - name: all

@@ -10,17 +10,17 @@
     <antcall target="geoserver-war-jboss"/>
   </target>
 
-  <target name="opengeo-docs-war">
-    <mkdir dir="target/opengeo-docs"/>
-    <copy todir="target/opengeo-docs">
+  <target name="suite-docs-war">
+    <mkdir dir="target/suite-docs"/>
+    <copy todir="target/suite-docs">
       <fileset dir="../docs">
         <include name="**/target/html/**"/>
       </fileset>
       <mapper type="regexp" from="^(.*)/target/html/(.*)$$" to="\1/\2"/>
     </copy>
-    <copy todir="target/opengeo-docs" file="../docs/index.html"/>
-    <jar destfile="target/opengeo-docs.war">
-       <fileset dir="target/opengeo-docs"/>
+    <copy todir="target/suite-docs" file="../docs/index.html"/>
+    <jar destfile="target/suite-docs.war">
+       <fileset dir="target/suite-docs"/>
     </jar>
   </target>
 

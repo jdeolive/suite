@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.bio.SocketConnector;
+import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.xml.XmlConfiguration;
@@ -25,14 +25,14 @@ public class Start {
         Server jettyServer = null;
 
         try {
-            jettyServer = new Server();
-
             // don't even think of serving more than XX requests in parallel... we
             // have a limit in our processing and memory capacities
             QueuedThreadPool tp = new QueuedThreadPool();
             tp.setMaxThreads(50);
+            
+            jettyServer = new Server(tp);
 
-            SocketConnector conn = new SocketConnector();
+            ServerConnector conn = new ServerConnector(jettyServer);
             String portVariable = System.getProperty("jetty.port");
             int port = parsePort(portVariable);
             if(port <= 0)
@@ -46,9 +46,8 @@ public class Start {
             }
             
             conn.setPort(port);
-            conn.setThreadPool(tp);
             conn.setAcceptQueueSize(100);
-            conn.setMaxIdleTime(1000 * 60 * 60);
+            conn.setIdleTimeout(1000 * 60 * 60);
             conn.setSoLingerTime(-1);
             jettyServer.setConnectors(new Connector[] { conn });
 

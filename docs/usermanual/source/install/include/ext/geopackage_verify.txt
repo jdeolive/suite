@@ -1,0 +1,19 @@
+To verify that the extension has been installed properly:
+
+#. Log in to the GeoServer web interface.
+
+#. Click :guilabel:`Stores` then :guilabel:`Add new store`.
+
+#. In the list of :guilabel:`Vector Data Stores`, you should see an entry for :guilabel:`GeoPackage`.
+
+   .. figure:: /install/include/ext/img/geopackage_vectorstorelink.png
+
+      GeoPackage in the list of vector stores
+
+   In the list of :guilabel:`Raster Data Stores`, you should see an entry for :guilabel:`GeoPackage`.
+
+   .. figure:: /install/include/ext/img/geopackage_rasterstorelink.png
+
+      GeoPackage in the list of raster stores
+
+  If you don't see either of these entries, the extension did not install correctly.

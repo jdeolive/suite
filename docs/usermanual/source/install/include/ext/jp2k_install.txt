@@ -1,0 +1,9 @@
+To install :ref:`JPEG 2000 <intro.extensions.jp2k>` support in GeoServer, you will need to copy some files to the proper location. The files to be copied are inside the Boundless Suite extensions bundle (:file:`BoundlessSuite-ext.zip`).
+
+.. note:: The GDAL extension (with the Mr.SID plugin) has a higher performance JPEG 2000 reader, but requires the installation of native libraries.
+
+#. Inside the Boundless Suite extensions bundle, navigate to the :file:`jp2k` directory.
+
+#. Copy the contents of the :file:`jp2k` directory into the library directory (:file:`WEB-INF/lib`) of your GeoServer instance. For example, if your GeoServer application is located at :file:`/usr/share/tomcat/webapps/geoserver`, copy the files to :file:`/usr/share/tomcat/webapps/geoserver/WEB-INF/lib`.
+
+#. Restart the server.

@@ -15,66 +15,22 @@ Installation
 
 Amazon CloudWatch support isn't enabled by default, so it must be separately installed.
 
-Installing Amazon CloudWatch support is the same as most :ref:`OpenGeo Suite Extensions <intro.extensions>`.
+Installing Amazon CloudWatch support is the same as most :ref:`Boundless Suite Extensions <intro.extensions>`.
 
-.. note:: The CloudWatch extension is only available with `OpenGeo Suite Enterprise <http://boundlessgeo.com/solutions/opengeo-suite/>`_. For more information on OpenGeo Suite Enterprise, please `contact us <http://boundlessgeo.com/about/contact-us/sales/>`_.
+Installation instructions are dependent on your operating system and method of install:
 
-Windows
-~~~~~~~
+* **Tomcat**: :ref:`Ubuntu<install.ubuntu.tomcat.extensions.cloudwatch>`, :ref:`Red Hat<install.redhat.tomcat.extensions.cloudwatch>`, :ref:`Windows<install.windows.tomcat.extensions.cloudwatch>`
+* **Packages**: :ref:`Ubuntu<install.ubuntu.packages.list>`, :ref:`Red Hat<install.redhat.packages.list>` 
 
-The CloudWatch extension can be added during the installation process. On the :guilabel:`Components` page, check the box for :guilabel:`CloudWatch` in the section named :guilabel:`GeoServer Extensions`.
+.. note:: The Boundless Suite virtual machine has most extensions pre-installed.
 
-.. todo:: ADD FIGURE
-
-If OpenGeo Suite has already been installed and you wish to install CloudWatch support at a later time, simply run the installer once more and uncheck all other items except for :guilabel:`CloudWatch`. This will add CloudWatch support to the existing OpenGeo Suite installation.
-
-OS X
-~~~~
-
-The CloudWatch extension can be added to OpenGeo Suite by copying the contents of the :file:`cloudwatch` extension folder (not the folder itself) to the GeoServer library folder. The GeoServer library folder can be found by selecting :guilabel:`Open Webapps Directory` from the GeoServer menu and then navigating to :file:`geoserver/WEB-INF/lib`.
-
-   .. figure:: ../../intro/installation/mac/img/ext_webappsmenu.png
-
-      Opening the webapps directory from the GeoServer menu
-
-Once copied, GeoServer will need to be restarted to take effect.
-
-Ubuntu Linux
-~~~~~~~~~~~~
-
-The CloudWatch extension can be added to OpenGeo Suite by installing the ``geoserver-cloudwatch`` package:
-
-.. code-block:: console
-
-   apt-get install geoserver-cloudwatch
-
-.. note:: This command will need to be run as root or with :command:`sudo`.
-
-Red Hat Linux
-~~~~~~~~~~~~~
-
-The CloudWatch extension can be added to OpenGeo Suite by installing the ``geoserver-cloudwatch`` package:
-
-.. code-block:: console
-
-   yum install geoserver-cloudwatch
-
-.. note:: This command will need to be run as root or with :command:`sudo`.
-
-Application servers
-~~~~~~~~~~~~~~~~~~~
-
-The CloudWatch extension can be added to OpenGeo Suite by copying the contents of the :file:`geopackage` extension directory (not the directory itself) to the GeoServer library directory. If GeoServer is installed at :file:`/opt/tomcat/webapps/geoserver`, the GeoServer library directory will be found at :file:`/opt/tomcat/webapps/geoserver/WEB-INF/lib`.
-
-After copying files, the application server or GeoServer will need to be restarted.
 
 Configuration
 -------------
 
-Next, a number of variables will need to be configured.
+Cloudwatch has a number of configuration parameters used to control the extension.
 
 These can be configured in the standard three ways: by setting environment variables, by employing Java command line parameters, or by adding system parameters to the GeoServer :file:`web.xml` file. (See more on :ref:`sysadmin.startup`.)
-
 
 The following are the parameters, along with their description:
 
@@ -138,58 +94,3 @@ Each of the enabled OWS watchers will produce three metrics.
 - The number of requests per second.
 - The number of errors per second.
 - The median processing time per request (windowed over approximately five minutes).
-
-As an example of usage, on Linux running Tomcat, one could edit the :file:`/usr/share/tomcat7/setenv.sh` file and add the following block:
-
-.. code-block:: bash
-
-    GS_CW_INTERVAL=60000
-
-    # AWS Authentication
-    export AWS_ACCESS_KEY_ID=MY_KEY
-    export AWS_SECRET_KEY=MY_SECRET_KEY
-
-    # Instance specific settings
-    export GS_CW_ENABLE_PER_INSTANCE_METRICS=true
-
-    # GeoServer metrics
-    export GS_CW_WATCH_WMS=true
-    export GS_CW_WATCH_WFS=true
-    export GS_CW_WATCH_WPS=true
-
-The exact same usage in the Windows installer would be accomplished by adding the following to the :file:`start.ini` file (often in :file:`C:\\Program Files\\Boundless\\OpenGeo\\jetty\\` or :file:`C:\\Program Files (x86)\\Boundless\\OpenGeo\\jetty\\`):
-
-.. code-block:: console
-
-    -DGS_CW_INTERVAL=60000
-
-    # AWS Authentication
-    -DAWS_ACCESS_KEY_ID=MY_KEY
-    -DAWS_SECRET_KEY=MY_SECRET_KEY
-
-    # Instance specific settings
-    -DGS_CW_ENABLE_PER_INSTANCE_METRICS=true
-
-    # GeoServer metrics
-    -DGS_CW_WATCH_WMS=true
-    -DGS_CW_WATCH_WFS=true
-    -DGS_CW_WATCH_WPS=true
-
-After these changes have been made, restart GeoServer.
-
-Verifying installation
-----------------------
-
-To confirm that the extension is working as intended:
-
-#. Access your account's `CloudWatch panel <https://console.aws.amazon.com/cloudwatch/home>`_.
-
-#. Select :guilabel:`geoserver` in the menu on the left.
-
-#. There should now be a list of metrics. Click on the checkboxes to add or remove them from the chart.
-
-.. figure:: img/cloudwatch_panel.png
-
-   CloudWatch panel showing GeoServer
-
-You can now monitor the load on your GeoServer instance and enable alarms to notify you of extreme events.

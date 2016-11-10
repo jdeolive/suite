@@ -3,7 +3,10 @@
 Working with your data 
 ======================
 
-This section describes some strategies on how to work with your data using OpenGeo Suite, including connecting from databases and using the GeoServer Layer Importer.
+This section describes some strategies on how to work with your data using Boundless Suite, including connecting from databases and using the GeoServer Layer Importer.
+
+Working with PostGIS
+--------------------
 
 .. toctree::
    :maxdepth: 2
@@ -13,10 +16,38 @@ This section describes some strategies on how to work with your data using OpenG
    pgAdvanced/index
    pgDBAdmin/index
    pointcloud/index
+
+Working with GeoServer
+----------------------
+
+.. toctree::
+   :maxdepth: 2
+
+   importer/index
+   vectortiles/index
+
+Working with raster data in GeoServer
+-------------------------------------
+
+.. toctree::
+   :maxdepth: 2
+
+   grib/index
+   gdal/index
+   jp2k/index
+   mbtiles/index
+   mrsid/index
+   netcdf/index
+   
+Working with external databases in GeoServer
+--------------------------------------------
+
+.. toctree::
+   :maxdepth: 2
+
+   geopackage/index
    oracle/index
    mongodb/index
-   geomesa/index
-   gdal/index
-   mrsid/index
-   geopackage/index
-   importer/index
+
+
+

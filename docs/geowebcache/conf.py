@@ -14,6 +14,8 @@
 import sys, os, string
 sys.path.append('../../../build'); from build_properties import *
 
+from datetime import date
+
 # If your extensions are in another directory, add it here. If the directory
 # is relative to the documentation root, use os.path.abspath to make it
 # absolute, like shown here.
@@ -40,7 +42,7 @@ master_doc = 'index'
 # General substitutions.
 project = u'GeoWebCache'
 manual = u'User Manual'
-copyright = u'CC BY-SA 3.0'
+copyright = u'© ' + str(date.today().year) + u' <a href="http://boundlessgeo.com" class="normal-text">Boundless</a>. License <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike</a>'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.

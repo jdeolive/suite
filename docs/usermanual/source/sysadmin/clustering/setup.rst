@@ -3,48 +3,15 @@
 Setting up the clustering extension
 ===================================
 
-Upon installation of the clustering extension, GeoServer will still be using the original file-based data directory. In order to make use of the clustering extension, some configuration files will need to be edited and GeoServer restarted.
+After following the steps to install and configure JDBCConfig and Clustering, your GeoServer configuration will be stored in a JDBC database. The following process will detail how to set up an initial cluster from this point. The specific network details will change depending on your system.
 
-.. note:: Configuration of the clustering extension, as it involves changes to the data directory, must be done through configuration files. It cannot be done through the UI. It is also not possible to use the REST API to configure the clustering extension.
-
-The following process will detail how to set up an initial cluster. The specific network details will change depending on your system.
-
-.. note:: This setup assumes that a load balancer (such as `HAProxy <http://haproxy.1wt.eu/>`_ will be employed in front of GeoServer. The details of the configuration of the load balancer are beyond the scope of this documentation.
-
-
-Database setup
---------------
+.. warning:: Make sure you have set the data directory to be external to the GeoServer installation, in a shared location that all GeoServer instances will be able to access.
 
 .. warning:: Setting up a database for the data directory is a **one-way process**. It is not currently possible to export the configuration back to a file-based data directory.
 
-The following databases are supported for containing the data directory:
+.. note:: Configuration of the clustering extension, as it involves changes to the data directory, must be done through configuration files. It cannot be done through the UI. It is also not possible to use the REST API to configure the clustering extension.
 
-* PostgreSQL
-* H2
-
-To set up the shared database that will contain the data directory:
-
-#. Create a database, as well as a role able to create tables in that database.
-
-#. Install GeoServer, if it is not already installed, but make sure it is not running. The data directory associated with this instance will be the one that is ingested into the database.
-
-   .. warning:: Make sure you have set the data directory to be external to the GeoServer installation, in a shared location that all GeoServer instances will be able to access.
-
-#. Open the file :file:`<data_dir>/jdbcconfig/jdbcconfig.properties` in a text editor, where ``<data_dir>`` is the location of the current file-based data directory.
-
-#. Replace the lines::
-
-     initdb=false
-     import=false
-
-   with the lines::
-
-     initdb=true
-     import=true
-     
-#. Set the connection information for the database created earlier. The specifics of these parameters will depend on the choice of database used, as well as whether you are using JNDI. See the :ref:`sysadmin.clustering.params` for more details on the options available.
-
-#. Save and close this file.
+.. note:: This setup assumes that a load balancer (such as `HAProxy <http://haproxy.1wt.eu/>`_ will be employed in front of GeoServer. The details of the configuration of the load balancer are beyond the scope of this documentation.
 
 Broadcasting setup
 ------------------
@@ -68,9 +35,15 @@ Verification
 
 #. Start GeoServer and log in as an administrator to the web interface.
 
-#. If clustering extension is working, you will see two messages on the Welcome page: one about JDBCConfig and the other about clustering.
+#. If the clustering extension is working, you will see two messages on the Welcome page: one about JDBCConfig and the other about clustering.
 
-   .. todo:: Screenshot needed.
+   .. figure:: /install/include/ext/img/jdbcconfig_status.png
+
+      JDBCConfig status
+
+   .. figure:: /install/include/ext/img/cluster_status.png
+
+      Clustering status
 
 #. Confirm that the JDBC message lists the correct JDBC URL. Also confirm that the layers, stores, and other catalog objects have been imported correctly by viewing the list and them in the Layer Preview.
 
@@ -92,7 +65,7 @@ Session sharing
 
 *(Optional but recommended)* HTTP session sharing is not enabled by default. To enable session sharing:
 
-#. Open the file :file:`<webapps>/geoserver/WEB-INF/web.xml` in a text editor.
+#. Open the file :file:`$CATALINA_HOME/webapps/geoserver/WEB-INF/web.xml` in a text editor.
 
 #. Add this block of text as the first ``filter`` in the file.
 

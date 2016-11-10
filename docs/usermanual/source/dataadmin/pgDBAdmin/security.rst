@@ -115,7 +115,7 @@ Database columns can be encrypted using the pgcrypto_ module, which includes has
 SSL connections
 ~~~~~~~~~~~~~~~
 
-To use SSL connections, both your client and server must support SSL. OpenGeo Suite provides PostgreSQL with SSL support, but SSL is not enabled by default.  To enable SLL support:
+To use SSL connections, both your client and server must support SSL. Boundless Suite provides PostgreSQL with SSL support, but SSL is not enabled by default.  To enable SLL support:
 
  1. Shut down the PostgreSQL service.
  2. Acquire or generate an SSL certificate and key. The certificate must not include a passphrase otherwise the database server won't be able to start up. To generate a self-signed key, enter the following:
@@ -134,7 +134,7 @@ To use SSL connections, both your client and server must support SSL. OpenGeo Su
      # Set the permission of the key to private read/write
      chmod og-rwx server.key
      
- 3. Copy the ``server.crt`` and ``server.key`` into the OpenGeo Suite PostgreSQL installation folder's data directory (``pgdata``).
+ 3. Copy the ``server.crt`` and ``server.key`` into the Boundless Suite PostgreSQL installation folder's data directory (``pgdata``).
 
  4. Enable SSL support in the ``postgresql.conf`` file and set the ssl :guilabel:`Value` to *on*.
 

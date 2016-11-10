@@ -1,0 +1,9 @@
+To install :ref:`Clustering <sysadmin.clustering>` support in GeoServer, you will need to copy some files to the proper location. The files to be copied are inside the Boundless Suite extensions bundle (:file:`BoundlessSuite-ext.zip`).
+
+.. note:: The Clustering extension requires JDBCConfig to be installed and enabled. Refer to the instructions further down this page for installing these extensions before proceeding to install Clustering
+
+#. Inside the Boundless Suite extensions bundle, navigate to the :file:`cluster` directory.
+
+#. Copy the contents of the :file:`cluster` directory into the library directory (:file:`WEB-INF\\lib`) of your GeoServer instance. For example, if your GeoServer application is located at :file:`C:\\Program Files\\Tomcat\\webapps\\geoserver`, copy the files to :file:`C:\\Program Files\\Tomcat\\webapps\\geoserver\\WEB-INF\\lib`.
+
+#. Restart the server.

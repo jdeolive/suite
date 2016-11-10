@@ -3,9 +3,9 @@
 Allowing read-write access to vector data through transactions
 ==============================================================
 
-OpenGeo Suite contains a full Web Feature Service (WFS) implementation. This also includes support for WFS Transactions (WFS-T).
+Boundless Suite contains a full Web Feature Service (WFS) implementation. This also includes support for WFS Transactions (WFS-T).
 
-However, as unrestricted write access to data is a security risk, the WFS in OpenGeo Suite is set to "Basic" by default. This means that the only requests that will be accepted are:
+However, as unrestricted write access to data is a security risk, the WFS in Boundless Suite is set to "Basic" by default. This means that the only requests that will be accepted are:
 
 * GetCapabilites
 * DescribeFeatureType
@@ -33,7 +33,7 @@ However, as unrestricted write access to data is a security risk, the WFS in Ope
 
 #. Click :guilabel:`Save`.
 
-If you are using **the default data directory** shipped with OpenGeo Suite, you can easily test that transactions are enabled:
+If you are using **the default data directory** shipped with Boundless Suite, you can easily test that transactions are enabled:
 
 #. On the left side of the page, click :guilabel:`Demos` and then click :guilabel:`Demo Requests`.
 

@@ -4,7 +4,7 @@
 Getting started with PostGIS
 ============================
 
-This section describes how to get started with the PostGIS database included in OpenGeo Suite—connecting to the database, loading data, and some basic SQL commands.
+This section describes how to get started with the PostGIS database included in Boundless Suite—connecting to the database, loading data, and some basic SQL commands.
 
 
 .. toctree::
@@ -14,7 +14,6 @@ This section describes how to get started with the PostGIS database included in 
    pgadmin
    createdb
    shp2pgsql
-   pgshapeloader
    raster2pgsql
    restload
    basicsql

@@ -3,7 +3,7 @@
 Transforms
 ==========
 
-YSLD allows for the use of :ref:`rendering transformations <cartography.rt>`. Rendering transformations are processes on the server that are executed inside the rendering pipeline, to allow for dynamic data transformations. In OpenGeo Suite, rendering transformations are typically exposed as WPS processes.
+YSLD allows for the use of :ref:`rendering transformations <cartography.rt>`. Rendering transformations are processes on the server that are executed inside the rendering pipeline, to allow for dynamic data transformations. In Boundless Suite, rendering transformations are typically exposed as WPS processes.
 
 For example, one could create a style that applies to a point layer, and applies a Heatmap process as a rendering transformation, making the output a (raster) heatmap.
 
@@ -120,7 +120,7 @@ The point stacker transform can be used to combine points that are close togethe
    - transform:
        name: vec:PointStacker
        params:
-       cellSize: 100
+         cellSize: 100
      rules:
      - symbolizers:
        - point:

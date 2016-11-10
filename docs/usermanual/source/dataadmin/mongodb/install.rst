@@ -1,13 +1,18 @@
 .. _dataadmin.mongodb.install:
 
+Installing MongoDB support
+==========================
+
 Installation
-============
+------------
 
-MongoDB is an extension to OpenGeo Suite, specifically GeoServer. As such it can be enabled through the standard :ref:`extension install <intro.extensions>` process.
+MongoDB support isn't enabled by default, so it must be separately installed through an extension.
 
-* On Windows, the GeoServer Extension is called :guilabel:`MongoDB`.
-* On OS X, the folder that contains the files to copy is called :guilabel:`mongodb`.
-* On all Linux versions, the package to install is called ``geoserver-mongodb``.
-* For application servers, the extensions bundle will contain a directory called ``mongodb``.
+.. include:: ../include/ext_install_links.txt
 
-To verify successful installation, please see the next section on adding a store.
+Verifying installation
+----------------------
+
+.. include:: ../../install/include/ext/mongodb_verify.txt
+
+For more information on adding a store and publishing layers, please see the :ref:`continue with the MongoDB tutorial <dataadmin.mongodb.store>`.

@@ -1,0 +1,14 @@
+<project name="geoserver-community" default="build">
+  <target name="clean">
+    <ant dir="../geoserver" target="clean-community" inheritAll="false"/>
+  </target>
+  <target name="build">
+    <ant dir="../geoserver" target="build-community" inheritAll="false"/>
+  </target>
+  <target name="assemble">
+    <ant dir="../geoserver" target="assemble-community" inheritAll="false"/>
+  </target>
+  <target name="publish">
+    <ant dir="../geoserver" target="publish-community" inheritAll="false"/>
+  </target>
+</project>

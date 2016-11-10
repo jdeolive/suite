@@ -7,6 +7,7 @@ import com.boundlessgeo.geoserver.json.JSONObj;
 import org.geoserver.security.impl.GeoServerUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -46,6 +47,9 @@ public class LoginController {
         if (principal instanceof GeoServerUser) {
             GeoServerUser user = (GeoServerUser) principal;
             obj.put("user", user.getUsername());
+        //PKI Authentication
+        } else if (auth instanceof PreAuthenticatedAuthenticationToken && principal instanceof String) {
+            obj.put("user", principal);
         }
 
         return obj;

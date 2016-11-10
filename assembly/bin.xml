@@ -18,43 +18,28 @@
       <outputDirectory>webapps/geowebcache</outputDirectory>
     </fileSet>
     <fileSet>
-      <directory>geoexplorer/target/geoexplorer</directory>
-      <outputDirectory>webapps/geoexplorer</outputDirectory>
-      <excludes>
-        <exclude>doc/**</exclude>
-      </excludes>
-    </fileSet>
-    <fileSet>
       <directory>docs/usermanual/target/html</directory>
-      <outputDirectory>webapps/opengeo-docs</outputDirectory>
-    </fileSet>
-    <fileSet>
-      <directory>docs/geoexplorer/target/html</directory>
-      <outputDirectory>webapps/opengeo-docs/geoexplorer</outputDirectory>
+      <outputDirectory>webapps/suite-docs</outputDirectory>
     </fileSet>
     <fileSet>
       <directory>docs/geoserver/target/html</directory>
-      <outputDirectory>webapps/opengeo-docs/geoserver</outputDirectory>
+      <outputDirectory>webapps/suite-docs/geoserver</outputDirectory>
     </fileSet>
     <fileSet>
       <directory>docs/postgis/target/html</directory>
-      <outputDirectory>webapps/opengeo-docs/postgis</outputDirectory>
+      <outputDirectory>webapps/suite-docs/postgis</outputDirectory>
     </fileSet>
     <fileSet>
       <directory>docs/geowebcache/target/html</directory>
-      <outputDirectory>webapps/opengeo-docs/geowebcache</outputDirectory>
-    </fileSet>
-    <fileSet>
-      <directory>docs/sdk-api/target/html</directory>
-      <outputDirectory>webapps/opengeo-docs/sdk-api</outputDirectory>
+      <outputDirectory>webapps/suite-docs/geowebcache</outputDirectory>
     </fileSet>
     <fileSet>
       <directory>docs/openlayers/target/html</directory>
-      <outputDirectory>webapps/opengeo-docs/openlayers</outputDirectory>
+      <outputDirectory>webapps/suite-docs/openlayers</outputDirectory>
     </fileSet>
     <fileSet>
       <directory>docs/qgis/target/html</directory>
-      <outputDirectory>webapps/opengeo-docs/qgis</outputDirectory>
+      <outputDirectory>webapps/suite-docs/qgis</outputDirectory>
     </fileSet>
     <fileSet>
       <directory>recipes</directory>

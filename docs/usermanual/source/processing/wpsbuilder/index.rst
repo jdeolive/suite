@@ -5,8 +5,6 @@ Executing processes using WPS Builder
 
 WPS Builder allows for the creating of graphical process workflows that can be easily executed and reproduced. Processes that are available are the same as those available in GeoServer.
 
-.. note:: WPS Builder is only available with `OpenGeo Suite Enterprise <http://boundlessgeo.com/solutions/opengeo-suite/>`_. For more information on OpenGeo Suite Enterprise, please `contact us <http://boundlessgeo.com/about/contact-us/sales/>`_.
-
 .. figure:: img/wpsbuilder.png
 
    WPS Builder application
@@ -133,7 +131,7 @@ Or a geometry can be input via a text box, in either Well-Known Text (WKT) or GM
 
    WKT input 
 
-Once you have entered or selected a value, click the :guilabel:`Save` button. Some parameter types need to be validated, and this validation will be shown here.
+Some parameter types require validation. The validity will be shown below the text box.
 
 .. figure:: img/invalid_value.png
 

@@ -1,0 +1,16 @@
+To verify that the extension has been installed properly:
+
+#. Log in to the GeoServer web interface.
+
+#. Click :guilabel:`Stores` then :guilabel:`Add new store`.
+
+#. In the list of :guilabel:`Vector Data Stores`, you should see **three entries** that mention Oracle:
+
+   .. figure:: /install/include/ext/img/oracle_storelink.png
+
+      Oracle in the list of vector stores
+
+   If you don't see all three entries, then the Oracle JDBC driver was not copied to the correct location. The file must be copied to the same directory as the rest of the extension files.
+
+   If you don't see any entries, the extension itself did not install correctly.
+   

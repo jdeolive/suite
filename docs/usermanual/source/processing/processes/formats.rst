@@ -41,9 +41,7 @@ HTTP request (REFERENCE)
 
 Processes can also accept inputs from the result of an HTTP GET or POST request. This request (often a WFS GetFeature request or equivalent) should output GML or WKT.
 
-For example:
-
-.. code-block:: xml
+For example::
 
    <wps:Reference mimeType="text/xml; subtype=gml/3.1.1"\
     xlink:href="http://example.com:8080/geoserver?myrequest" method="GET"/>
@@ -94,9 +92,7 @@ HTTP request (REFERENCE)
 
 Processes that accept feature collections as input can take the input from the result of an HTTP GET or POST request. This request (often a WFS GetFeature request or equivalent) should output either a WFS collection or JSON.
 
-For example:
-
-.. code-block:: xml
+For example::
 
    <wps:Reference mimeType="text/xml; subtype=gml/3.1.1"\
     xlink:href="http://example.com:8080/geoserver?myrequest" method="GET"/>
@@ -170,9 +166,7 @@ HTTP request (REFERENCE)
 
 Processes that accept rasters as input can take the input from the result of an HTTP GET or POST request. This request (often a :term:`WCS` GetCoverage request or equivalent) should output either TIFF or ArcGrid image data.
 
-For example:
-
-.. code-block:: xml
+For example::
 
    <wps:Reference mimeType="text/xml; subtype=gml/3.1.1"\
     xlink:href="http://example.com:8080/geoserver?myrequest" method="GET"/>

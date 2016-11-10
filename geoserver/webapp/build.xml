@@ -4,96 +4,37 @@
   <property name="data.dir" value="../data_dir/target"/>
   <property name="war.dir" value="target/geoserver"/>
   <property name="war.file" value="${war.dir}.war"/>
-  <property name="composer.dir" value="target/composer"/>
 
-  <target name="build" depends="init,build-client,build-server" 
-    description="Builds project">
-  </target>
-
-  <target name="build-client" description="builds client">
-    <if>
-      <available file="composer/build.xml"/>
-      <then>
-        <ant antfile="composer/build.xml" useNativeBasedir="true" />
-        <mkdir dir="${composer.dir}"/>
-        <copy todir="${composer.dir}">
-          <fileset dir="composer/build" includes="**/*"/>
-          <fileset dir="composer/app" includes="LICENSE.txt"/>
-        </copy>
-      </then>
-    </if>
-  </target>
+  <target name="build" depends="init,build-server" description="Builds project" />
 
   <target name="build-server" description="builds and installs server">
     <antcall target="mvn">
-        <param name="goals" value="install"/>
-        <param name="flags" value="-DskipTests"/>
+      <param name="goals" value="install"/>
+      <param name="flags" value="-DskipTests"/>
     </antcall>
-    <if>
-      <equals arg1="${suite.build_profile}" arg2="ee"/>
-      <then>
-        <antcall target="mvn">
-          <param name="dir" value="ee"/>
-          <param name="goals" value="install"/>
-          <param name="flags" value="-DskipTests"/>
-        </antcall>
-      </then>
-    </if>
   </target>
 
-  <target name="clean" depends="destroy">
-    <if>
-      <available file="composer/build.xml"/>
-      <then>
-        <ant antfile="composer/build.xml" target="clean" useNativeBasedir="true" />
-      </then>
-    </if>
-  </target>
+  <target name="clean" depends="destroy" />
 
-  <target name="assemble">
-    <available file="${data.dir}/global.xml" property="dataDirIsAvailable"/>
-    <fail message="Data dir ${data.dir} not present, build ../data_dir first"
-      unless="dataDirIsAvailable"/>  
-
-    <mkdir dir="${war.dir}/data"/>
-    <copy todir="${war.dir}/data">
-      <fileset dir="${data.dir}" excludes="*.zip"/>
-    </copy>
+  <target name="assemble"> 
+    <delete dir="${war.dir}/data"/>
 
     <delete file="${war.file}"/>
-    <if>
-        <equals arg1="${suite.build_profile}" arg2="ee"/>
-        <then>
-          <sequential>
-            <copy todir="${war.dir}">
-              <fileset dir="target" includes="composer/**/*"/>
-            </copy>
-            <copy todir="${war.dir}/WEB-INF/lib">
-              <fileset dir="ee/target" includes="*.jar"/>
-            </copy>
-          </sequential>
-        </then>
-    </if>
 
-    <jar destfile="${war.file}" basedir="${war.dir}" />
+    <jar destfile="${war.file}">
+      <fileset dir="${war.dir}">
+        <!-- Exclude these jars which contain a security vulnerability. We are still pulling in the fixed / hacked versions from gs-main-->
+        <exclude name="**/lib/commons-beanutils-1.7.0.jar"/>
+        <exclude name="**/lib/org.restlet-1.0.8.jar"/>
+      </fileset>
+    </jar>
     <antcall target="assemble-artifact">
       <param name="includes" value="*.war"/>
     </antcall>
-
-    <!--
-    <antcall target="assemble-artifact">
-      <param name="name" value="composer"/>
-      <param name="includes" value="composer/**/*"/>
-    </antcall>
-    -->
   </target>
 
   <target name="publish">
     <antcall target="publish-artifact"/>
-    <!--antcall target="publish-artifact">
-      <param name="name" value="composer"/>
-      <param name="path" value="composer"/>
-    </antcall-->
   </target>
 
   <target name="serve" description="Runs GeoServer">

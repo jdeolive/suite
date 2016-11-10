@@ -1,0 +1,43 @@
+#. In the extensions bundle, navigate to the :file:`windows` directory.
+
+#. Run the :file:`vcredist_x86.exe` file, accepting all defaults.
+
+#. Inside the same directory, there is a file named :file:`GDAL-suite-windows.zip`. Extract the contents of this archive to an appropriate directory such as :file:`C:\\GDAL`.
+
+#. Add :file:`C:\\GDAL` to your path:
+
+   .. note:: This example shows how to add :file:`C:\\NEW_DIRECTORY` to your Path.  Instead of adding :file:`C:\\NEW_DIRECTORY`, add :file:`C:\\GDAL` to your Path.
+
+
+
+   .. include:: /install/windows/include/updatePATH.txt
+     
+#. Create a new :guilabel:`System Variable` called :guilabel:`GDAL_DATA` that has the value :file:`C:\\GDAL\\gdal_data`:
+
+   .. figure:: /install/include/ext/img/gdal_data_win.png
+
+#. Verify installation by opening a :guilabel:`Command Prompt` and typing ``gdalinfo --version``. You should see the version information of the utility.
+
+#. Use :menuselection:`Start --> Apache Tomcat --> Configure Tomcat` to open :guilabel:`Apache Tomcat Properties`. Switch to the :guilabel:`Java` tab.
+
+#. Under :guilabel:`Java Options`, add the following line::
+
+     -Djava.library.path=C:\GDAL
+    
+
+#. Click :guilabel:`Apply`.
+     
+   .. note::
+
+      If you already have an existing ``-Djava.library.path=`` entry in your :guilabel:`Java Options`, append the new path to the end of the line, separated by a semicolon. For example::
+
+        -Djava.library.path=C:\libjpeg-turbo\bin;C:\GDAL
+
+#. Inside the Boundless Suite extensions bundle, navigate to the :file:`gdal` directory.
+
+#. Copy the contents of the :file:`gdal` directory into the library directory (:file:`WEB-INF\\lib`) of your GeoServer instance. For example, if your GeoServer application is located at :file:`C:\\Program Files\\Tomcat\\webapps\\geoserver`, copy the files to :file:`C:\\Program Files\\Tomcat\\webapps\\geoserver\\WEB-INF\\lib`.
+
+#. Copy the :file:`gdal-1.11.2.jar` file from :file:`C:\GDAL` to the same library directory as above.
+
+#. Stop and start the server.
+   

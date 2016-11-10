@@ -1,0 +1,21 @@
+To verify that the extension has been installed properly:
+
+#. Log in to the GeoServer web interface.
+
+#. You should see a menu titled :guilabel:`GeoMesa`.
+
+   .. figure:: /install/include/ext/img/geomesa_menu.png
+
+      GeoMesa menu
+
+   If you don't see this menu, the extension did not install correctly.
+
+#. Click :guilabel:`Stores` then :guilabel:`Add new store`.
+
+#. In the list of :guilabel:`Vector Data Stores`, you should see an entry for :guilabel:`Accumulo (GeoMesa)`.
+
+   .. figure:: /install/include/ext/img/geomesa_storelink.png
+
+      GeoMesa in the list of raster stores
+
+   If you don't see this entry, the extension did not install correctly.

@@ -8,7 +8,7 @@ then
   exit 1
 fi
 
-doc_dirs="geoexplorer geoserver geowebcache install sdk-api usermanual"
+doc_dirs="geoserver geowebcache install usermanual"
 bad_modules=""
 cd ${1}
 

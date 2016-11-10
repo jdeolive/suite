@@ -22,7 +22,7 @@ Select one of the following data sources to use for the import:
 
 .. figure:: img/sources_choosesourcefiles.png
 
-   *Choose a data source*
+   Choose a data source
 
 The contents of the next section is dependent on the data source chosen here.
 
@@ -33,11 +33,11 @@ There is a single box for selecting a file or directory. Click the :guilabel:`Br
 
 .. figure:: img/sources_spatialfiles.png
 
-   *Spatial file data source*
+   Spatial file data source
 
 .. figure:: img/sources_filechooser.png
 
-   *File chooser for selecting spatial files*
+   File chooser for selecting spatial files
 
 Configure the data source: PostGIS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -48,20 +48,18 @@ There are also advanced connection options, which are common to the standard Pos
 
 .. figure:: img/sources_postgis.png
 
-   *PostGIS data source connection*
+   PostGIS data source connection
 
 Configure the data source: Oracle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The parameter fields for the Oracle import are identical to that of PostGIS. The fields aren't populated with default credentials with the exception of the port, which is set to **1521** by default.
 
-.. note:: This option is only enabled if the Oracle proprietary driver is installed in the GeoServer instance. This driver (typically named :file:`ojdbc*.jar`) is not available from OpenGeo, and must be obtained through the Oracle instance or by contacting Oracle.
-
-.. todo:: See the specific install instructions for Oracle when SUITE-1141 is complete.
+.. note:: This option is only enabled if the Oracle proprietary driver is installed in the GeoServer instance. This driver (typically named :file:`ojdbc*.jar`) is not available from Boundless, and must be obtained through the Oracle instance or by contacting Oracle.
 
 .. figure:: img/sources_oracle.png
 
-   *Oracle data source connection*
+   Oracle data source connection
 
 Configure the data source: SQL Server
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -70,11 +68,9 @@ The parameter fields for the SQL Server import are identical to that of PostGIS.
 
 .. note:: This option is only enabled if the SQL Server proprietary driver is installed in the GeoServer instance. This driver (typically named :file:`sqljdbc*.jar`) is not available from OpenGeo, and must be obtained through the SQL Server instance or by contacting Microsoft.
 
-.. todo:: See the specific install instructions for SQL Server when SUITE-1141 is complete.
-
 .. figure:: img/sources_sqlserver.png
 
-   *SQL Server data source connection*
+   SQL Server data source connection
 
 Specify the target for the import
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -85,7 +81,7 @@ Select the name of an existing workspace and store.
 
 .. figure:: img/sources_target.png
 
-   *Target workspace and store in GeoServer*
+   Target workspace and store in GeoServer
 
 Alternately, select :guilabel:`Create New` and type in a names for a new workspace or store. During the import process, these will be created.
 
@@ -93,7 +89,7 @@ Alternately, select :guilabel:`Create New` and type in a names for a new workspa
 
 .. figure:: img/sources_newworkspace.png
 
-   *Creating a new workspace and store*
+   Creating a new workspace and store
 
 If PostGIS is installed and configured properly on this GeoServer instance, selecting the :guilabel:`opengeo` workspace and the :guilabel:`postgis` store will cause the imported data to be automatically converted to tables in PostGIS (specifically, the ``geoserver`` database). Otherwise, the contents will remain in their source formats.
 
@@ -104,7 +100,7 @@ This section will list previous imports, and whether they were successful or not
 
 .. figure:: img/sources_recentimports.png
 
-   *Recent imports*
+   Recent imports
 
 When ready to continue to the next page, click :guilabel:`Next`.
 
@@ -117,23 +113,23 @@ All layers will be selected for import by default, but can be deselected here by
 
 .. figure:: img/layerlist_select.png
 
-   *List of layers to be imported*
+   List of layers to be imported
 
 A common issue during the import process is when a :term:`CRS` cannot be determined for a given layer. In this case, a dialog box will display where the CRS can be declared explicitly. Enter the CRS and Click :guilabel:`Apply`.
 
 .. figure:: img/layerlist_crs.png
 
-   *Declaring a CRS*
+   Declaring a CRS
 
 When ready to perform the import, click :guilabel:`Import`.
 
 Each selected layer will be added to the GeoServer catalog inside a new or existing store, and published as a layer.
 
-After the import is complete the status area will refresh showing if the import was successful for each layer. If successful, a dialog box for previewing the layer will be displayed, with options for :guilabel:`Layer Preview` (OpenLayers), :guilabel:`Google Earth`, and :guilabel:`GeoExplorer`.
+After the import is complete the status area will refresh showing if the import was successful for each layer. If successful, a dialog box for previewing the layer will be displayed, with options for :guilabel:`Layer Preview` (OpenLayers) and :guilabel:`Google Earth`.
 
 .. figure:: img/layerlist_success.png
 
-   *Layers successfully imported*
+   Layers successfully imported
 
 Advanced import settings page
 -----------------------------
@@ -148,5 +144,5 @@ Click :guilabel:`Save` when finished.
 
 .. figure:: img/advanced.png
 
-   *Advanced layer list page*
+   Advanced layer list page
 

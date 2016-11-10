@@ -14,6 +14,8 @@
 import sys, os, string
 sys.path.append('../../../build'); from build_properties import *
 
+from datetime import date
+
 # If your extensions are in another directory, add it here. If the directory
 # is relative to the documentation root, use os.path.abspath to make it
 # absolute, like shown here.
@@ -41,7 +43,7 @@ master_doc = 'index'
 # General substitutions.
 project = u'PostGIS'
 manual = u'User Manual'
-copyright = u'CC BY-SA 3.0, Postgis.net'
+copyright = u'© ' + str(date.today().year) + u' Postgis.net. License <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike</a>'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
@@ -101,7 +103,7 @@ html_theme_options = {
   'is_community': True, # Community Docs flag for Suite component docs
   'display_zendesk': True, # Display link to report doc bugs to Suite Zendesk
   'display_version': True,  # Whether to show version number
-  'suite_url': 'postgis' # the url path within Suite e.g. sdk-api for opengeo-docs/sdk-api
+  'suite_url': 'postgis' # the url path within Suite e.g. sdk-api for suite-docs/sdk-api
 
 }
 

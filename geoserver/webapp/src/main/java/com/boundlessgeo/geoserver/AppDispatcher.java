@@ -28,7 +28,6 @@ import java.util.List;
 public class AppDispatcher extends DispatcherServlet {
 
     static final String API_PATH = "/api";
-    static final String COMPOSER_PATH = "/composer";
 
     ResourceHttpRequestHandler appHandler;
 
@@ -39,33 +38,6 @@ public class AppDispatcher extends DispatcherServlet {
 
         ServletContextResource composerRoot = new ServletContextResource(config.getServletContext(), "/composer/");
         appHandler.setApplicationContext(getWebApplicationContext());
-        appHandler.setLocations((List)Arrays.asList(composerRoot));
-
-    }
-
-    @Override
-    protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        if (request.getServletPath().startsWith(COMPOSER_PATH) && !request.getPathInfo().startsWith(API_PATH)) {
-            String path = request.getPathInfo();
-
-            // handle redirect
-            if ("".equals(path)) {
-                response.sendRedirect(COMPOSER_PATH.substring(1) + "/");
-                return;
-            }
-
-            // handle index
-            if ("/".equals(path)) {
-                // index.html
-                path = "/index.html";
-            }
-
-            request.setAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE, path);
-            appHandler.handleRequest(request, response);
-        }
-        else {
-            super.doDispatch(request, response);
-        }
     }
 
     @Override

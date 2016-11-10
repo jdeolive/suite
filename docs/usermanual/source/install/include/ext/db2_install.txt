@@ -1,0 +1,11 @@
+To install :ref:`DB2 <intro.extensions.db2>` support in GeoServer, you will need to copy some files to the proper location. The files to be copied are inside the Boundless Suite extensions bundle (:file:`BoundlessSuite-ext.zip`).
+
+#. Inside the Boundless Suite extensions bundle, navigate to the :file:`db2` directory.
+
+#. Copy the contents of the :file:`db2` directory into the library directory (:file:`WEB-INF/lib`) of your GeoServer instance. For example, if your GeoServer application is located at :file:`/usr/share/tomcat/webapps/geoserver`, copy the files to :file:`/usr/share/tomcat/webapps/geoserver/WEB-INF/lib`.
+
+Because of licensing issues, **two additional files are required to be installed**.
+
+#. Copy :file:`db2jcc.jar` and :file:`db2jcc_license_cu.jar` from the :file:`java` subdirectory of your DB2 installation directory to the same directory specified above.
+
+#. Restart the server.

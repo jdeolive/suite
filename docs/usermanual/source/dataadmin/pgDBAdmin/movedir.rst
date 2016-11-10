@@ -27,6 +27,8 @@ Please see the instructions specific to your operating system.
 Windows
 -------
 
+.. note:: PostgreSQL is no longer available from Boundless Suite for Windows. These instructions will only apply if you have a PostgreSQL installation from an older version of Suite. If you are using the Boundless Suite virtual machine on Windows, log into the VM and follow the Ubuntu instructions.
+
 #. Open Windows Services (typically :menuselection:`Control Panel --> Administrative Tools --> Services` or :menuselection:`Start --> Run --> services.msc`) and stop the :guilabel:`OpenGeo PostgreSQL` service.
 
    .. note:: You can also use the :guilabel:`Stop` shortcut for :guilabel:`PostGIS` in the Start Menu.
@@ -47,6 +49,8 @@ Windows
 
 OS X
 ----
+
+.. note:: PostgreSQL is no longer available from Boundless Suite for OS X. These instructions will only apply if you have a PostgreSQL installation from an older version of Suite. If you are using the Boundless Suite virtual machine on OS X, log into the VM and follow the Ubuntu instructions.
 
 #. Quit the PostGIS application using the menu.
 

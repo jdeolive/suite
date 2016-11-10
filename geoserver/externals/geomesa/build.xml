@@ -1,0 +1,47 @@
+<project name="geoserver.geomesa" default="build">
+
+  <import file="../../../build/common.xml"/>
+
+  <property name="geomesa.dir" value="geomesa"/>
+  <property name="geomesa.gs-plugin-dist.dir" value="accumulo-gs-plugin-dist"/>
+
+  <target name="clean" unless="skip.geomesa" description="Clean GeoMesa">
+    <delete dir="target"/>
+    <antcall target="mvn">
+      <param name="dir" value="${geomesa.dir}"/>
+      <param name="goals" value="clean"/>
+    </antcall>
+    <ant dir="${geomesa.gs-plugin-dist.dir}" target="clean" inheritAll="false"/>
+  </target>
+
+  <target name="build" unless="skip.geomesa" description="Build GeoMesa">
+     <antcall target="mvn">
+        <param name="dir" value="${geomesa.dir}"/>
+        <param name="flags" value="-DskipTests"/>
+        <param name="goals" value="install"/>
+     </antcall>
+     <ant dir="${geomesa.gs-plugin-dist.dir}" target="build" inheritAll="false"/>
+  </target>
+
+  <target name="assemble" unless="skip.geomesa" description="Assemble GeoMesa">
+    <!-- CLI tools -->
+    <delete dir="target/geomesa-tools"/>
+    <mkdir dir="target/geomesa-tools"/>
+    <untar compression="gzip" dest="target/geomesa-tools">
+      <fileset dir="${geomesa.dir}/geomesa-tools/target" includes="geomesa-tools-*.tar.gz"/>
+      <cutdirsmapper dirs="1"/>
+    </untar>
+    <antcall target="assemble-artifact" inheritAll="false">
+      <param name="name" value="geomesa-tools"/>
+    </antcall>
+    <!-- GS Plugin -->
+    <ant dir="${geomesa.gs-plugin-dist.dir}" target="assemble" inheritAll="false"/>
+  </target>
+
+  <target name="publish" unless="skip.geomesa">
+    <ant dir="${geomesa.gs-plugin-dist.dir}" target="publish" inheritAll="false"/>
+    <antcall target="publish-artifact" inheritAll="false">
+      <param name="name" value="geomesa-tools"/>
+    </antcall>
+  </target>
+</project>

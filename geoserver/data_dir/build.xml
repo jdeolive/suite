@@ -5,6 +5,7 @@
 
   <target name="clean" depends="destroy">
     <ant dir="${datapack.dir}" target="clean"/>
+    <delete dir="target" failonerror="false" />
   </target>
 
   <target name="build" depends="init"
@@ -12,20 +13,20 @@
     <ant dir="${datapack.dir}"/>
     <ant dir="${datapack.dir}" target="assemble"/>
 
-    <copy todir="target">
+    <copy todir="target/data-dir">
       <fileset dir="${basedir}">
         <exclude name="target/"/>
         <exclude name="externals/"/>
         <exclude name="build.xml"/>
       </fileset>
     </copy>
-    <unzip src="${datapack.dir}/target/default.zip" dest="target"/>
+    <unzip src="${datapack.dir}/target/default.zip" dest="target/data-dir"/>
   </target>
 
   <target name="assemble">
     <antcall target="assemble-artifact">
       <param name="name" value="data-dir"/>
-      <param name="dir" value="target"/>
+      <param name="dir" value="target/data-dir"/>
       <param name="includes" value="**/*"/>
       <param name="excludes" value="*-data-dir-*.zip"/>
     </antcall>

@@ -1,0 +1,18 @@
+<Context docBase="geoserver.war">
+
+  <!-- The location of the GeoServer configuration directory -->
+  <Parameter name="GEOSERVER_DATA_DIR"
+             value="C:\ProgramData\Boundless\geoserver\data"
+             override="false"/>
+
+  <!-- This MUST be the same as GEOSERVER_DATA_DIR but suffixed by "/global.xml" -->
+  <Parameter name="GEOSERVER_REQUIRE_FILE"
+             value="C:\ProgramData\Boundless\geoserver\data\global.xml"
+             override="false"/>
+
+  <!-- The default location of the GWC tile cache -->
+  <Parameter name="GEOWEBCACHE_CACHE_DIR"
+             value="C:\ProgramData\Boundless\geoserver\tilecache"
+             override="false"/>
+
+</Context>

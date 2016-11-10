@@ -165,37 +165,6 @@ Now that all layers are in their appropriate workspaces, verify this by navigati
 
 Scroll down in the document to the ``<Layer>`` section (``<FeatureTypeList>`` for WFS). The layers loaded in that workspace should be listed but should also be the only layers listed.
 
-You can also verify virtual services in `GeoExplorer <../../geoexplorer>`_.
-
-#. Open GeoExplorer.
-
-#. Open the Add Layers dialog.
-
-   .. figure:: img/geoexplorer_addlayerslink.png
-
-      *Adding layers in GeoExplorer*
-
-#. In the select box titled :guilabel:`View available data from:`, select :guilabel:`Add a New Server...`.
-
-   .. figure:: img/geoexplorer_addnewserverlink.png
-
-      *Adding a new WMS server in GeoExplorer*
-
-#. In the :guilabel:`URL` field, enter one of the WMS virtual service endpoints.
-
-   .. figure:: img/geoexplorer_addnewserverdialog.png
-
-      *Entering the virtual service endpoint*
-
-#. Click :guilabel:`Add Server`.
-
-#. The layers listed should be only those loaded into that particular workspace.
-
-   .. figure:: img/geoexplorer_vslayers.png
-
-      *Virtual service layers*
-
-
 Restricting global services
 ---------------------------
 

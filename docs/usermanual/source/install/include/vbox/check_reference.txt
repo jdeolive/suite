@@ -1,0 +1,55 @@
+When connected to your virtual machine, the following commands may be useful:
+
+* **Start GeoServer**:
+
+  .. code-block:: console
+
+     $ sudo service tomcat8 start
+
+* **Stop GeoServer**:
+
+  .. code-block:: console
+
+     $ sudo service tomcat8 stop
+
+* **Start PostgreSQL/PostGIS**:
+
+  .. code-block:: console
+
+     $ sudo service postgresql start
+
+* **Stop PostgreSQL/PostGIS**:
+
+  .. code-block:: console
+
+     $ sudo service postgresql stop
+
+* **Shut down the virtual machine**:
+
+  .. code-block:: console
+
+     $ sudo poweroff
+
+The following paths will be referenced on multiple occasions:
+
+* **GeoServer data directory**
+
+  .. code-block:: console
+
+     /var/opt/boundless/suite/geoserver/data/
+
+* **GeoServer application directory**
+
+  .. code-block:: console
+
+     /opt/boundless/suite/geoserver/
+
+* **Shared VM directory (default)**
+
+  .. code-block:: console
+
+     /media/sf_share/
+
+  .. note:: If you named your shared directory something other than ``share``, the shared folder will be named :file:`/media/sf_<name>`.
+
+The virtual machine is running Ubuntu, so please read more about :ref:`sysadmin.ubuntu` for more information.

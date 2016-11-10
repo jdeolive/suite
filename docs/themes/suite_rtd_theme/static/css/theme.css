@@ -5049,13 +5049,9 @@ div[class^='highlight'] pre {
   background-color: #00a78d !important;
 }
 
-.qgis-header {
-  background-color: #00a78d !important;
-}
-
 #header {
   position: fixed;
-  height: 70px;
+  height: 60px;
   padding: 0;
   overflow: hidden;
   background-color: #28728d;
@@ -5064,21 +5060,21 @@ div[class^='highlight'] pre {
   width: 100%;
 }
 #header .suite_logo a {
-  margin: 1em 0 0 1em;
+  margin: 0.5em 0 0 0;
   float: left;
   width: 304px;
   height: 40px;
   overflow: hidden;
   text-indent: -9999em;
-  background: url("../img/opengeo-logo.png") no-repeat;
+  background: url("../img/suite-logo.png") no-repeat;
 }
 #header .suite_logo_only {
   display: inline-block;
   vertical-align: top;
-  margin-top: 1em;
+  margin-top: 0.5em;
 }
 #header .suite_logo_only a {
-  background: url("../img/opengeo-logo-only.png") no-repeat;
+  background: url("../img/suite-logo-only.png") no-repeat;
   width: 40px;
   height: 40px;
   text-indent: -9999em;
@@ -5091,9 +5087,12 @@ div[class^='highlight'] pre {
   font-size: 28px;
   padding: 0.2em 0.5em 0;
 }
+#header .suite_logo {
+  padding-left: 20px;
+}
 #header .community_logo {
   display: inline-block;
-  padding-left: 15px;
+  padding-left: 20px;
 }
 @media screen and (min-width: 320px) and (max-width: 480px) {
   #header .community_logo {
@@ -5105,20 +5104,21 @@ div[class^='highlight'] pre {
   width: 203px;
   height: 40px;
   display: inline-block;
-  margin: 1em 0 0;
+  margin: 0.6em 0 0;
 }
 #header .gs_logo a {
   background: url("../img/geoserver-logo.png") no-repeat;
   width: 235px;
   height: 40px;
   display: inline-block;
-  margin: 1em 0 0;
+  margin: 0.6em 0 0;
 }
 @media screen and (min-width: 320px) and (max-width: 480px) {
   #header .gs_logo a {
     background-size: 212px 36px;
     width: 212px;
     margin-left: 10px;
+    margin: 0.7em 0 0;
   }
 }
 #header .gwc_logo a {
@@ -5126,44 +5126,14 @@ div[class^='highlight'] pre {
   width: 300px;
   height: 40px;
   display: inline-block;
-  margin: 1em 0 0;
+  margin: 0.6em 0 0;
 }
 @media screen and (min-width: 320px) and (max-width: 480px) {
   #header .gwc_logo a {
     background-size: 210px 28px;
-    margin-top: 1.4em;
+    margin-top: 1.1em;
     margin-left: 10px;
     width: 210px;
-  }
-}
-#header .sdk_logo a {
-  background: url("../img/boundlesssdk-logo.png") no-repeat;
-  width: 322px;
-  height: 40px;
-  display: inline-block;
-  margin: 1em 0 0;
-}
-@media screen and (min-width: 320px) and (max-width: 480px) {
-  #header .sdk_logo a {
-    background-size: 225px 28px;
-    margin-left: 10px;
-    margin-top: 1.5em;
-    width: 225px;
-  }
-}
-#header .ge_logo a {
-  background: url("../img/geoexplorer-logo.png") no-repeat;
-  width: 272px;
-  height: 40px;
-  display: inline-block;
-  margin: 1em 0 0;
-}
-@media screen and (min-width: 320px) and (max-width: 480px) {
-  #header .ge_logo a {
-    background-size: 212px 36px;
-    margin-left: 5px;
-    margin-top: 1.1em;
-    width: 212px;
   }
 }
 #header .ol_logo a {
@@ -5171,26 +5141,19 @@ div[class^='highlight'] pre {
   width: 227px;
   height: 40px;
   display: inline-block;
-  margin: 1em 0 0;
+  margin: 0.6em 0 0;
 }
 @media screen and (min-width: 320px) and (max-width: 480px) {
   #header .ol_logo a {
     background-size: 204px 36px;
     margin-left: 10px;
-    margin-top: 1.3em;
+    margin-top: 0.8em;
     width: 204px;
   }
 }
-#header .qgis_logo a {
-  background: url("../img/qgis-logo.png") no-repeat;
-  width: 144px;
-  height: 40px;
-  display: inline-block;
-  margin: 1em 0 0;
-}
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 1.5 / 1), only screen and (min-resolution: 144dpi), only screen and (min-resolution: 1.5dppx) {
   #header .suite_logo a {
-    background: url("../img/opengeo-logo@2x.png") no-repeat;
+    background: url("../img/suite-logo@2x.png") no-repeat;
     background-size: 304px 40px;
   }
 }
@@ -5212,7 +5175,7 @@ div[class^='highlight'] pre {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (min-width: 320px) and (max-width: 480px), only screen and (min--moz-device-pixel-ratio: 1.5) and (min-width: 320px) and (max-width: 480px), only screen and (-o-min-device-pixel-ratio: 1.5 / 1) and (min-width: 320px) and (max-width: 480px), only screen and (min-resolution: 144dpi) and (min-width: 320px) and (max-width: 480px), only screen and (min-resolution: 1.5dppx) and (min-width: 320px) and (max-width: 480px) {
   #header .gs_logo a {
     background-size: 212px 36px;
-    margin-top: 1.1em;
+    margin-top: 0.8em;
     margin-left: 10px;
     width: 212px;
   }
@@ -5226,23 +5189,9 @@ div[class^='highlight'] pre {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (min-width: 320px) and (max-width: 480px), only screen and (min--moz-device-pixel-ratio: 1.5) and (min-width: 320px) and (max-width: 480px), only screen and (-o-min-device-pixel-ratio: 1.5 / 1) and (min-width: 320px) and (max-width: 480px), only screen and (min-resolution: 144dpi) and (min-width: 320px) and (max-width: 480px), only screen and (min-resolution: 1.5dppx) and (min-width: 320px) and (max-width: 480px) {
   #header .gwc_logo a {
     background-size: 210px 28px;
-    margin-top: 1.6em;
+    margin-top: 1em;
     margin-left: 10px;
     width: 210px;
-  }
-}
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 1.5 / 1), only screen and (min-resolution: 144dpi), only screen and (min-resolution: 1.5dppx) {
-  #header .sdk_logo a {
-    background: url("../img/boundlesssdk-logo@2x.png") no-repeat;
-    background-size: 322px 40px;
-  }
-}
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (min-width: 320px) and (max-width: 480px), only screen and (min--moz-device-pixel-ratio: 1.5) and (min-width: 320px) and (max-width: 480px), only screen and (-o-min-device-pixel-ratio: 1.5 / 1) and (min-width: 320px) and (max-width: 480px), only screen and (min-resolution: 144dpi) and (min-width: 320px) and (max-width: 480px), only screen and (min-resolution: 1.5dppx) and (min-width: 320px) and (max-width: 480px) {
-  #header .sdk_logo a {
-    background-size: 225px 28px;
-    margin-left: 5px;
-    margin-top: 1.4em;
-    width: 225px;
   }
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 1.5 / 1), only screen and (min-resolution: 144dpi), only screen and (min-resolution: 1.5dppx) {
@@ -5255,28 +5204,8 @@ div[class^='highlight'] pre {
   #header .ol_logo a {
     background-size: 204px 36px;
     margin-left: 10px;
-    margin-top: 1.3em;
+    margin-top: 0.8em;
     width: 204px;
-  }
-}
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 1.5 / 1), only screen and (min-resolution: 144dpi), only screen and (min-resolution: 1.5dppx) {
-  #header .ge_logo a {
-    background: url("../img/geoexplorer-logo@2x.png") no-repeat;
-    background-size: 236px 40px;
-  }
-}
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (min-width: 320px) and (max-width: 480px), only screen and (min--moz-device-pixel-ratio: 1.5) and (min-width: 320px) and (max-width: 480px), only screen and (-o-min-device-pixel-ratio: 1.5 / 1) and (min-width: 320px) and (max-width: 480px), only screen and (min-resolution: 144dpi) and (min-width: 320px) and (max-width: 480px), only screen and (min-resolution: 1.5dppx) and (min-width: 320px) and (max-width: 480px) {
-  #header .ge_logo a {
-    background-size: 212px 36px;
-    margin-top: 1.1em;
-    margin-left: 5px;
-    width: 212px;
-  }
-}
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 1.5 / 1), only screen and (min-resolution: 144dpi), only screen and (min-resolution: 1.5dppx) {
-  #header .qgis_logo a {
-    background: url("../img/qgis-logo@2x.png") no-repeat;
-    background-size: 144px 40px;
   }
 }
 #header .component_version_info {
@@ -5286,7 +5215,7 @@ div[class^='highlight'] pre {
   margin-top: 2.5em;
 }
 #header .version_info {
-  margin: 1.2em 3.236em 0 1.5em;
+  margin: 0.8em 3.236em 0 1.5em;
   float: left;
   color: white;
   font-size: 1.4em;
@@ -5297,7 +5226,7 @@ div[class^='highlight'] pre {
   background: url("../img/powered-by-boundless.png") no-repeat;
   height: 30px;
   width: 100px;
-  margin: 1.3em 1em 0 0;
+  margin: 0.8em 1em 0 0;
 }
 @media screen and (max-width: 768px) {
   #header .powered_by {
@@ -5373,10 +5302,10 @@ div[class^='highlight'] pre {
   width: 70px;
 }
 .back-to-suite .back-to-suite-inner {
-  background: url("../img/opengeo-logo-only.png") no-repeat;
+  background: url("../img/suite-logo-only.png") no-repeat;
   height: 40px;
   width: 40px;
-  margin: 1em auto;
+  margin: 0.7em auto;
 }
 
 @media screen and (max-width: 768px) {

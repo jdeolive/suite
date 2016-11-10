@@ -133,12 +133,15 @@ Or to build everything:
 
     ant all
 
+The highest level build files simply delegate to the lower level build files. This means that performing a top level build and performing a build for a specific module will result in the same artifacts being produced for that module.
+
 The [build](build) directory contains common build files used by modules.
 
  * [common.xml](build/common.xml) - Common ant targets used by module 
  build files. Every module build file imports this file as the first step.
  * [build.properties](build/build.properties) - Default build properties that can
  be overridden on a global or per module basis.
+ * [build_properties.py](build/build_properties.py) - Used by the doc build to parse properties from [build.properties](build/build.properties) into the suite build environment.
 
 ### Build Properties
 
@@ -156,20 +159,26 @@ There are two ways to override build properties:
 1. Creating a file named `local.properties` either at the global level or at the module level. The global `local.properties` is located in the [build](build) directory next to 
 `build.properties`. Module specific `local.properties` files are located next to the module `build.xml` file. Naturally the module specific local properties file overrides properties from its global counterpart. 
 
-Using any combination of the above method it should never be necessary to modify the `build.properties` file directly. 
+Using any combination of the above method it should never be necessary to modify the `build.properties` file directly.
+
+The build.properties file *should* be modified when development begins on a new suite version, in order to update the appropriate version numbers and geosserver extensions.
+
+### Versioned build
+
+To build suite with a specific minor version assigned to geotools, geowebcache, and geoserver (instead of -SNAPSHOT), use the [build/versions.xml](build/versions.xml) ant script to set a custom version. For example, to build suite 4.9-beta1:
+
+        % ant -f build/versions.xml set-versions -Dsuite.minor_version=-beta1
+        % ant all -Dsuite.minor_version=-beta1
 
 ## Modules
 
 The suite repository is composed of the following modules:
 
-* [apps](apps/README.md)
+* [composer](composer/README.md)
 * [dashboard](dashboard/README.md)
 * [docs](docs/README.md)
-* [geoexplorer](geoexplorer/README.md)
 * [geoserver](geoserver/README.md)
 * [geowebcache](geowebcache/README.md)
-* [jetty](jetty/README.md)
-* [recipes](recipes/README.md)
-* [webapp-sdk](sdk/README.md)
+* [wpsbuilder](wpsbuilder/README.md)
 
 Consult the module README files for module specific information. 

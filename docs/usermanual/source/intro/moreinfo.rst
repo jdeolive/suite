@@ -3,19 +3,17 @@
 More Information
 ================
 
-Below are links to various resources to help you learn more about OpenGeo Suite.
+Below are links to various resources to help you learn more about Boundless Suite.
 
-Project details
----------------
+Component details
+-----------------
 
-For more information on individual components, please see Boundless's project pages:
+For more information on individual components, please see the Boundless project pages:
 
 * `PostGIS <http://boundlessgeo.com/solutions/solutions-software/postgis/>`_
 * `GeoServer <http://boundlessgeo.com/solutions/solutions-software/geoserver/>`_
 * `GeoWebCache <http://boundlessgeo.com/solutions/solutions-software/geowebcache/>`_
 * `OpenLayers <http://boundlessgeo.com/solutions/solutions-software/openlayers/>`_
-* `QGIS <http://boundlessgeo.com/solutions/solutions-software/qgis/>`_
-* `More software <http://boundlessgeo.com/solutions/solutions-software/software/>`_
 
 About Boundless
 ---------------

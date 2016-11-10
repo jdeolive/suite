@@ -1,96 +1,36 @@
 <project name="geoserver.externals" default="build">
+  <import file="../../build/common.xml"/>
+  <property name="geoserver.externals.modules" value="geoserver-exts,marlin,geoscript,geomesa"/>
 
-   <import file="../../build/common.xml"/>
+  <target name="build" description="Builds project">
+    <for list="${geoserver.externals.modules}" param="mod">
+      <sequential>
+        <ant dir="@{mod}" target="build" inheritAll="false"/>
+      </sequential>
+    </for>
+  </target>
 
-   <target name="build" description="Build all projects"
-      depends="init, build-gt, build-gwc, build-geoscript-py, build-gs, build-gs-exts, build-wps-gui, build-geomesa">
-   </target>
+  <target name="clean" description="Cleans project">
+    <for list="${geoserver.externals.modules}" param="mod">
+      <sequential>
+        <ant dir="@{mod}" target="clean" inheritAll="false"/>
+      </sequential>
+    </for>
+  </target>
 
-   <target name="clean"/>
+  <target name="assemble" description="Assembles project artifacts">
+    <for list="${geoserver.externals.modules}" param="mod">
+      <sequential>
+        <ant dir="@{mod}" target="assemble" inheritAll="false"/>
+      </sequential>
+    </for>
+  </target>
 
-   <target name="assemble"/>
-
-   <target name="publish"/>
-
-   <target name="build-gt" unless="skip.gt" description="Build GeoTools">
-     <exec executable="git" dir="${gt.dir}" failonerror="false" outputproperty="gt.rev">
-       <arg line="rev-parse HEAD"/>
-     </exec>
-     <antcall target="mvn">
-        <param name="dir" value="${gt.dir}"/>
-        <param name="flags" value="-DskipTests -Dall -P ogr,mbtiles,geopkg,mongodb -Dpostgresql.jdbc.version=${postgresql.jdbc.version} -Dbuild.commit.id=${gt.rev} ${gt.flags}"/>
-        <param name="goals" value="clean install"/>
-     </antcall>
-   </target>
-
-   <target name="build-gs" unless="skip.gs" description="Build GeoServer">
-     <exec executable="git" dir="${gs.dir}" failonerror="false" outputproperty="gs.rev">
-       <arg line="rev-parse HEAD"/>
-     </exec>
-     <antcall target="mvn">
-        <param name="dir" value="${gs.dir}/src"/>
-        <param name="flags" value="-DskipTests -DconfigDirectory=${basedir}/${gs.dir}/data -Dbuild.commit.id=${gs.rev} -P ${gs.modules.extension} ${gs.flags} -Dgwc.version=${gwc.version}"/>
-        <param name="goals" value="clean install assembly:attached"/>
-     </antcall>
-     <antcall target="mvn">
-        <param name="dir" value="${gs.dir}/src/community"/>
-        <param name="flags" value="-DskipTests -Dbuild.commit.id=${gs.rev} -P {gs.modules.community} ${gs.flags} -Dgwc.version=${gwc.version}"/>
-        <param name="goals" value="clean install assembly:attached"/>
-     </antcall>
-   </target>
-
-   <target name="build-gwc" unless="skip.gwc" description="Build GeoWebCache">
-     <propertyregex property="gwc.branch" input="${gwc.version}"
-       regexp="(\d\.\d).*" select="\1.x"/>
-     <exec executable="git" dir="${gwc.dir}" failonerror="false" outputproperty="gwc.rev">
-       <arg line="rev-parse HEAD"/>
-     </exec>
-     <antcall target="mvn">
-        <param name="dir" value="${gwc.dir}/geowebcache"/>
-        <param name="flags" value="-DskipTests -Dgt.version=${gt.version} -Dbuild.branch=${gwc.branch} -Dbuild.commit.id=${gwc.rev}"/>
-        <param name="goals" value="clean install"/>
-     </antcall>
-     <antcall target="mvn">
-        <param name="dir" value="${gwc.dir}/geowebcache"/>
-        <param name="flags" value="-DgroupId=org.geowebcache -DartifactId=geowebcache -Dgt.version=${gt.version} -Dversion=${gwc.version} -Dpackaging=war -Dfile=web/target/geowebcache.war ${gwc.flags}"/>
-        <param name="goals" value="install:install-file"/>
-     </antcall>
-   </target>
-
-   <target name="build-gs-exts" unless="skip.gs-exts" description="Build GeoServer Exts">
-     <antcall target="mvn">
-        <param name="dir" value="${gs-exts.dir}"/>
-        <param name="flags" value="-DskipTests -Dgs.version=${gs.version} -Dgt.version=${gt.version} ${gs-exts.flags}"/>
-        <param name="goals" value="clean install assembly:attached"/>
-     </antcall>
-   </target>
-
-   <target name="build-geomesa" unless="skip.geomesa"
-      description="Build geomesa">
-     <antcall target="mvn">
-        <param name="dir" value="${geomesa.dir}"/>
-        <param name="flags" value="-DskipTests"/>
-        <param name="goals" value="clean install"/>
-     </antcall>
-     <antcall target="mvn">
-        <param name="dir" value="${geomesa.gs-plugin-dist.dir}"/>
-        <param name="flags" value="-DskipTests"/>
-        <param name="goals" value="clean install"/>
-     </antcall>
-   </target>
-
-   <target name="build-geoscript-py" unless="skip.geoscript-py"
-      description="Build GeoScript PY">
-     <antcall target="mvn">
-        <param name="dir" value="${geoscript-py.dir}"/>
-        <param name="flags" value="-DskipTests -Dgt.version=${gt.version} ${geoscript-py.flags}"/>
-        <param name="goals" value="clean install"/>
-     </antcall>
-   </target>
-
-   <target name="build-wps-gui" unless="skip.wps-gui"
-      description="Build WPS GUI">
-     <ant antfile="build.xml" dir="wps-gui" target="clean"/>
-     <ant antfile="build.xml" dir="wps-gui" target="war"/>
-   </target>
+  <target name="publish" description="Publishes project artifacts">
+    <for list="${geoserver.externals.modules}" param="mod">
+      <sequential>
+        <ant dir="@{mod}" target="publish" inheritAll="false"/>
+      </sequential>
+    </for>
+  </target>
 </project>

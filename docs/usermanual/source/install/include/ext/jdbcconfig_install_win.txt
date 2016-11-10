@@ -1,0 +1,19 @@
+To install :ref:`JDBCConfig <intro.extensions.jdbcconfig>` support in GeoServer, you will need to copy some files to the proper location. The files to be copied are inside the Boundless Suite extensions bundle (:file:`BoundlessSuite-ext.zip`).
+
+#. Inside the Boundless Suite extensions bundle, navigate to the :file:`jdbcconfig` directory.
+
+#. Copy the contents of the :file:`jdbcconfig` directory into the library directory (:file:`WEB-INF\\lib`) of your GeoServer instance. For example, if your GeoServer application is located at :file:`C:\\Program Files\\Tomcat\\webapps\\geoserver`, copy the files to :file:`C:\\Program Files\\Tomcat\\webapps\\geoserver\\WEB-INF\\lib`.
+
+#. Restart the server.
+
+#. On startup, JDBCConfig will create a configuration directory ``jdbcconfig`` in the GeoServer data directory. Verify this directory exists.
+
+   .. note:: If unsure of the location of the GeoServer data directory, log in to the GeoServer web interface and click :guilabel:`Server Status`. The location of the :guilabel:`Data directory` will be displayed at the top.
+
+#. Stop the server.
+
+#. In the :file:`jdbcconfig` directory, edit the :file:`jdbcconfig.properties` file to enable JDBCConfig. Be sure to set ``enabled``, ``initdb``, and ``import`` to ``true``. Provide the connection information for an empty database. For more information, refer to `JDBCConfig Configuration <../../../../geoserver/community/jdbcconfig/configuration.html>`_ in the GeoServer documentation.
+
+   .. warning:: Setting up a database for the data directory is a **one-way process**. It is not currently possible to export the configuration back to a file-based data directory.
+
+#. Restart the server again. This time JDBCConfig will connect to the specified database, initialize it, import the old catalog into it, and take over from the old catalog. Subsequent start ups will skip the initialize and import steps unless you re-enable them in :file:`jdbcconfig.properties`.

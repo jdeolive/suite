@@ -40,22 +40,21 @@ A watchdog can be implemented using a full-featured monitoring application such 
    #!/bin/bash
 
    # Set up script variables
-   PID_FILE=/var/run/catalina/catalina.pid
-   HTTP_URL=http://localhost:8080/GeoServer/openlayers/img/west-mini.png
-   CATALINA_SCRIPT=/opt/tomcat-6.0/bin/catalina.sh
-   GeoServer_LOG=/var/lib/GeoServer_data/default/logs/GeoServer.log
-   CATALINA_LOG=/opt/tomcat-6.0/logs/catalina.out
+   PID_FILE=/var/run/tomcat8.pid
+   HTTP_URL=http://localhost:8080/geoserver
+   GeoServer_LOG=/var/opt/boundless/suite/geoserver/data/logs/geoserver.log
+   CATALINA_LOG=/usr/share/tomcat8/logs/catalina.out
    LOG_COPY=/home/tomcat
    PID=`cat $PID_FILE`
 
    # Function to kill and restart application server
    function catalinarestart() {
-     $CATALINA_SCRIPT stop
+     service tomcat8 stop
      sleep 5
-     kill 9 $PID
+     kill -9 $PID
      cp $GeoServer_LOG $LOG_COPY
      cp $CATALINA_LOG $LOG_COPY
-     $CATALINA_SCRIPT start
+     service tomcat8 start
    }
 
    if [ -d /proc/$PID ]
@@ -116,7 +115,7 @@ In this deployment, the network router sends the request to one of the VRRPd rou
 Summary
 -------
 
-Availability is the amount of uptime during which a system is able to service client requests.  Techniques to increase the availability of OpenGeo Suite deployments include:
+Availability is the amount of uptime during which a system is able to service client requests.  Techniques to increase the availability of Boundless Suite deployments include:
 
 * Use a watchdog process to detect server responsiveness and restart it if necessary
 * Use load balancing to distribute request load across a pool of servers

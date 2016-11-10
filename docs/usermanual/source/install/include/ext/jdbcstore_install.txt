@@ -1,0 +1,19 @@
+To install :ref:`JDBCStore <intro.extensions.jdbcstore>` support in GeoServer, you will need to copy some files to the proper location. The files to be copied are inside the Boundless Suite extensions bundle (:file:`BoundlessSuite-ext.zip`).
+
+#. Inside the Boundless Suite extensions bundle, navigate to the :file:`jdbcstore` directory.
+
+#. Copy the contents of the :file:`jdbcstore` directory into the library directory (:file:`WEB-INF/lib`) of your GeoServer instance. For example, if your GeoServer application is located at :file:`/usr/share/tomcat/webapps/geoserver`, copy the files to :file:`/usr/share/tomcat/webapps/geoserver/WEB-INF/lib`.
+
+#. Restart the server.
+
+#. On startup, JDBCStore will create a configuration directory ``jdbcstore`` in the GeoServer data directory. Verify this directory exists.
+
+   .. note:: If unsure of the location of the GeoServer data directory, log in to the GeoServer web interface and click :guilabel:`Server Status`. The location of the :guilabel:`Data directory` will be displayed at the top.
+
+   .. note:: If you are using JDBCConfig alongside JDBCStore, be sure to configure it before configuring JDBCStore.
+
+#. Stop the server.
+
+#. In the :file:`jdbcstore` directory, edit the :file:`jdbcstore.properties` file to enable JDBCStore. Be sure to set ``enabled``, ``initdb``, and ``import`` to ``true``. Provide the connection information for an empty database. For more information, refer to `JDBCStore Configuration <../../../../geoerver/community/jdbcstore/configuration.html>`_ in the GeoServer documentation.
+
+#. Restart the server again. This time JDBCStore will connect to the specified database, initialize it, import the old GeoServer data directory into it, and take over from the old GeoServer data directory. Subsequent start ups will skip the initialize and import steps unless you re-enable them in :file:`jdbcstore.properties`.

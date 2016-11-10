@@ -14,6 +14,8 @@
 import sys, os, string
 sys.path.append('../../../build'); from build_properties import *
 
+from datetime import date
+
 # If your extensions are in another directory, add it here. If the directory
 # is relative to the documentation root, use os.path.abspath to make it
 # absolute, like shown here.
@@ -40,7 +42,7 @@ master_doc = 'index'
 # General substitutions.
 project = u'GeoServer'
 manual = u'User Manual'
-copyright = u'CC BY-SA 3.0'
+copyright = u'© ' + str(date.today().year) + u' Open Source Geospatial Foundation. License <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a>'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
@@ -99,7 +101,7 @@ html_theme_options = {
   'is_community': True, # Community Docs flag for Suite component docs
   'display_zendesk': True, # Display link to report doc bugs to Suite Zendesk
   'display_version': True,  # Whether to show version number
-  'suite_url': 'geoserver' # the url path within Suite e.g. sdk-api for opengeo-docs/sdk-api
+  'suite_url': 'geoserver' # the url path within Suite e.g. geoserver for suite-docs/geoserver
 
 }
 
@@ -223,7 +225,7 @@ latex_elements = {
 extlinks = { 
     'wiki': ('https://github.com/geoserver/geoserver/wiki/%s',''),
     'website': ('http://geoserver.org/%s',''),
-    'user': ('http://localhost:8080/opengeo-docs/geoserver/%s',''),
+    'user': ('http://localhost:8080/suite-docs/geoserver/%s',''),
     'developer': ('http://docs.geoserver.org/latest/en/developer/%s',''),
     'geos': ('https://jira.codehaus.org/browse/GEOS-%s','GEOS-'),
     'geot': ('https://jira.codehaus.org/browse/GEOT-%s','GEOT-')

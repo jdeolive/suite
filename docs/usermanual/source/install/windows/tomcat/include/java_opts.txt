@@ -1,0 +1,15 @@
+# memory 
+-XX:SoftRefLRUPolicyMSPerMB=36000
+-XX:-UsePerfData
+# memory end
+
+# geoserver
+-Dorg.geotools.referencing.forceXY=true
+-Dorg.geotoools.render.lite.scale.unitCompensation=true
+# geoserver end
+
+# marlin
+-Xbootclasspath/a:C:\Program Files (x86)\Apache Software Foundation\Tomcat 8\bin\marlin-0.7.3-Unsafe.jar
+-Dsun.java2d.renderer=org.marlin.pisces.PiscesRenderingEngine
+-Dsun.java2d.renderer.useThreadLocal=false
+# marlin end

@@ -97,8 +97,7 @@ public class ImportController extends ApiController {
     public ImportController(GeoServer geoServer, ApplicationContext ctx) {
         super(geoServer);
         
-        this.importer = new Importer(geoServer.getCatalog());
-        this.importer.onApplicationEvent(new ContextLoadedEvent(ctx));
+        this.importer = (Importer) ctx.getBean("composer-importer");
         this.importer.setStyleHandler(new YsldHandler());
         this.hasher = new Hasher(7);
     }
@@ -253,6 +252,18 @@ public class ImportController extends ApiController {
      * @param t ImportTask containing data about a single import
      */
     void moveFile(ImportTask t) {
+        moveFile(t, new ArrayList<File>());
+    }
+    
+    /**
+     * Moves uploaded files from the temp upload directory to the appropriate store folder
+     * Updates the ImportContext tasks and stores with the new location.
+     * Updates the catalog store with the new location.
+     * 
+     * @param t ImportTask containing data about a single import
+     * @param mainFiles List of primary files that should not be counted among supplementary files
+     */
+    void moveFile(ImportTask t, List<File> importFiles) {
         Catalog catalog = geoServer.getCatalog();
         StoreInfo store = catalog.getStore(t.getStore().getId(), StoreInfo.class);
         
@@ -340,13 +351,16 @@ public class ImportController extends ApiController {
                     ((SpatialFile)destData).setPrjFile(prjFile);
                 }
                 for (File f : ((SpatialFile)srcData).getSuppFiles()) {
-                    File suppFile = new File(destDir, f.getName());
-                    if (move) {
-                        Files.move(f.toPath(), suppFile.toPath());
-                    } else {
-                        Files.copy(f.toPath(), suppFile.toPath());
+                    
+                    if (!importFiles.contains(f)) {
+                        File suppFile = new File(destDir, f.getName());
+                        if (move) {
+                            Files.move(f.toPath(), suppFile.toPath());
+                        } else {
+                            Files.copy(f.toPath(), suppFile.toPath());
+                        }
+                        ((SpatialFile)destData).getSuppFiles().add(suppFile);
                     }
-                    ((SpatialFile)destData).getSuppFiles().add(suppFile);
                 }
             } else if (srcData instanceof ASpatialFile) {
                 destData = new ASpatialFile(destFile);
@@ -1056,6 +1070,12 @@ public class ImportController extends ApiController {
         public void run() {
             try {
                 ImportContext context = task.get();
+                List<File> importFiles = new ArrayList<File>();
+                for (ImportTask t : context.getTasks()) {
+                    if (t.getState() == State.COMPLETE) {
+                        importFiles.add(((FileData)t.getData()).getFile());
+                    }
+                }
                 for (ImportTask t : context.getTasks()) {
                     if (t.getState() == State.COMPLETE) {
                         //Clean up names
@@ -1077,7 +1097,7 @@ public class ImportController extends ApiController {
                         t.setStore(store);
                         t.setLayer(layer);
                         
-                        moveFile(t);
+                        moveFile(t, importFiles);
                         //Set created date
                         store = t.getStore();
                         if (store != null && Metadata.created(store) == null) {

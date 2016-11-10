@@ -104,7 +104,7 @@ One the output of the process has been downloaded, it needs to be added back to 
 
    .. note:: It is also possible to chain the output of this process to the input of the **gs:Import** process. This way, the GeoServer layer will be published in one step without the need for a shapefile to be created.
 
-#. View this layer using :ref:`Composer <webmaps.composer>` or GeoExplorer. When making the map, place the contour layer on top of the source raster layer for proper context.
+#. View this layer using :ref:`Composer <webmaps.composer>`. When making the map, place the contour layer on top of the source raster layer for proper context.
 
    .. note:: See the :ref:`Composer tutorial <webmaps.composer.tutorial>` for how to create a map with multiple layers.
 
@@ -251,10 +251,10 @@ Using Composer, load this style into the layer on the :ref:`style/view <webmaps.
 
       Associating the style with the layer
 
-   Once these changes are saved, go to the :guilabel:`Layer Preview` and view the layer. You can also view the layer in GeoExplorer.
+   Once these changes are saved, go to the :guilabel:`Layer Preview` and view the layer.
 
-   .. figure:: img/geoexplorer_static_styled.png
+   .. figure:: img/static_styled.png
 
-      Static contour map in GeoExplorer
+      Static contour map
 
 In the next section, the contour map will be generated dynamically from the source raster.

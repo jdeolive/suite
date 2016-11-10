@@ -1,0 +1,11 @@
+To install :ref:`ArcSDE <intro.extensions.arcsde>` support in GeoServer, you will need to copy some files to the proper location. The first set of files to be copied are inside the Boundless Suite extensions bundle (:file:`BoundlessSuite-ext.zip`).
+
+#. Inside the Boundless Suite extensions bundle, navigate to the :file:`arcsde` directory.
+
+#. Copy the contents of the :file:`arcsde` directory into the library directory (:file:`WEB-INF\\lib`) of your GeoServer instance. For example, if your GeoServer application is located at :file:`C:\\Program Files\\Tomcat\\webapps\\geoserver`, copy the files to :file:`C:\\Program Files\\Tomcat\\webapps\\geoserver\\WEB-INF\\lib`.
+
+Because of licensing issues, **two additional files are required to be installed**.
+
+#. Copy :file:`jsde_sdk.jar` and :file:`jpe_sdk.jar` from the ArcSDE installation media (usually :file:`C:\\Program Files\\ArcGIS\\ArcSDE\\lib`) to the same directory specified above.
+
+#. Restart the server.

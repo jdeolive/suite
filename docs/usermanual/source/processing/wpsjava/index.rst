@@ -5,7 +5,7 @@ Creating WPS processes with Java
 
 .. todo:: Split into multiple pages?
 
-Web Processing Service (WPS) processes are able to perform almost any kind of computation. OpenGeo Suite supplies many useful WPS processes built in to GeoServer.
+Web Processing Service (WPS) processes are able to perform almost any kind of computation. Boundless Suite supplies many useful WPS processes built in to GeoServer.
 
 However, for even more capability, GeoServer can be extended by adding new WPS processes. This section describes creating a custom WPS process in Java and how to deploy and run it in GeoServer.
 
@@ -70,14 +70,14 @@ Since a custom WPS process is packaged as a regular JAR file the standard archet
       </dependency>
 
 
-#. In addition, add the following lines inside the ``<properties>`` block (typically beneath the line for ``<project.build.sourceEncoding>``, replacing ``GEOSERVER_VERSION`` and ``GEOTOOLS_VERSION`` with the versions used by OpenGeo Suite:
+#. In addition, add the following lines inside the ``<properties>`` block (typically beneath the line for ``<project.build.sourceEncoding>``, replacing ``GEOSERVER_VERSION`` and ``GEOTOOLS_VERSION`` with the versions used by Boundless Suite:
 
    .. code-block:: xml
 
       <geoserver.version>GEOSERVER_VERSION</geoserver.version>
       <geotools.version>GEOTOOLS_VERSION</geotools.version>
 
-   .. warning:: You must make sure that the GeoServer and GeoTools versions match the ones used by OpenGeo Suite. You can check the versions by navigating to the :guilabel:`About GeoServer` section of the GeoServer admin interface. The GeoServer version will be shown under :guilabel:`Version`, and the GeoTool version will be shown under :guilabel:`GeoTools Version`.
+   .. warning:: You must make sure that the GeoServer and GeoTools versions match the ones used by Boundless Suite. You can check the versions by navigating to the :guilabel:`About GeoServer` section of the GeoServer admin interface. The GeoServer version will be shown under :guilabel:`Version`, and the GeoTool version will be shown under :guilabel:`GeoTools Version`.
 
       .. figure:: img/gt-version.png
 
@@ -224,6 +224,7 @@ The previous steps created a Java package ``org.example.wps`` in which to implem
 
    * The ``execute`` method will be called when the WPS request is processed by GeoServer. The method takes two parameters of type ``Geometry``: a polygon to be split and the line doing the splitting.
    * The ``polygonize`` method is not public because it is internal to the process and need not be exposed.
+   * The return type of the polygonize(Geometry geometry) function is ``Geometry``. **Each process is required to return a result**, so a static void method cannot be advertised as a process.
    * The process will be given a namespace (prefix) of "custom".
    * The full name of the process will be **custom:splitPolygon**.
 
@@ -234,7 +235,7 @@ The previous steps created a Java package ``org.example.wps`` in which to implem
       @DescribeProcess(title = "splitPolygon", description = "Splits a polygon by a linestring")
       @DescribeResult(description = "Geometry collection created by splitting the input polygon")
 
-   The ``DescripeProcess`` annotation provides the process description for the DescribeProcess request. The ``DescribeResult`` annotation provides the description of the output of the process.
+   The ``DescripeProcess`` annotation provides the process description for the DescribeProcess request. The ``DescribeResult`` annotation provides the description of the output of the process, which, as previously mentioned, is ``Geometry``.
 
 #. Replace the initial definition line for the ``splitPolygon`` class:
 
@@ -344,9 +345,8 @@ Build and deploy
 
    Typical paths for this directory:
 
-   * Windows: :file:`C:\\Program Files\\Boundless\\OpenGeo\\jetty\\webapps\\geoserver\\WEB-INF\\lib`
-   * OS X: :file:`~/Library/Application\ Support/GeoServer/jetty/webapps/geoserver/WEB-INF/lib`
-   * Linux: :file:`/usr/share/opengeo/geoserver/WEB-INF/lib`
+   * Windows: :file:`C:\\Program Files (x86)\\Apache Software Foundation\\Tomcat 8\\webapps\\geoserver\\WEB-INF\\lib`
+   * Linux: :file:`/opt/boundless/suite/geoserver/WEB-INF/lib` or :file:`/usr/share/tomcat8/webapps/WEB-INF/lib`.
 
 Test the process
 ----------------

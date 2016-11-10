@@ -3,7 +3,7 @@
 Performance
 ===========
 
-Performance is a measure of how fast OpenGeo Suite can fulfill client requests. Factors that affect performance include hardware capacity, data tuning, software versions and configuration, network saturation, caching, and many others. Because of this range of factors, performance of production systems should be analyzed on a case-by-case basis. However, there are some general strategies for improving performance that are effective in most cases.
+Performance is a measure of how fast Boundless Suite can fulfill client requests. Factors that affect performance include hardware capacity, data tuning, software versions and configuration, network saturation, caching, and many others. Because of this range of factors, performance of production systems should be analyzed on a case-by-case basis. However, there are some general strategies for improving performance that are effective in most cases.
 
 Note that while performance is often the main focus of system tuning, it is advisable to ensure that the service is reliable before attempting to improve performance.  Fortunately, many of the strategies presented earlier for increasing reliability also provide a boost to performance.
 
@@ -12,33 +12,35 @@ Java Virtual Machine
 
 For best performance, use the **Oracle (Sun) Java HotSpot Virtual Machine (JVM)**. Testing has shown that the Oracle JVM is significantly faster than other JVM implementations.  For best results evaluate the latest release of the JVM, since each new version has offered significant performance improvements.
 
-The performance optimizations available for each JVM release change. If you are experienced with application server tuning please keep in mind that OpenGeo Suite handles an unusual workload that includes requests with heavy resource use.
+The performance optimizations available for each JVM release change. If you are experienced with application server tuning please keep in mind that Boundless Suite handles an unusual workload that includes requests with heavy resource use.
 
 .. note:: Oracle Java 7 provides very detailed memory management and performance tuning options that can be tuned for specific workloads. For details see `Java HotSpot VM Options <http://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html>`_. Oracle's `Java SE 6 Performance White Paper <http://www.oracle.com/technetwork/java/6-performance-137236.html>`_ describes the JVM improvements that were introduced in Java SE 6 (specifically see `Section 2.3 - Ergonomics in the 6.0 Virtual Machine <http://www.oracle.com/technetwork/java/6-performance-137236.html#2.3>`_). Java 7 has introduced Oracle's `Garbage-First Collector <http://docs.oracle.com/javase/7/docs/technotes/guides/vm/G1.html>`_ that should be considered for installations working with 6GB or lager heap space. Java 8 introduces `Metaspace <https://blogs.oracle.com/poonam/entry/about_g1_garbage_collector_permanent>`_ as a replacement for the ``PermGen`` settings used to manage application size.
    
-.. note:: For more information, please see the section on :ref:`sysadmin.jvm.setting`.
+.. note:: For more information, please see the section on :ref:`sysadmin.jvm`.
+
+.. warning:: Boundless Suite requires **Java 8**.
 
 Server Mode
 -----------
 
-For production use, OpenGeo Suite should be run using the **Server mode** of the JVM.  This mode is used by default on some platforms (such as Linux and Solaris), but not on others (such as Windows or OS X).   The ``-server`` JVM option forces the use of the Server VM.  To determine the default JVM mode, run ``java -version``, and the output should be as follows::
+For production use, Boundless Suite should be run using the **Server mode** of the JVM.  This mode is used by default on some platforms (such as Linux and Solaris), but not on others (such as Windows or OS X).   The ``-server`` JVM option forces the use of the Server VM.  To determine the default JVM mode, run ``java -version``, and the output should be as follows::
 
-  java version "1.7.0_71"
-  Java(TM) SE Runtime Environment (build 1.7.0_71-b13)
-  Java HotSpot(TM) 64-Bit Server VM (build 24.71-b01, mixed mode)
+	openjdk version "1.8.0_101"
+	OpenJDK Runtime Environment (build 1.8.0_101-b13)
+	OpenJDK 64-Bit Server VM (build 25.101-b13, mixed mode)
 
 Note that the final line says ``Server VM``.
 
 JVM tuning
 ----------
 
-Certain JVM operating characteristics can be tuned to optimize performance when running OpenGeo Suite.  The following parameters can be configured:
+Certain JVM operating characteristics can be tuned to optimize performance when running Boundless Suite.  The following parameters can be configured:
   
 * ``-server`` forces the use of the Java HotSpot Server VM
 * ``-Xms2048m -Xmx2048m`` sets the JVM to use 2048 megabytes (2 GB) of memory for the heap, and allocates it all on startup (the heap size should be adjusted to fit the actual memory available)
 * ``-XX:NewRatio=2`` tunes the JVM for handling a large number of short-lived objects
   
-The method of setting these parameters is container-specific.  For example, in OpenGeo Suite the service :file:`tomcat7`, parameters are configured by defining them in the ``OPENGEO_OPTS`` variable in a ``setenv`` script file located in the installation ``bin`` directory. In ``OpenGeo Jetty`` service they are configured in :file:`C:\\Program Files (x86)\\Boundless\\OpenGeo\\jetty\\start.ini`.
+The method of setting these parameters is container-specific.  For example, in Boundless Suite, the :file:`tomcat8` parameters are configured by defining them in :file:`/etc/tomcat8/suite-opts` (see :ref:`sysadmin.startup`).
 
 JAI and JAI Image I/O
 ---------------------
@@ -61,10 +63,6 @@ The memory made available for image processing is controlled in the GeoServer Ad
 **Memory Threshold** is used to control when JAI will release images that have been temporarily staged in memory. The default value of `0.75` will ensure that out of the ``378`` MB above, ``284`` MB will be used to hold on to imagery in case it can be reused, and ``94`` MB will always be available for quickly working with new imagery.
 
 The JAI and JAI Image I/O APIs provide both Java and native code implementations for most operating system platforms. GeoServer will use the native code implementations by default if they are present.
-
-.. only:: Enterprise
-
-   OpenGeo Suite Enterprise provides an optional native code extension providing you the best possible performance.
 
 JDK and JAI Performance Comparison
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -115,7 +113,7 @@ As with vector data, reprojecting rasters to a different coordinate system is co
 Summary
 -------
 
-There are many factors that can affect OpenGeo Suite performance. This section has presented the following general tuning strategies:
+There are many factors that can affect Boundless Suite performance. This section has presented the following general tuning strategies:
   
 * Use the most recent version of the Oracle JVM
 * Ensure the JVM is run in Server mode

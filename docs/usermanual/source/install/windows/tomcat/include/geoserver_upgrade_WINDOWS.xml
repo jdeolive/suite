@@ -1,0 +1,10 @@
+<Context docBase="geoserver.war">
+  <Parameter name="GEOSERVER_DATA_DIR"
+             value="C:\ProgramData\Boundless\OpenGeo\geoserver"
+             override="false"/>
+             
+ <!-- Ensure this directory exists and is where you want your cache to be -->
+  <Parameter name="GEOWEBCACHE_CACHE_DIR"
+             value="C:\ProgramData\Boundless\geoserver\tilecache"
+             override="false"/>
+</Context>

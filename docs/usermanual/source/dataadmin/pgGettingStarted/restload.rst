@@ -37,7 +37,8 @@ The next section describes how to link a PostGIS database to GeoSever and publis
 
    .. code-block:: console
 
-      curl -v -u admin:geoserver -X POST -H "Content-type: text/xml" -T pgrest.xml http://localhost:8080/geoserver/rest/workspaces/opengeo/datastores.xml
+      curl -v -u admin:geoserver -X POST -H "Content-type: text/xml" -T pgrest.xml \
+        http://localhost:8080/geoserver/rest/workspaces/opengeo/datastores.xml
 
    If the command was successful, you should see the following in the output:
 
@@ -51,7 +52,8 @@ The next section describes how to link a PostGIS database to GeoSever and publis
 
    .. code-block:: console
 
-      curl -v -u admin:geoserver -X GET http://localhost:8080/geoserver/rest/workspaces/opengeo/datastores/pgstore.xml
+      curl -v -u admin:geoserver -X GET \
+        http://localhost:8080/geoserver/rest/workspaces/opengeo/datastores/pgstore.xml
 
    .. note:: The password to this database, unencrypted in our example, is displayed encrypted.
 
@@ -61,7 +63,9 @@ Now that the connection has been made, you can publish a table from the PostGIS 
 
    .. code-block:: console
 
-      curl -v -u admin:geoserver -X POST -H "Content-type: text/xml" -d "<featureType><name>lakes</name></featureType>" http://localhost:8080/geoserver/rest/workspaces/opengeo/datastores/pgstore/featuretypes
+      curl -v -u admin:geoserver -X POST -H "Content-type: text/xml" -d \
+        "<featureType><name>lakes</name></featureType>" \
+        http://localhost:8080/geoserver/rest/workspaces/opengeo/datastores/pgstore/featuretypes
 
    
    This example creates a new layer ``lakes`` based on the table of the same name. The layer is contained in the previously created ``pgstore`` GeoServer store, as part of the ``opengeo`` workspace. The command uses a POST request to create a new *featuretype* resource.
@@ -70,7 +74,7 @@ Now that the connection has been made, you can publish a table from the PostGIS 
 
    .. code-block:: console
 
-      < HTTP/1.1 201 Created
+      HTTP/1.1 201 Created
 
    If you don't see this entry, examine the output for errors.
 
@@ -78,7 +82,8 @@ Now that the connection has been made, you can publish a table from the PostGIS 
 
    .. code-block:: console
 
-      curl -v -u admin:geoserver -X GET http://localhost:8080/geoserver/rest/workspaces/opengeo/datastores/pgstore/featuretypes.xml
+      curl -v -u admin:geoserver -X GET \
+        http://localhost:8080/geoserver/rest/workspaces/opengeo/datastores/pgstore/featuretypes.xml
 
    You should see the layer listed in the output. You can also view the layer in the GeoServer Layer Preview.
 

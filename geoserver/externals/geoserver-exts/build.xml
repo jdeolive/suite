@@ -1,0 +1,60 @@
+<project name="geoserver.geoserver-exts" default="build">
+
+  <import file="../../../build/common.xml"/>
+
+  <property name="gs-exts.flags" value=""/>
+  <property name="gs-exts.dir" value="geoserver-exts"/>
+
+  <target name="clean" unless="skip.gs-exts">
+    <delete dir="target"/>
+    <antcall target="mvn">
+      <param name="dir" value="${gs-exts.dir}"/>
+      <param name="goals" value="clean"/>
+    </antcall>
+  </target>
+
+  <target name="build" unless="skip.gs-exts" description="Build GeoServer Exts">
+    <antcall target="mvn">
+      <param name="dir" value="${gs-exts.dir}"/>
+      <param name="flags" value="-DskipTests -Dgs.version=${gs.version} -Dgt.version=${gt.version} ${gs-exts.flags}"/>
+      <param name="goals" value="install assembly:attached"/>
+    </antcall>
+  </target>
+
+  <target name="assemble" unless="skip.gs-exts">
+    <for list="${gs-exts.exts}" param="ext">
+      <sequential>
+        <antcall target="unpack-ext" inheritAll="false">
+          <param name="ext" value="@{ext}"/>
+        </antcall>
+        <antcall target="assemble-extension" inheritAll="false">
+          <param name="name" value="@{ext}"/>
+        </antcall>
+      </sequential>
+    </for>
+  </target>
+
+  <target name="publish" unless="skip.gs-exts">
+    <foreach list="${gs-exts.exts}" param="name" target="publish-extension"/>
+  </target>
+
+  <target name="unpack-ext">
+    <delete dir="target/${ext}"/>
+    <mkdir dir="target/${ext}"/>
+    <unzip src="${gs-exts.dir}/target/geoserver-exts-${gs.version}-${ext}.zip" dest="target/${ext}">
+    <!-- exclude non-jar files and any jars that are already provided by the core webapp -->
+      <patternset>
+        <exclude name="*.txt"/>
+        <exclude name="*.TXT"/>
+        <exclude name="*.ini"/>
+        <exclude name="httpclient-*.jar"/>
+        <exclude name="httpcore-*.jar"/>
+        <exclude name="jackson-annotations-*.jar"/>
+        <exclude name="jackson-core-*.jar"/>
+        <exclude name="jackson-databind-*.jar"/>
+        <exclude name="joda-time-*.jar"/>
+        <exclude name="json-simple-*.jar"/>
+      </patternset>
+    </unzip>
+  </target>
+</project>

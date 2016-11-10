@@ -7,9 +7,9 @@ This section will detail the parameters available in the various configuration f
 
 There are three primary configuration files used in the clustering extension::
 
-  <data_dir>/jdbcconfig/jdbcconfig.properties
-  <data_dir>/cluster/cluster.properties
-  <data_dir>/cluster/hazelcast.xml
+  $GEOSERVER_DATA_DIR/jdbcconfig/jdbcconfig.properties
+  $GEOSERVER_DATA_DIR/cluster/cluster.properties
+  $GEOSERVER_DATA_DIR/cluster/hazelcast.xml
 
 jdbcconfig.properties
 ---------------------

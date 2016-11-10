@@ -1,0 +1,11 @@
+To verify that the extension has been installed properly:
+
+#. Log in to the GeoServer web interface.
+
+#. Under :guilabel:`Services`, look for the :guilabel:`WPS` option.
+
+   .. figure:: /install/include/ext/img/wps_link.png
+
+      WPS service
+
+  If you don't see this option, the extension did not install correctly.

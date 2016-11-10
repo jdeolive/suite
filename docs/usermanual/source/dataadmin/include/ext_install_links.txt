@@ -1,0 +1,8 @@
+Installing support for this is the same as most :ref:`Boundless Suite Extensions <intro.extensions>`.
+
+Installation instructions are dependent on your operating system and method of install:
+
+* **Tomcat**: :ref:`Ubuntu <install.ubuntu.tomcat.extensions>`, :ref:`Red Hat <install.redhat.tomcat.extensions>`, :ref:`Windows <install.windows.tomcat.extensions>`, :ref:`OS X <install.mac.tomcat.extensions>`
+* **Packages**: :ref:`Ubuntu <install.ubuntu.packages.list>`, :ref:`Red Hat <install.redhat.packages.list>` 
+
+.. note:: The Boundless Suite virtual machine has most extensions pre-installed.

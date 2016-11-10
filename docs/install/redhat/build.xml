@@ -1,6 +1,0 @@
-<project name="doc.install.redhat" default="build">
-
-  <property name="doc.name" value="redhat"/>
-  <import file="../common.xml"/>
-
-</project>

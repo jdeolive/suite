@@ -51,7 +51,7 @@ The use of ``fill-graphic`` allows for the following extra options:
      - ``none``
    * - ``x-random-symbol-count``
      - No
-     - When used tih ``x-random``, determines the number of symbols drawn. Increasing this number will generate a more dense distribution of symbols
+     - When used with ``x-random``, determines the number of symbols drawn. Increasing this number will generate a more dense distribution of symbols
      - ``16``
    * - ``x-random-seed``
      - No

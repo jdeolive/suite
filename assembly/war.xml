@@ -12,13 +12,6 @@
       </includes>
     </fileSet>
     <fileSet>
-      <directory>geoexplorer/target</directory>
-      <outputDirectory>/</outputDirectory>
-      <includes>
-        <include>geoexplorer.war</include>
-      </includes>
-    </fileSet>
-    <fileSet>
       <directory>geowebcache/target</directory>
       <outputDirectory>/</outputDirectory>
       <includes>
@@ -43,7 +36,7 @@
       <directory>assembly/target</directory>
       <outputDirectory>/</outputDirectory>
       <includes>
-        <include>opengeo-docs.war</include>
+        <include>suite-docs.war</include>
       </includes>
     </fileSet>
     <fileSet>

@@ -46,7 +46,7 @@ Return a JSON version of the data in that point.
 
     SELECT PC_AsText('010100000064CEFFFF94110000703000000400'::pcpoint);
 
-.. code-block:: sql
+::
 
     {"pcid":1,"pt":[-127,45,124,4]}
 
@@ -61,7 +61,7 @@ Return the OGC "well-known binary" format for the point.
 
     SELECT PC_AsBinary('010100000064CEFFFF94110000703000000400'::pcpoint);
 
-.. code-block:: sql
+::
 
     \x01010000800000000000c05fc000000000008046400000000000005f40
 
@@ -118,7 +118,7 @@ Return the OGC "well-known binary" format for *bounds* of the patch. Useful for 
 
     SELECT PC_Envelope(pa) FROM patches LIMIT 1;
 
-.. code-block:: sql
+::
 
     \x0103000000010000000500000090c2f5285cbf5fc0e17a
     14ae4781464090c2f5285cbf5fc0ec51b81e858b46400ad7
@@ -136,7 +136,7 @@ Return a JSON version of the data in that patch.
 
     SELECT PC_AsText(pa) FROM patches LIMIT 1;
 
-.. code-block:: sql
+::
 
     {"pcid":1,"pts":[
      [-126.99,45.01,1,0],[-126.98,45.02,2,0],[-126.97,45.03,3,0],
@@ -207,7 +207,7 @@ Set-returning function, converts patch into result set of one point record for e
     SELECT PC_AsText(PC_Explode(pa)), id 
     FROM patches WHERE id = 7;
 
-.. code-block:: sql
+::
 
                   pc_astext               | id 
     --------------------------------------+----
@@ -282,7 +282,7 @@ Returns a patch with only points whose values are greater than the supplied valu
     SELECT PC_AsText(PC_FilterGreaterThan(pa, 'y', 45.57)) 
     FROM patches WHERE id = 7;
 
-.. code-block:: sql
+::
 
     {"pcid":1,"pts":[[-126.42,45.58,58,5],[-126.41,45.59,59,5]]}
 

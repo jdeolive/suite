@@ -1,0 +1,47 @@
+To install :ref:`Cloudwatch <sysadmin.cloudwatch>` support in GeoServer, you will need to copy some files to the proper location. The files to be copied are inside the Boundless Suite extensions bundle (:file:`BoundlessSuite-ext.zip`).
+
+#. Inside the Boundless Suite extensions bundle, navigate to the :file:`cloudwatch` directory.
+
+#. Copy the contents of the :file:`cloudwatch` directory into the library directory (:file:`WEB-INF/lib`) of your GeoServer instance. For example, if your GeoServer application is located at :file:`/usr/share/tomcat/webapps/geoserver`, copy the files to :file:`/usr/share/tomcat/webapps/geoserver/WEB-INF/lib`.
+
+#. Generate an AWS access key in the AWS console. To generate AWS credentials, please see the `AWS documentation <http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSGettingStartedGuide/AWSCredentials.html>`_.
+
+#. Append the following environment variables to the Tomcat 8 configuration file located at :file:`/etc/tomcat8/tomcat8.conf`:
+
+   .. code-block:: bash
+      :linenos:
+
+      ### Interval in milliseconds at which to send metrics
+      GS_CW_INTERVAL="10000"
+
+      ### AWS Authentication
+      AWS_ACCESS_KEY_ID="[your_access_key]"
+      AWS_SECRET_KEY="[your_secret_key]"
+
+      ### Instance specific settings
+      GS_CW_ENABLE_PER_INSTANCE_METRICS="true" 
+      GS_CW_INSTANCE_ID="hal9000"
+
+      ### EC2 Autoscaling
+      GS_CW_AUTOSCALING_GROUP_NAME="testgroup"
+
+      ### JMX metrics
+      #export GS_CW_JMX="true"
+
+      ### Geoserver metrics
+      #GS_CW_WATCH_WMS="true"
+      #GS_CW_WATCH_WPS="true"
+      #GS_CW_WATCH_WFS="true"
+      #GS_CW_WATCH_CSW="true"
+      #GS_CW_WATCH_OSW="true"
+      #GS_CW_WATCH_WCS100="true"
+      #GS_CW_WATCH_WCS111="true"
+      #GS_CW_WATCH_WCS20="true"
+
+#. Insert the generated AWS access key and secret key on lines 5 and 6.
+
+#. Optionally edit the instance ID or autoscaling group name (lines 8-13).
+
+#. Uncomment any desired metrics (lines 15-26). If no metrics are uncommented, Cloudwatch will not report any metrics.
+
+#. Save the file and restart the server.

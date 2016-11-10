@@ -1,0 +1,34 @@
+It is important to test that the virtual machine installed in the previous exercise is running correctly.
+
+#. Start the virtual machine by clicking the :guilabel:`Start` toolbar button.
+
+   .. note:: :guilabel:`Normal Start` will spawn a console window, while :guilabel:`Headless Start` will not. We recommend using :guilabel:`Headless Start` and interacting with the server via a local SSH connection.
+
+   .. figure:: /install/include/vbox/img/vbox_headless.png
+
+      Headless Start
+
+   .. note:: Occasionally, the virtual machine can not be started. In many cases, this can be solved by going into your machine's BIOS and enabling **hardware virtualization**. Please check with your hardware manufacturer for information on how to enable this.
+
+#. It may take a few minutes for the virtual machine to load. You will know that the virtual machine is ready when you see the :guilabel:`Preview` pane in the VirtualBox Manager pause and ask for a login:
+
+   .. figure:: /install/include/vbox/img/vbox_preview.png
+
+      Login screen on the Preview pane in VirtualBox
+
+   .. note:: If you chose :guilabel:`Normal Start`, a console window will be opened. This window captures keyboard and mouse input, which can be a hindrance to working with the virtual machine.
+      
+      * If you just see a blank screen, click in the window and press :kbd:`Enter`.
+
+      * If you ever lose your mouse or are unable to type, press the :kbd:`Right Ctrl` key to reclaim focus back from the virtual machine.
+    
+#. Once you see the above screen, open a browser and navigate to http://localhost:8080/dashboard. You should see the Boundless Suite Dashboard.
+
+   .. figure:: /intro/img/dashboard.png
+
+      Boundless Suite Dashboard
+
+   .. note:: 
+
+      If you are using a different hypervisor such as `VMware <http://www.vmware.com/>`__, you may need to replace ``localhost`` with the IP address of your VM.  Execute ``ifconfig`` inside the console of the VM to find the IP address.
+

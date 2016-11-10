@@ -61,7 +61,7 @@ function onLoad() {
     setUpTabsForIndex('.homelink');
     setUpTabsForIndex('.aboutlink');
     var docs_link = $('#_documentationlink');
-    docs_link.attr('href', '/opengeo-docs/');
+    docs_link.attr('href', '/suite-docs/');
   }
 
   $('.nav a').click(function(e) {
@@ -109,16 +109,6 @@ function onLoad() {
   var proj_version = $('.version').html();
   proj_version = '@suite_version@';
   $('.version').html(proj_version);
-
-  // Add version info to all version spans
-  var build_profile = '@build_profile@';
-  if (build_profile==='ee') {
-    var header = $('#header-tag');
-    header.addClass('navbar-ee');
-    $('.build_profile').show();
-  } else {
-    $('.build_profile').hide();
-  }
 
   // Add version to all docs links
 /*

@@ -21,16 +21,15 @@
       </a>
       <div class="copyright">
       {% if copyright %}
-        &copy; {{ copyright }}.
+        {{ copyright }}.
       {% else %}
-        <a href="http://boundlessgeo.com" class="normal-text">Boundless</a>
-        <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons License.</a>
+        &copy; <a href="http://boundlessgeo.com" class="normal-text">Boundless</a>.
       {% endif %}
       </div>
     </div>
     <div class="footer-aside">
         {% if theme_display_zendesk %}
-          <a id="zenbox" class="help-contact" data="{{ pagename }}" href="https://opengeo.zendesk.com/account/dropboxes/20307456">Report an Issue</a>
+          <a id="zenbox" class="help-contact" data="{{ pagename }}" href="https://connect.boundlessgeo.com/Community/Questions-Answers">Ask a Question</a>
         {% endif %}
       </div>
   </div>

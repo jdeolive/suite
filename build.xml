@@ -1,20 +1,20 @@
 <project name="suite" default="build">
   <import file="build/common.xml"/>
 
-  <property name="modules.list" value="geoserver,geowebcache,geoexplorer,dashboard,jetty,docs,apps,sdk"/>
-
-  <target name="build" description="Builds project">
-    <for list="${modules.list}" param="mod">
-      <sequential>
-        <ant dir="@{mod}" target="build" inheritAll="false"/>
-      </sequential>
-    </for>
-  </target>
+  <property name="modules.list" value="geoserver,geowebcache,composer,wpsbuilder,dashboard,docs"/>
 
   <target name="clean" description="Cleans project">
     <for list="${modules.list}" param="mod">
       <sequential>
         <ant dir="@{mod}" target="clean" inheritAll="false"/>
+      </sequential>
+    </for>
+  </target>
+
+  <target name="build" description="Builds project">
+    <for list="${modules.list}" param="mod">
+      <sequential>
+        <ant dir="@{mod}" target="build" inheritAll="false"/>
       </sequential>
     </for>
   </target>
@@ -28,25 +28,19 @@
   </target>
 
   <target name="assemble-bin">
-   <condition property="artifact_postfix"
-          value="${suite.build_rev}-${suite.build_profile}"
-          else="${suite.build_rev}">
-          <not>
-            <equals arg1="${suite.build_profile}" arg2="basic"/>
-          </not>
-        </condition>
-    <property name="bindir" value="target/${suite.build_profile}/bin"/>
+    <property name="bindir" value="target/bin"/>
     <property name="webappsdir" value="${bindir}/webapps"/>
     <delete dir="${bindir}"/>
     <mkdir dir="${bindir}"/>
+    <mkdir dir="jetty/target"/>
     <unzip dest="${bindir}">
       <fileset dir="jetty/target" includes="*.zip"/>
     </unzip>
     <copy todir="${webappsdir}/root">
-      <fileset dir="dashboard/target/${suite.build_profile}/war" includes="**/*"/>
+      <fileset dir="dashboard/target/war" includes="**/*"/>
     </copy>
-    <unzip dest="geoserver/webapp/target/${suite.build_profile}" overwrite="true">
-      <fileset dir="geoserver/webapp/target/" includes="suite-geoserver-${artifact_postfix}.zip"/>
+    <unzip dest="geoserver/webapp/target/" overwrite="true">
+      <fileset dir="geoserver/webapp/target/" includes="suite-geoserver.zip"/>
     </unzip>
     <unzip dest="${webappsdir}/geoserver" overwrite="true">
       <fileset dir="geoserver/webapp/target" includes="geoserver.war">
@@ -59,9 +53,6 @@
         <exclude name="**/imageio-ext-*.jar"/>
       </fileset>
     </copy>
-    <copy todir="${webappsdir}/geoexplorer">
-      <fileset dir="geoexplorer/target/war" includes="**/*"/>
-    </copy>
     <!-- Once WPS Builder issues on r2d2 are resolved this should be re-added to the bin bundle
     <unzip dest="${webappsdir}/wpsbuilder" overwrite="true">
       <fileset dir="geoserver/externals/wps-gui/build" includes="wpsbuilder.war">
@@ -70,12 +61,12 @@
     -->
     <mkdir dir="docs/target"/>
     <unzip dest="docs/target" overwrite="true">
-      <fileset dir="docs/target/" includes="suite-docs-${artifact_postfix}.zip"/>
+      <fileset dir="docs/target/" includes="suite-docs.zip"/>
     </unzip>
     <copy todir="${webappsdir}">
-      <fileset dir="docs/target" includes="opengeo-docs/**/*"/>
+      <fileset dir="docs/target" includes="suite-docs/**/*"/>
     </copy>
-    <unzip dest="${webappsdir}/apps" src="apps/target/apps.war"/>
+    <!-- <unzip dest="${webappsdir}/apps" src="apps/target/apps.war"/> -->
     <copy todir="${bindir}/data_dir">
       <fileset dir="geoserver/data_dir/target" includes="**/*">
         <exclude name="*.zip"/>
@@ -84,7 +75,7 @@
 
     <antcall target="assemble-artifact">
       <param name="name" value="bin"/>
-      <param name="dir" value="target/${suite.build_profile}/bin"/>
+      <param name="dir" value="target/bin"/>
     </antcall>
   </target>
 

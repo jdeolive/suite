@@ -11,12 +11,6 @@ Loading with PDAL
 
 PDAL is a LIDAR conversion library that includes some useful commandline utilities for automating LIDAR loading and processing. The PDAL package was included in the :ref:`dataadmin.pointcloud.install` directions.
 
-.. note:: 
-
-   OpenGeo Suite includes PDAL builds for Linux and OSX, but not yet for Windows. Future releases
-   will include native Windows support.
-
-
 Running ``pdal pipeline``
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 

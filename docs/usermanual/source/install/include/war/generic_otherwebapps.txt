@@ -1,0 +1,84 @@
+GeoWebCache
+-----------
+
+#. If needed, install Java and Tomcat (see :ref:`install` for more details).
+
+#. Create two directories to store the GWC configuration and tiles:
+
+   .. code-block:: bash
+
+      mkdir -p /var/opt/boundless/suite/geowebcache/config
+      mkdir -p /var/opt/boundless/suite/geowebcache/tilecache
+
+#. Copy the :file:`geowebcache.war` file to your webapps directory (:file:`$CATALINA_HOME/webapps`).
+
+#. Create a :file:`geowebcache.xml` file in your :file:`$CATALINA_HOME/conf/Catalina/localhost` directory:
+
+   .. literalinclude:: /install/include/war/config_gwc.txt
+
+#. Restart Tomcat.
+
+#. Go to the GeoWebCache main page at `<http://localhost:8080/geoserver/gwc>`__ and verify the Local Storage (``GEOWEBCACHE_CACHE_DIR``) is correct.
+
+
+Composer
+--------
+
+.. note:: Composer assumes that GeoServer is running in the same web application server.
+
+#. If needed, install Java and Tomcat (see :ref:`install` for more details).
+
+#. Copy the :file:`composer.war` file to your webapps directory (:file:`$CATALINA_HOME/webapps`).
+
+#. Restart Tomcat.
+
+#. Navigate to `<http://localhost:8080/composer>`__ to verify that the application deployed successfully. You will be prompted for the main GeoServer Username/Password (which defaults to ``admin`` / ``geoserver``).
+
+
+Documentation
+-------------
+
+#. If needed, install Java and Tomcat (see :ref:`install` for more details).
+
+#. Copy the :file:`suite-docs.war` file to your webapps directory (:file:`$CATALINA_HOME/webapps`).
+
+#. Restart Tomcat.
+
+#. Navigate to `<http://localhost:8080/suite-docs>`__ to verify that the application deployed successfully.
+
+
+WPS Builder
+-----------
+
+.. note:: Make sure you have installed the WPS extension in GeoServer and GeoServer is running in the same web application server.
+
+#. If needed, install Java and Tomcat (see :ref:`install` for more details).
+
+#. Copy the :file:`wpsbuilder.war` file to your webapps directory (:file:`$CATALINA_HOME/webapps`).
+
+#. Restart Tomcat.
+
+#. Navigate to `<http://localhost:8080/wpsbuilder>`__ to verify that the application deployed successfully. 
+
+
+QuickView
+---------
+
+.. note:: QuickView assumes that GeoServer is running in the same web application server.
+
+#. If needed, install Java and Tomcat (see :ref:`install` for more details)
+#. Copy the :file:`quickview.war` file to your webapps directory (:file:`$CATALINA_HOME/webapps`).
+#. Restart Tomcat
+#. Navigate to `<http://localhost:8080/quickview>`__ to verify that the application deployed successfully. 
+
+
+Dashboard
+---------
+
+#. If needed, install Java and Tomcat (see :ref:`install` for more details).
+
+#. Copy the :file:`dashboard.war` file to your webapps directory (:file:`$CATALINA_HOME/webapps`).
+
+#. Restart Tomcat.
+
+#. Navigate to `<http://localhost:8080/dashboard>`__ to verify that the application deployed successfully.

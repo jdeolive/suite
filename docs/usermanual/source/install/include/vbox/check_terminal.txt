@@ -1,0 +1,35 @@
+Most interaction with Boundless Suite will be done through a browser, but occasionally we will want to run commands directly on the virtual machine. To do this, we will use a terminal client.
+
+.. note:: Use :guilabel:`Headless Start` to prevent the virtual machine console from even being shown.
+
+We will use the following connection parameters to connect to the virtual machine via the terminal:
+
+* **Host name**: ``localhost``
+* **Port**: ``2020``
+* **User**: ``root``
+* **Password**: ``boundless123``
+
+**Linux and OS X** systems have a built-in terminal utility with the ability to run SSH commands.
+
+#. Enter the following command on a terminal:
+
+   .. code-block:: console
+
+      ssh -p 2020 root@localhost
+
+#. The first time connecting to the virtual machine will fail (as the "ECDSA key fingerprint" used for a secure connection is not trusted). Enter :kbd:`yes` to add ``localhost:2020`` to the listed of known hosts.
+
+#. When asked for a user name, enter :kbd:`root` and press :kbd:`Enter`.
+
+#. When asked for a password, enter :kbd:`boundless123` and press :kbd:`Enter`.
+
+#. Check the shared directory to confirm that files can be shared between the host and the virtual machine:
+
+   .. code-block:: console
+
+      cd /media/sf_share
+      ls -l
+
+   You should see the contents of your shared directory.
+
+.. note:: If you named your shared directory something other than "share", the shared folder will be named :file:`/media/sf_<name>`.

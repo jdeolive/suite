@@ -1,0 +1,38 @@
+We recommend using the shared folder as a way of transferring files between your host and your virtual machine, but not as a permanent storage location.
+
+To load a file on your host system into GeoServer:
+
+#. Copy the file to your shared folder on your host system.
+
+#. Open a terminal to the virtual machine.
+
+#. Verify that the file is there on your virtual machine: 
+
+   .. code-block:: console
+
+      cd /media/sf_share
+      ls -l
+
+   .. note:: If you don't see this directory, check that your shared folder settings are correct and that you copied the file to the correct location.
+
+#. Copy or move the file out of the shared folder to a location on your virtual machine.
+
+   .. code-block:: console
+
+      cp /media/sf_share/data.zip /opt/data/data.zip
+
+#. Make sure that the Tomcat service user (``tomcat8``) has access to the file:
+
+   .. code-block:: console
+
+      chown tomcat8:tomcat8 /opt/data/data.zip      
+
+#. Now launch the :ref:`GeoServer Layer Importer <dataadmin.importer>` by logging in to the GeoServer admin interface and clicking :guilabel:`Import Data`.
+
+#. Click :guilabel:`Browse` to select the file.
+
+   .. figure:: /install/include/vbox/img/vbox_importshared.png
+
+      Importing a file into GeoServer
+
+#. Select the file and :ref:`continue with the import <dataadmin.importer>`.

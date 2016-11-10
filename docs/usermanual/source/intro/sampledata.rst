@@ -3,7 +3,7 @@
 Sample Data
 ===========
 
-OpenGeo Suite comes with some preloaded sample layers that may be viewed and restyled as required.
+Boundless Suite comes with some preloaded sample layers that may be viewed and restyled as required.
 
 .. note:: The sample layers are provided for demonstration purposes only. No assurances are provided with respect to the currency or accuracy of the data.
 
@@ -36,7 +36,7 @@ Medford
 
 The city of Medford, in the United States state of Oregon, has generously shared some of their public domain municipal data.
 
-.. note:: To install the data download `medford.zip <http://data.opengeo.org/medford.zip>`_ and unpack it into the root of the GeoServer data directory.
+.. note:: To install the data download `medford.zip <http://data.boundlessgeo.com/medford.zip>`_ and unpack it into the root of the GeoServer data directory.
 
 The following layers are available in the Medford dataset:
 
@@ -116,7 +116,7 @@ The following layers are available in the Medford dataset:
 
 .. figure:: img/medford.png
 
-   Medford zoning data viewed in GeoExplorer
+   Medford zoning data
 
 The Medford layers are in a geographic projection (EPSG:4326) with an approximate spatial extent of ``-122.904, 42.231, -123.042, 42.438`` (west, south, east, north).
 
@@ -127,7 +127,7 @@ World
 
 A variety of world wide datasets compiled from a number of sources.
 
-.. note:: To install the data download `world.zip <http://data.opengeo.org/world.zip>`_ and unpack it into the root of the GeoServer data directory.
+.. note:: To install the data download `world.zip <http://data.boundlessgeo.com/world.zip>`_ and unpack it into the root of the GeoServer data directory.
 
 .. note:: The world data bundle contains styles that require the GeoServer WPS extensions.
 
@@ -163,16 +163,6 @@ The :guilabel:`world:volcanoes` layer is derived from the freely available volca
 
 The :guilabel:`world:urbanareas1_1` layer was obtained from the `Nordpil world database of large urban areas <http://nordpil.com/go/resources/world-database-of-large-cities/>`_, derived from the World Urbanization Prospects: The 2007 Revision Population Database (UN Population Division). The urban areas data is made available under a Creative Commons public domain license.
 
-The :guilabel:`world:cities` layer was derived from public domain data obtained from the `Natural Earth <http://www.naturalearthdata.com/>`_ website. The :guilabel:`world:borders` layer was downloaded from the `Mapping Hacks <http://www.mappinghacks.com/data>`_ website. The original data was derived from public domain sources.
+The :guilabel:`world:cities` layer was derived from public domain data obtained from the `Natural Earth <http://www.naturalearthdata.com/>`_ website. The :guilabel:`world:borders` layer was downloaded from the `Thematic Mapping <http://thematicmapping.org/downloads/world_borders.php>`_ website. The original data was derived from public domain sources.
 
 For further information, please refer to the :file:`Readme.txt` file included with the data.
-
-Base Maps
-~~~~~~~~~
-
-GeoExplorer provides a link to the MapQuest OpenStreetMap (OSM) web service, providing a general map of the world as a base map.
-
-.. figure:: ../webmaps/easypublish/img/load_geoexplorer.png
-
-   OSM world map in GeoExplorer
-

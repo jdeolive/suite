@@ -1,0 +1,57 @@
+<project name="suite.versions" default="set-versions">
+  <import file="./common.xml"/>
+
+  <target name="clean" />
+  <target name="build" />
+  <target name="assemble" />
+  <target name="publish" />
+
+  <target name="set-versions">
+    <!-- Suite version -->
+    <!-- replace file="../assembly/pom.xml" token="${suite.major_version}-SNAPSHOT"
+      value="${suite.major_version}${suite.minor_version}">
+    </replace -->
+
+    <!-- GeoTools version -->
+    <replace dir="../geoserver" token="${gt.major_version}-SNAPSHOT"
+      value="${gt.major_version}${suite.minor_version}">
+      <!-- all pom files -->
+      <include name="**/pom.xml" />
+    </replace>
+    <replace dir="../geoserver/geotools/geotools/" token="${gt.major_version}-SNAPSHOT"
+      value="${gt.major_version}${suite.minor_version}">
+      <!-- geotools config -->
+      <include name="**/GeoTools.java"/>
+      <include name="**/common.py"/>
+    </replace>
+
+    <!-- GeoWebCache version -->
+    <replace dir="../geoserver" token="${gwc.major_version}-SNAPSHOT"
+      value="${gwc.major_version}${suite.minor_version}">
+      <!-- all pom files -->
+      <include name="**/pom.xml" />
+    </replace>
+    <replace dir="../geowebcache" token="${gwc.major_version}-SNAPSHOT"
+      value="${gwc.major_version}${suite.minor_version}">
+      <!-- all pom files -->
+      <include name="**/pom.xml" />
+    </replace>
+    <replace dir="../geoserver/geowebcache/geowebcache/geowebcache/release/" token="${gwc.major_version}-SNAPSHOT"
+      value="${gwc.major_version}${suite.minor_version}">
+      <!-- geowebcache config -->
+      <include name="**/*.xml" />
+    </replace>
+
+    <!-- GeoServer version -->
+    <replace dir="../geoserver" token="${gs.major_version}-SNAPSHOT"
+      value="${gs.major_version}${suite.minor_version}">
+      <!-- all pom files -->
+      <include name="**/pom.xml" />
+    </replace>
+    <replace dir="../geoserver/geoserver/geoserver/doc/" token="${gs.major_version}-SNAPSHOT"
+      value="${gs.major_version}${suite.minor_version}">
+      <!-- geoserver config -->
+      <include name="**/conf.py"/>
+    </replace>
+  </target>
+</project>

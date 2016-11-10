@@ -1,4 +1,0 @@
-#!/bin/bash
-
-cp /home/web/system-test/jboss/* /opt/jboss/bin
-cp /home/web/system-test/tomcat/* /opt/tomcat/bin

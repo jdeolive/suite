@@ -5,7 +5,7 @@ Contour map setup
 
 A contour map is a vector map formed by linestring features which describe areas of similar or equal value. The contour map is most commonly generated from raster topographic or digital elevation model data (to show height), but can also be used on weather maps or other datasets where bands of common value are desired.
 
-There are two methods of creating a contour map from raster data using the OpenGeo Suite.
+There are two methods of creating a contour map from raster data using Boundless Suite.
 
 * **Statically**, using the Web Processing Service (WPS)
 * **Dynamically**, using map styles and :ref:`rendering transformations <cartography.rt>`
@@ -17,7 +17,7 @@ Example data
 
 You should start with an appropriate dataset. Any raster data set that contains a band where contouring is possible will work.
 
-Load this dataset into GeoServer. The simplest way is to use :ref:`Composer <webmaps.composer>`, but you can also use the :ref:`GeoServer Layer Importer <dataadmin.importer>` or `GeoExplorer <../../geoexplorer>`_ and its Upload Layers functionality.
+Load this dataset into GeoServer. The simplest way is to use :ref:`Composer <webmaps.composer>`, but you can also use the :ref:`GeoServer Layer Importer <dataadmin.importer>`.
 
 .. figure:: img/composer_raster.png
 

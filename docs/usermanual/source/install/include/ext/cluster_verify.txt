@@ -1,0 +1,11 @@
+To verify that the extension has been installed properly:
+
+#. Log in to the GeoServer web interface.
+
+#. You should see a status line about a cluster node:
+
+   .. figure:: /install/include/ext/img/cluster_status.png
+
+      Clustering status
+
+   If you don't see this, the extension did not install correctly.

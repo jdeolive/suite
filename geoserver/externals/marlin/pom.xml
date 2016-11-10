@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.boundlessgeo.suite</groupId>
+  <artifactId>marlin</artifactId>
+  <version>4.9-SNAPSHOT</version>
+  <name>Boundless Suite Marlin</name>
+  <description>Boundless Suite Marlin extension</description>
+
+  <organization>
+    <name>Boundless</name>
+    <url>http://http://boundlessgeo.com</url>
+  </organization>
+  <licenses>
+    <license>
+      <name>OpenGeo Suite End User License Agreement</name>
+      <url>http://boundlessgeo.com/site-map/legal/opengeo-suite-eula/</url>
+      <distribution>manual</distribution>
+    </license>
+  </licenses>
+  <repositories>
+    <repository>
+      <id>boundless</id>
+      <name>Boundless Maven Repository</name>
+      <url>https://repo.boundlessgeo.com/snapshot/</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+
+    <repository>
+      <id>boundless-libs-release-local</id>
+      <name>Boundless Libs-Release-Local Maven Repository</name>
+      <url>https://repo.boundlessgeo.com/artifactory/libs-release-local/</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+
+    <repository>
+      <id>geosolutions</id>
+      <name>GeoSolutions Repository</name>
+      <url>http://maven.geo-solutions.it/</url>
+    </repository>
+
+    <repository>
+      <id>osgeo</id>
+      <name>Open Source Geospatial Foundation Repository</name>
+      <url>http://download.osgeo.org/webdav/geotools/</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <properties>
+    <marlin.version>0.7.3-Unsafe</marlin.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.marlin</groupId>
+      <artifactId>marlin</artifactId>
+      <version>${marlin.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.10</version>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/marlin</outputDirectory>
+              <overWriteReleases>true</overWriteReleases>
+              <overWriteSnapshots>true</overWriteSnapshots>
+              <overWriteIfNewer>true</overWriteIfNewer>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -1,0 +1,13 @@
+To verify that the **output format** extension has been installed properly:
+
+#. Log in to the GeoServer web interface.
+
+#. Click :guilabel:`Global` under :guilabel:`Settings`.
+
+#. Toward the bottom, you should see a section titled :guilabel:`NetCDF Output Settings`.
+
+   .. figure:: /install/include/ext/img/netcdf-out_config.png
+
+      NetCDF output settings in the list of raster stores
+
+   If you don't see this entry, the extension did not install correctly.

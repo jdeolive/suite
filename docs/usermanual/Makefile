@@ -2,7 +2,7 @@
 #
 
 # You can set these variables from the command line.
-SPHINXOPTS    =
+SPHINXOPTS    = -q -W -j 4
 SPHINXBUILD   = sphinx-build
 PAPER         =
 
@@ -28,36 +28,36 @@ help:
 	@echo "  doctest   to run all doctests embedded in the documentation (if enabled)"
 
 clean:
-	-rm -rf build/*
+	-rm -rf target/*
 
 html:
-	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) build/html
+	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) target/html
 	@echo
 	@echo "Build finished. The HTML pages are in build/html."
 
 dirhtml:
-	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) build/dirhtml
+	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) target/dirhtml
 	@echo
 	@echo "Build finished. The HTML pages are in build/dirhtml."
 
 pickle:
-	$(SPHINXBUILD) -b pickle $(ALLSPHINXOPTS) build/pickle
+	$(SPHINXBUILD) -b pickle $(ALLSPHINXOPTS) target/pickle
 	@echo
 	@echo "Build finished; now you can process the pickle files."
 
 json:
-	$(SPHINXBUILD) -b json $(ALLSPHINXOPTS) build/json
+	$(SPHINXBUILD) -b json $(ALLSPHINXOPTS) target/json
 	@echo
 	@echo "Build finished; now you can process the JSON files."
 
 htmlhelp:
-	$(SPHINXBUILD) -b htmlhelp $(ALLSPHINXOPTS) build/htmlhelp
+	$(SPHINXBUILD) -b htmlhelp $(ALLSPHINXOPTS) target/htmlhelp
 	@echo
 	@echo "Build finished; now you can run HTML Help Workshop with the" \
 	      ".hhp project file in build/htmlhelp."
 
 qthelp:
-	$(SPHINXBUILD) -b qthelp $(ALLSPHINXOPTS) build/qthelp
+	$(SPHINXBUILD) -b qthelp $(ALLSPHINXOPTS) target/qthelp
 	@echo
 	@echo "Build finished; now you can run "qcollectiongenerator" with the" \
 	      ".qhcp project file in build/qthelp, like this:"
@@ -66,30 +66,30 @@ qthelp:
 	@echo "# assistant -collectionFile build/qthelp/OpenGeoSuiteInstallation.qhc"
 
 latex:
-	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) build/latex
+	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) target/latex
 	@echo
 	@echo "Build finished; the LaTeX files are in build/latex."
 	@echo "Run \`make all-pdf' or \`make all-ps' in that directory to" \
 	      "run these through (pdf)latex."
 
 text:
-	$(SPHINXBUILD) -b text $(ALLSPHINXOPTS) build/text
+	$(SPHINXBUILD) -b text $(ALLSPHINXOPTS) target/text
 	@echo
 	@echo "Build finished. The text files are in build/text."
 
 changes:
-	$(SPHINXBUILD) -b changes $(ALLSPHINXOPTS) build/changes
+	$(SPHINXBUILD) -b changes $(ALLSPHINXOPTS) target/changes
 	@echo
 	@echo "The overview file is in build/changes."
 
 linkcheck:
-	$(SPHINXBUILD) -b linkcheck $(ALLSPHINXOPTS) build/linkcheck
+	$(SPHINXBUILD) -b linkcheck $(ALLSPHINXOPTS) target/linkcheck
 	@echo
 	@echo "Link check complete; look for any errors in the above output " \
 	      "or in build/linkcheck/output.txt."
 
 doctest:
-	$(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) build/doctest
+	$(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) target/doctest
 	@echo "Testing of doctests in the sources finished, look at the " \
 	      "results in build/doctest/output.txt."
 

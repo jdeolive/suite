@@ -1,0 +1,14 @@
+These instructions provide a **virtual machine** which has been already configured with Boundless Suite, eliminating the need to install Boundless Suite directly on your machine.
+
+**All interaction with Boundless Suite will still be done through your host's standard browser or a terminal connection.** There is no need to interact directly with the virtual machine console once it is running.
+
+These instructions should only be used with `VirtualBox <https://www.virtualbox.org/>`__. This machine has VirtualBox Guest Additions installed, which is required for functionality such as shared folders. 
+
+.. note::
+
+   Prerequisites:
+
+   * Please disable any programs on your system that use ports 2020, 5432, 8080, or 8433.
+   * Make sure you have administrative / super-user privileges on your system.
+   * You must be able to run a 64-bit virtual machine. 32-bit machines are not supported.
+   * You must have at least 2GB of memory and 4GB of free disk space (plus extra space for any loaded data).

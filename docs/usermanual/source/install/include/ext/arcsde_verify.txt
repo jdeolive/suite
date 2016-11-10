@@ -1,0 +1,13 @@
+To verify that the extension has been installed properly:
+
+#. Log in to the GeoServer web interface.
+
+#. Click :guilabel:`Stores` then :guilabel:`Add new store`.
+
+#. In the list of :guilabel:`Vector Data Stores`, you should see :guilabel:`ArcSDE` in the list:
+
+   .. figure:: /install/include/ext/img/arcsde_storelink.png
+
+      ArcSDE in the list of vector stores
+
+   If you don't see this entry, the extension itself did not install correctly.

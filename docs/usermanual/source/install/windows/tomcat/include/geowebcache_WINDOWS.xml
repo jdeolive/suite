@@ -1,0 +1,10 @@
+<Context docBase="geowebcache.war">
+  <!-- The default location of the GWC tile cache -->
+  <Parameter name="GEOWEBCACHE_CACHE_DIR"
+             value="C:\ProgramData\Boundless\geowebcache\tilecache"
+             override="false"/>
+  <!-- Location of geowebcache configuration-->
+  <Parameter name="GEOWEBCACHE_CONFIG_DIR"
+             value="C:\ProgramData\Boundless\geowebcache\config"
+             override="false"/>
+</Context>

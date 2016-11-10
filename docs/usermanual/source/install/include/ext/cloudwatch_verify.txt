@@ -1,0 +1,15 @@
+To verify that the extension has been installed properly:
+
+#. Access your account's `CloudWatch panel <https://console.aws.amazon.com/cloudwatch/home>`_.
+
+#. Select :guilabel:`geoserver` in the menu on the left.
+
+   .. figure:: /install/include/ext/img/cloudwatch_panel.png
+
+      CloudWatch panel showing GeoServer
+
+   If you don't see this entry in the menu on the left, the extension did not install correctly.
+
+#. There should now be a list of metrics. Click on the checkboxes to add or remove them from the chart.
+
+

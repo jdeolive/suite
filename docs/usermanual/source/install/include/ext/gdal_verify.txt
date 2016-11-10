@@ -1,0 +1,23 @@
+To verify that the GDAL native library extension has been installed properly:
+
+#. Navigate to the GeoServer web application and login using the admin credentials.
+
+#. Navigate to the GeoServer Detailed Status Page at http://localhost:8080/geoserver/rest/about/status.
+
+#. Verify that the GDAL extension is available (:guilabel:`Enabled` and :guilabel:`Available` both set to :guilabel:`true`):
+
+   .. figure:: /install/include/ext/img/gdal_rest.png
+
+      GDAL available
+
+   If you don't see this exactly as displayed, the extension did not install correctly.
+
+#. Click :guilabel:`Stores` then :guilabel:`Add new store`.
+
+#. In the list of :guilabel:`Raster Data Stores`, you should see extra raster formats, such as :guilabel:`MrSID`, :guilabel:`EHdr`, and :guilabel:`NITF`.
+
+   .. figure:: /install/include/ext/img/gdal_storelinks.png
+
+      GDAL formats in the list of raster stores
+
+   If you don't see these entries, the extension did not install correctly.

@@ -1,0 +1,65 @@
+Binaries
+--------
+
+Some Geoserver extensions require non-java (binary) support libraries.  
+
+GDAL
+~~~~
+
+#. Install, from the Boundless Repository, the GDAL and GDAL-java packages.
+
+   On Red Hat:
+
+   .. code-block:: bash
+
+      yum install gdal gdal-java
+
+   On Ubuntu:
+
+   .. code-block:: bash
+
+      apt-get install libgdal libgdal-java 
+
+   .. note:: You can also install the :file:`gdal-mrsid` package for MrSID and JP2K support.
+
+#. Verify the GDAL install by running :file:`gdalinfo --formats` to see a long list of supported formats and :file:`gdalinfo --version` to verify the version (1.11.2).  Also verify that the :file:`gdal.jar` file is in :file:`/usr/share/java`
+
+#. Copy the :file:`gdal.jar` from :file:`/usr/share/java` into the :file:`WEB-INF/lib` directory of your Geoserver web application.
+
+#. Copy the :file:`.jar` files from the :file:`gdal` directory inside the Boundless Suite extensions bundle (:file:`BoundlessSuite-ext.zip` - available from Boundless Connect) into the :file:`WEB-INF/lib` directory of your Geoserver web application.
+
+#. In your Tomcat config, make sure that :guilabel:`-Djava.library.path` includes the gdal and gdal-jni libaries - :file:`/usr/lib64`,  :file:`/usr/lib`, :file:`/usr/lib/jni`.
+
+#. In your Tomcat config (:file:`tomcat8.conf`), create a :guilabel:`GDAL_DATA` environment variable that points to :file:`/usr/share/gdal`
+
+Also see :ref:`dataadmin.mrsid`.
+
+.. include:: /install/include/ext/gdal_verify.txt
+
+NetCDF-4 Output
+~~~~~~~~~~~~~~~
+
+.. note:: Uninstalling the NetCDF-out extension requires editing the :file:`global.xml` file - see :ref:`dataadmin.netcdf.uninstall`
+
+#. Install the NetCDF-output extension by copying the :file:`.jar` files from the :file:`netcdf-out` directory inside the Boundless Suite extensions bundle (:file:`BoundlessSuite-ext.zip` - available from Boundless Connect) into the :file:`WEB-INF/lib` directory of your Geoserver web application. 
+
+#. Install, from the Boundless Repository, the NetCDF package.
+
+   On Red Hat:
+
+   .. code-block:: bash
+
+      yum install netcdf
+
+   On Ubuntu:
+
+   .. code-block:: bash
+
+      apt-get install netcdf-bin
+
+#. Verify the NetCDF install by running :file:`ncdump` to verify the version (4.3.3.1)
+
+#. In your Tomcat config, make sure that :guilabel:`-Djna.library.path` includes the NetCDF libaries - :file:`/usr/lib64`,  :file:`/usr/lib`.
+
+.. include:: /install/include/ext/netcdf4-out_verify.txt
+

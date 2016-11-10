@@ -1,0 +1,11 @@
+To verify that the NetCDF native library extension has been installed properly:
+
+#. Navigate to the GeoServer web application and login using the admin credentials.
+
+#. Navigate to the GeoServer Detailed Status Page at http://localhost:8080/geoserver/rest/about/status.
+
+#. Search for "NetCDF Output" on the page and verify that the binary is available.
+
+   .. figure:: /install/include/ext/img/ncdf4-status.png
+
+      NetCDF 4 output settings

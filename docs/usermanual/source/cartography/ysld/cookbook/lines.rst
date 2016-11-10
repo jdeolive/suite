@@ -115,7 +115,7 @@ Code
 
 :download:`Download the "Simple line" YSLD <artifacts/line_simpleline.ysld>`
 
-.. code-block:: python
+.. code-block:: yaml
   :linenos:
 
   title: 'YSLD Cook Book: Simple Line'
@@ -151,7 +151,7 @@ Code
 
 :download:`Download the "Line with border" YSLD <artifacts/line_linewithborder.ysld>`
 
-.. code-block:: python
+.. code-block:: yaml
   :linenos:
 
   title: 'YSLD Cook Book: Line with border'
@@ -205,7 +205,7 @@ Code
 
 :download:`Download the "Dashed line" YSLD <artifacts/line_dashedline.ysld>`
 
-.. code-block:: python
+.. code-block:: yaml
   :linenos:
 
   title: 'YSLD Cook Book: Dashed line'
@@ -223,6 +223,42 @@ Details
 
 In this example, **line 8** sets the color of the lines to be blue (``'#0000FF'``) and **line 8** sets the width of the lines to be 3 pixels. **Line 9** determines the composition of the line dashes. The value of ``5 2`` creates a repeating pattern of 5 pixels of drawn line, followed by 2 pixels of omitted line.
 
+Offset line
+-----------
+
+This example alters the :ref:`ysld_cookbook_lines_simpleline` to add a perpendicular offset line on the left side of the line, at five pixels distance.
+
+.. figure:: images/line_dashoffset.png
+
+   Dashed line
+
+Code
+~~~~
+
+:download:`Download the "Offset line" YSLD <artifacts/line_offsetline.ysld>`
+
+.. code-block:: yaml
+  :linenos:
+
+  title: 'YSLD Cook Book: Dashed line'
+  feature-styles:
+  - name: name
+    rules:
+    - symbolizers:
+      - line:
+          stroke-color: '#000000'
+          stroke-width: 2
+      - line:
+          stroke-color: '#0000FF'
+          stroke-width: 3
+          stroke-dasharray: 5 2
+          offset: 3
+
+Details
+~~~~~~~
+
+In this example, **lines 6-8** draw a simple black line like in the Simple line example. **Lines 9-12** draw a blue dashed line like in the above Dashed line example. **Line 13** modifies the dashed line with a 3 pixel offset from the line geometry.
+
 
 Railroad (hatching)
 -------------------
@@ -239,7 +275,7 @@ Code
 
 :download:`Download the "Railroad (hatching)" YSLD <artifacts/line_railroad.ysld>`
 
-.. code-block:: python
+.. code-block:: yaml
   :linenos:
 
   title: 'YSLD Cook Book: Railroad (hatching)'
@@ -287,7 +323,7 @@ Code
 
 :download:`Download the "Spaced symbols" YSLD <artifacts/line_dashspace.ysld>`
 
-.. code-block:: python
+.. code-block:: yaml
   :linenos:
 
   name: Default Styler
@@ -311,7 +347,7 @@ Code
       
 Details
 ~~~~~~~
-This example, like others before, uses a ``stroke-graphic-stroke`` to place a graphic symbol along a line. The symbol, defined at **lines 13-17** is a 4 pixel gray circle with a dark gray outline. The spacing between symbols is controlled with the ``stroke-dasharray`` at **line 9**, which specifies 4 pixels of pen-down (just enough to draw the circle) and 6 pixels of pen-up,  to provide the spacing.
+This example, like others before, uses a ``stroke-graphic-stroke`` to place a graphic symbol along a line. The symbol, defined on **lines 14-18** is a 4 pixel gray circle with a dark gray outline. The spacing between symbols is controlled with the ``stroke-dasharray`` at **line 9**, which specifies 4 pixels of pen-down (just enough to draw the circle) and 6 pixels of pen-up,  to provide the spacing.
 
 
 .. _ysld_cookbook_lines_defaultlabel:
@@ -344,7 +380,7 @@ Code
 
 :download:`Download the "Spaced symbols" YSLD <artifacts/line_dashdot.ysld>`
 
-.. code-block:: python
+.. code-block:: yaml
   :linenos:
 
   title: 'YSLD Cook Book: Dash/Symbol line'
@@ -395,7 +431,7 @@ Code
 
 :download:`Download the "Line with default label" YSLD <artifacts/line_linewithdefaultlabel.ysld>`
 
-.. code-block:: python
+.. code-block:: yaml
   :linenos:
 
   name: Default Styler
@@ -419,7 +455,7 @@ Code
 Details
 ~~~~~~~
 
-In this example, there is one rule with a line symbolizer and a text symbolizer. The line symbolizer (**lines 6-8**) draws red lines (``'#FF0000'``). The text symbolizer (**lines 9-16**) determines the labeling of the lines. **Line 10** specifies that the text of the label will be determined by the value of the "name" attribute for each line. (Refer to the attribute table in the :ref:`ysld_cookbook_lines_attributes` section if necessary.)  **Line 11** sets the text color to black. All other details about the label are set to the renderer default, which here is Times New Roman font, font color black, and font size of 10 pixels.
+In this example, there is one rule with a line symbolizer and a text symbolizer. The line symbolizer (**lines 6-8**) draws red lines (``'#FF0000'``). The text symbolizer (**lines 10-17**) determines the labeling of the lines. **Line 10** specifies that the text of the label will be determined by the value of the "name" attribute for each line. (Refer to the attribute table in the :ref:`ysld_cookbook_lines_attributes` section if necessary.)  **Line 11** sets the text color to black. All other details about the label are set to the renderer default, which here is Times New Roman font, font color black, and font size of 10 pixels.
 
 
 .. _ysld_cookbook_lines_labelfollowingline:
@@ -438,7 +474,7 @@ Code
 
 :download:`Download the "Label following line" YSLD <artifacts/line_labelfollowingline.ysld>`
 
-.. code-block:: python
+.. code-block:: yaml
   :linenos:
 
   title: 'YSLD Cook Book: Label following line'
@@ -483,7 +519,7 @@ Code
 
 :download:`Download the "Optimized label" YSLD <artifacts/line_optimizedlabel.ysld>`
 
-.. code-block:: python
+.. code-block:: yaml
   :linenos:
 
   title: 'YSLD Cook Book: Optimized label placement'
@@ -529,7 +565,7 @@ Code
 
 :download:`Download the "Optimized and styled label" YSLD <artifacts/line_optimizedstyledlabel.ysld>`
 
-.. code-block:: python
+.. code-block:: yaml
   :linenos:
 
   title: 'YSLD Cook Book: Optimized and styled label'
@@ -574,7 +610,7 @@ Code
 
 :download:`Download the "Attribute-based line" YSLD <artifacts/line_attributebasedline.ysld>`
 
-.. code-block:: python
+.. code-block:: yaml
   :linenos:
 
   title: 'YSLD Cook Book: Attribute-based line'
@@ -669,7 +705,7 @@ Code
 
 :download:`Download the "Zoom-based line" YSLD <artifacts/line_zoombasedline.ysld>`
 
-.. code-block:: python
+.. code-block:: yaml
   :linenos:
 
   title: 'YSLD Cook Book: Zoom-based line'

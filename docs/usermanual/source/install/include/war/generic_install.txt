@@ -1,0 +1,102 @@
+Standard installation
+---------------------
+
+.. note:: Boundless Suite requires Java 1.8 and Tomcat 8.
+
+.. note:: See the :ref:`sysadmin` section for installation and administration help.
+
+#. If you have an existing OpenGeo Suite, Boundless Suite, or GeoServer install, backup your configuration (specifically your GeoServer data directory) and data.
+
+#. Uninstall any old versions.
+
+#. Install Java 1.8. (Boundless Suite requires Java 1.8)
+
+   .. note:: We recommend downloading from `Oracle <https://java.com/en/download/manual.jsp>`__.
+   .. note:: See :ref:`sysadmin.jvm` for dealing with multiple versions of java on your machine.
+
+#. Install `Tomcat 8 <http://tomcat.apache.org/download-80.cgi>`__ and ensure Tomcat is using the Java 8 runtime.
+
+#. Setup Tomcat with the following options:
+     
+   * ``-Xms256m``
+   * ``-Xmx756m`` (or higher)
+   * ``-XX:SoftRefLRUPolicyMSPerMB=36000``
+   * ``-XX:-UsePerfData``
+   * ``-Dorg.geotools.referencing.forceXY=true``
+   * ``-Dorg.geotoools.render.lite.scale.unitCompensation=true``
+
+#. If you don't have an existing GeoServer data directory, you can use the :file:`suite-data-dir.zip` inside the Boundless WAR bundle :file:`BoundlessSuite-war.zip`. 
+
+   .. note:: A suggested location would be :file:`/var/opt/boundless/suite/geoserver/data`:
+
+   .. code-block:: none
+
+      mkdir -p /var/opt/boundless/suite/geoserver/data
+      unzip suite-data-dir.zip -d /var/opt/boundless/suite/geoserver/data
+
+#. Add a GeoServer context file (:file:`geoserver.xml`) to :file:`$CATALINA_HOME/conf/Catalina/localhost/` with the following content:
+
+   .. code-block:: xml
+    
+      <Context docBase="geoserver.war">
+        <!-- The location of the GeoServer configuration directory -->
+        <Parameter name="GEOSERVER_DATA_DIR"
+                   value="/var/opt/boundless/suite/geoserver/data"
+                   override="false"/> 
+      
+        <!-- The default location of the GWC tile cache -->
+        <Parameter name="GEOWEBCACHE_CACHE_DIR"
+                   value="var/opt/boundless/suite/geoserver/tilecache"
+                   override="false"/>
+      </Context>
+
+   .. note:: Make sure the :guilabel:`GEOWEBCACHE_CACHE_DIR` exists, and the :guilabel:`GEOSERVER_DATA_DIR` points to your data directory location.
+
+#. Copy :file:`geoserver.war` to :file:`$CATALINA_HOME/webapps`.
+
+#. Start Tomcat, navigate to the GeoServer Welcome page at http://localhost:8080/geoserver and verify that the GeoServer data directory and Java version is correct.
+
+#. Go to the GeoWebCache main page at http://localhost:8080/geoserver/gwc and verify the Local Storage (:guilabel:`GEOWEBCACHE_CACHE_DIR`) is correct.
+
+Recommended performance extensions
+----------------------------------
+
+Java Cryptography
+~~~~~~~~~~~~~~~~~
+
+.. note:: This is only applicable if you are using the Oracle JRE (OpenJDK includes this by default).
+
+#. Download the :guilabel:`Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files for JDK/JRE 8` from `Oracle <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`__.   
+
+#. Copy the two JAR files to your :file:`$JRE_HOME/lib/security` directory (overwriting the existing jar files).
+
+#. Restart Tomcat, navigate to the GeoServer welcome page, and verify that it says :guilabel:`Strong cryptography available`.
+
+Marlin Renderer
+~~~~~~~~~~~~~~~
+
+The Marlin renderer is an open source Java rendering engine optimized for performance, based on OpenJDK’s Pisces implementation. With this, vector rendering in GeoServer is much improved over the standard engine.
+
+#. Copy the :file:`marlin-0.7.3-Unsafe.jar` file inside the :file:`marlin` directory in the Boundless extension bundle (:file:`BoundlessSuite-ext.zip`) to your Tomcat :file:`$CATALINA_HOME/lib` directory.
+
+#. Add the following options to Tomcat:
+
+   * ``-Xbootclasspath/a:/usr/share/tomcat8/lib/marlin-0.7.3-Unsafe.jar`` (your location maybe slightly different)
+   * ``-Dsun.java2d.renderer=org.marlin.pisces.PiscesRenderingEngine``
+   * ``-Dsun.java2d.renderer.useThreadLocal=false``
+
+#. Restart tomcat, navigate to the GeoServer :guilabel:`Server Status` page, and verify the :guilabel:`Java Rendering Engine` says :guilabel:`org.marlin.pisces.PiscesRenderingEngine`.
+
+LibJPEG Turbo
+~~~~~~~~~~~~~
+
+The libjpeg-turbo extension provides a significant performance enhancement for JPEG encoding in GeoServer WMS output (up to 40% faster than with no native libraries, equal or greater performance than with Native ImageIO).
+
+#. Download and install `LibJPEG Turbo <http://libjpeg-turbo.virtualgl.org/>`__ (also available from the Boundless Ubuntu/Red Hat repositories)
+
+#. Add the following option to Tomcat:
+
+   * ``-Djava.library.path=<path/to/libjpeg-turbo>/lib`` (often :file:`/opt/libjpeg-turbo/lib64`)
+
+#. Restart Tomcat, navigate to the GeoServer Detailed Status page at http://localhost:8080/geoserver/rest/about/status, and search for :guilabel:`libjpeg` to verify it is :guilabel:`Enabled` and :guilabel:`Available`.
+

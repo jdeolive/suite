@@ -1,6 +1,0 @@
-<project name="doc.install.windows" default="build">
-
-  <property name="doc.name" value="windows"/>
-  <import file="../common.xml"/>
-
-</project>

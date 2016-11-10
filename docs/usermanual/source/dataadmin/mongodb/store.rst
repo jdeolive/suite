@@ -7,12 +7,6 @@ The process for adding a MongoDB store to GeoServer is the same as for any other
 
 #. From the GeoServer web interface, click :guilabel:`Stores`, then :guilabel:`Add a new store`.
 
-#. If the MongoDB extension was installed correctly, you will see an entry for :guilabel:`MongoDB`.
-
-   .. figure:: img/mongodb_storelink.png
-
-      MongoDB in the list of data sources
-
 #. Click the entry for :guilabel:`MongoDB`.
 
 #. Fill out the following form: Enter the following parameters:
@@ -23,7 +17,7 @@ The process for adding a MongoDB store to GeoServer is the same as for any other
 
    * :guilabel:`Description`: Internal description of the store.
 
-   *  :guilabel:`Enabled`: Toggles whether the store is enabled (and all its layers published) or not.
+   * :guilabel:`Enabled`: Toggles whether the store is enabled (and all its layers published) or not.
 
    * :guilabel:`data_store`: Specifies the MongoDB instance and database to connect to.
 

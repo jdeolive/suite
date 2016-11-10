@@ -27,7 +27,7 @@ Returns true if the bounds of the patch intersect the geometry.
     SELECT PC_Intersects('SRID=4326;POINT(-126.451 45.552)'::geometry, pa)
     FROM patches WHERE id = 7;
 
-.. code-block:: sql
+::
 
     t
 
@@ -46,7 +46,7 @@ Returns a PcPatch which only contains points that intersected the geometry.
     )))
     FROM patches WHERE id = 7;
 
-.. code-block:: sql
+::
 
                  pc_astext               
     --------------------------------------

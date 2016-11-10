@@ -76,11 +76,7 @@ At the top, three buttons persist regardless of the active tab:
 Maps tab
 ~~~~~~~~
 
-The :guilabel:`Maps` tab lists of all maps created in the project workspace.
-
-.. figure:: img/mapsettings.png
-
-   Map settings
+The :guilabel:`Maps` tab lists of all maps created in the project workspace, and is the default tab for a workspace.
 
 The box at the top of the page provides options to sort the list of maps by name or by last modification, and to filter which maps are displayed based on a string.
 
@@ -106,7 +102,11 @@ The :guilabel:`Map Settings` page allows details about the map to be entered:
 * :guilabel:`Description`, for long-form information about the map
 * :guilabel:`Render Timeout`, for canceling long-running map requests when styling the map. 
 
-  .. note:: If a map request exceeds its `timeout <../../../geoserver/services/wms/vendor.html#format-options>`_, a `partial image <../../../geoserver/services/wms/reference.html#exceptions>`_ may be returned.
+  .. note:: If a map request exceeds its `timeout <../../geoserver/services/wms/vendor.html#format-options>`_, a `partial image <../../geoserver/services/wms/reference.html#exceptions>`_ may be returned.
+
+.. figure:: img/mapsettings.png
+
+   Map settings
 
 .. _webmaps.composer.configuration.workspacecontents.layers:
 

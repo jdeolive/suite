@@ -18,6 +18,8 @@ Navigating around the style editor interface is easy with the mouse, but there a
      - :guilabel:`Ctrl` + :guilabel:`Enter`
    * - Code fold / unfold
      - :guilabel:`Ctrl` + :guilabel:`,` / :guilabel:`Ctrl` + :guilabel:`.`
+   * - Comment / uncomment
+     - :guilabel:`Ctrl` + :guilabel:`3`
    * - Select line
      - :guilabel:`Shift` + :guilabel:`Up` and :guilabel:`Shift` + :guilabel:`Down`
    * - Increase / reduce indent

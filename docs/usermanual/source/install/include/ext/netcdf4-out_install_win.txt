@@ -1,0 +1,23 @@
+To output specifically in NetCDF 4 format, you must install the NetCDF output format extension and *also the native NetCDF library*. The instructions for the latter are below.
+
+#. In the extensions bundle, navigate to the :file:`windows` directory.
+
+#. Run the :file:`netCDF4.4.1-NC4-32.exe` installer, making sure to select :guilabel:`Add netCDF to the system PATH for all users`, but accepting all other defaults
+
+  .. figure:: /install/include/ext/img/netcd4_path_win.png
+
+#. Open a :guilabel:`Command Prompt` and type :guilabel:`ncdump`. You should see the following output:
+
+  .. figure:: /install/include/ext/img/ncdf4-cmd-win.png
+
+#. Use :menuselection:`Start --> Apache Tomcat --> Configure Tomcat` to open :guilabel:`Apache Tomcat Properties`. Switch to the :guilabel:`Java` tab.
+
+#. Under :guilabel:`Java Options`, add the following line (changing the path to your installation as necessary)::
+
+   -Djna.library.path=C:\Program Files (x86)\netCDF 4.4.1\bin
+  
+  .. figure:: /install/include/ext/img/ncdf4-config-win.png
+   
+#. Click :guilabel:`Apply`.
+     
+#. Stop and start the server.

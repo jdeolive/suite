@@ -5,8 +5,6 @@ A tour of Composer
 
 This section will introduce the Composer interface.
 
-.. note:: Composer is only available with `OpenGeo Suite Enterprise <http://boundlessgeo.com/solutions/opengeo-suite/>`_. For more information on OpenGeo Suite Enterprise, please `contact us <http://boundlessgeo.com/about/contact-us/sales/>`_.
-
 The Composer interface consists of two main sections:
 
 * :ref:`Configuration <webmaps.composer.configuration>` 

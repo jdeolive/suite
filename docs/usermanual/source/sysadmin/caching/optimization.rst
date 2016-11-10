@@ -8,7 +8,7 @@ While a tile cache for a layer automatically brings many improvements in perform
 Use 8-bit images
 ----------------
 
-PNG (Portable Network Graphics) is a popular file format for bitmap images. PNG is used in most cases except where a lossy compression format like JPEG would produce a more desired file size (for serving imagery). PNGs produced by GeoServer normally have a 24-bit "true color" color palette (2:sup:`24` = 16.8 million colors).
+PNG (Portable Network Graphics) is a popular file format for bitmap images. PNG is used in most cases except where a lossy compression format like JPEG would produce a more desired file size (for serving imagery). PNGs produced by GeoServer normally have a 24-bit "true color" color palette (2\ :sup:`24` = 16.8 million colors).
 
 In practice, such a large color palette is unnecessary for most map tiles. Unless the layer is rendering imagery files or other content requiring a full color palette, most of the time images will not be using anywhere near that many colors. More importantly, as PNG uses high quality lossless compression, those 24-bit colors take up a lot of unnecessary space.
 
