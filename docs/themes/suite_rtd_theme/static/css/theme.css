@@ -5051,7 +5051,7 @@ div[class^='highlight'] pre {
 
 #header {
   position: fixed;
-  height: 60px;
+  height: 80px;
   padding: 0;
   overflow: hidden;
   background-color: #28728d;
@@ -5060,10 +5060,10 @@ div[class^='highlight'] pre {
   width: 100%;
 }
 #header .suite_logo a {
-  margin: 0.5em 0 0 0;
+  margin: 9px 0 0 0;
   float: left;
-  width: 304px;
-  height: 40px;
+  width: 170px;
+  height: 60px;
   overflow: hidden;
   text-indent: -9999em;
   background: url("../img/suite-logo.png") no-repeat;
@@ -5075,8 +5075,8 @@ div[class^='highlight'] pre {
 }
 #header .suite_logo_only a {
   background: url("../img/suite-logo-only.png") no-repeat;
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   text-indent: -9999em;
   float: left;
   overflow: hidden;
@@ -5090,122 +5090,64 @@ div[class^='highlight'] pre {
 #header .suite_logo {
   padding-left: 20px;
 }
-#header .community_logo {
-  display: inline-block;
-  padding-left: 20px;
-}
-@media screen and (min-width: 320px) and (max-width: 480px) {
-  #header .community_logo {
-    padding-left: 0;
-  }
-}
-#header .pg_logo a {
-  background: url("../img/postgis-logo.png") no-repeat;
-  width: 203px;
-  height: 40px;
-  display: inline-block;
-  margin: 0.6em 0 0;
-}
-#header .gs_logo a {
-  background: url("../img/geoserver-logo.png") no-repeat;
-  width: 235px;
-  height: 40px;
-  display: inline-block;
-  margin: 0.6em 0 0;
-}
-@media screen and (min-width: 320px) and (max-width: 480px) {
-  #header .gs_logo a {
-    background-size: 212px 36px;
-    width: 212px;
-    margin-left: 10px;
-    margin: 0.7em 0 0;
-  }
-}
-#header .gwc_logo a {
-  background: url("../img/geowebcache-logo.png") no-repeat;
-  width: 300px;
-  height: 40px;
-  display: inline-block;
-  margin: 0.6em 0 0;
-}
-@media screen and (min-width: 320px) and (max-width: 480px) {
-  #header .gwc_logo a {
-    background-size: 210px 28px;
-    margin-top: 1.1em;
-    margin-left: 10px;
-    width: 210px;
-  }
-}
-#header .ol_logo a {
-  background: url("../img/openlayers-logo.png") no-repeat;
-  width: 227px;
-  height: 40px;
-  display: inline-block;
-  margin: 0.6em 0 0;
-}
-@media screen and (min-width: 320px) and (max-width: 480px) {
-  #header .ol_logo a {
-    background-size: 204px 36px;
-    margin-left: 10px;
-    margin-top: 0.8em;
-    width: 204px;
-  }
-}
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 1.5 / 1), only screen and (min-resolution: 144dpi), only screen and (min-resolution: 1.5dppx) {
   #header .suite_logo a {
     background: url("../img/suite-logo@2x.png") no-repeat;
-    background-size: 304px 40px;
+    background-size: 170px 60px;
   }
 }
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (min-width: 320px) and (max-width: 480px), only screen and (min--moz-device-pixel-ratio: 1.5) and (min-width: 320px) and (max-width: 480px), only screen and (-o-min-device-pixel-ratio: 1.5 / 1) and (min-width: 320px) and (max-width: 480px), only screen and (min-resolution: 144dpi) and (min-width: 320px) and (max-width: 480px), only screen and (min-resolution: 1.5dppx) and (min-width: 320px) and (max-width: 480px) {
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (min-width: 320px) and (max-width: 639px), only screen and (min--moz-device-pixel-ratio: 1.5) and (min-width: 320px) and (max-width: 480px), only screen and (-o-min-device-pixel-ratio: 1.5 / 1) and (min-width: 320px) and (max-width: 480px), only screen and (min-resolution: 144dpi) and (min-width: 320px) and (max-width: 480px), only screen and (min-resolution: 1.5dppx) and (min-width: 320px) and (max-width: 480px) {
   #header .suite_logo a {
     margin-left: 5px;
   }
 }
+#header .community_logo {
+  display: inline-block;
+  padding-left: 20px;
+}
+#header .pg_logo a {
+  background: url("../img/postgis-logo.png") no-repeat;
+}
+#header .gs_logo a {
+  background: url("../img/geoserver-logo.png") no-repeat;
+}
+#header .gwc_logo a {
+  background: url("../img/geowebcache-logo.png") no-repeat;
+}
+#header .ol_logo a {
+  background: url("../img/openlayers-logo.png") no-repeat;
+}
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 1.5 / 1), only screen and (min-resolution: 144dpi), only screen and (min-resolution: 1.5dppx) {
   #header .pg_logo a {
     background: url("../img/postgis-logo@2x.png") no-repeat;
-    background-size: 203px 40px;
   }
   #header .gs_logo a {
     background: url("../img/geoserver-logo@2x.png") no-repeat;
-    background-size: 235px 40px;
   }
-}
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (min-width: 320px) and (max-width: 480px), only screen and (min--moz-device-pixel-ratio: 1.5) and (min-width: 320px) and (max-width: 480px), only screen and (-o-min-device-pixel-ratio: 1.5 / 1) and (min-width: 320px) and (max-width: 480px), only screen and (min-resolution: 144dpi) and (min-width: 320px) and (max-width: 480px), only screen and (min-resolution: 1.5dppx) and (min-width: 320px) and (max-width: 480px) {
-  #header .gs_logo a {
-    background-size: 212px 36px;
-    margin-top: 0.8em;
-    margin-left: 10px;
-    width: 212px;
-  }
-}
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 1.5 / 1), only screen and (min-resolution: 144dpi), only screen and (min-resolution: 1.5dppx) {
   #header .gwc_logo a {
     background: url("../img/geowebcache-logo@2x.png") no-repeat;
-    background-size: 300px 40px;
   }
-}
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (min-width: 320px) and (max-width: 480px), only screen and (min--moz-device-pixel-ratio: 1.5) and (min-width: 320px) and (max-width: 480px), only screen and (-o-min-device-pixel-ratio: 1.5 / 1) and (min-width: 320px) and (max-width: 480px), only screen and (min-resolution: 144dpi) and (min-width: 320px) and (max-width: 480px), only screen and (min-resolution: 1.5dppx) and (min-width: 320px) and (max-width: 480px) {
-  #header .gwc_logo a {
-    background-size: 210px 28px;
-    margin-top: 1em;
-    margin-left: 10px;
-    width: 210px;
-  }
-}
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 1.5 / 1), only screen and (min-resolution: 144dpi), only screen and (min-resolution: 1.5dppx) {
   #header .ol_logo a {
     background: url("../img/openlayers-logo@2x.png") no-repeat;
-    background-size: 227px 40px;
   }
 }
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (min-width: 320px) and (max-width: 480px), only screen and (min--moz-device-pixel-ratio: 1.5) and (min-width: 320px) and (max-width: 480px), only screen and (-o-min-device-pixel-ratio: 1.5 / 1) and (min-width: 320px) and (max-width: 480px), only screen and (min-resolution: 144dpi) and (min-width: 320px) and (max-width: 480px), only screen and (min-resolution: 1.5dppx) and (min-width: 320px) and (max-width: 480px) {
-  #header .ol_logo a {
-    background-size: 204px 36px;
+#header .community_logo a {
+  width: 493px;
+  height: 60px;
+  display: inline-block;
+  margin: 0.6em 0 0;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 1.5 / 1), only screen and (min-resolution: 144dpi), only screen and (min-resolution: 1.5dppx) {
+  #header .community_logo a {
+    background-size: 493px 60px ;
+  }
+}
+@media screen and (min-width: 320px) and (max-width: 639px) {
+  #header .community_logo a {
+    background-size: 247px 30px;
+    width: 247px;
     margin-left: 10px;
-    margin-top: 0.8em;
-    width: 204px;
+    margin-top: 25px;
   }
 }
 #header .component_version_info {
@@ -5215,7 +5157,7 @@ div[class^='highlight'] pre {
   margin-top: 2.5em;
 }
 #header .version_info {
-  margin: 0.8em 3.236em 0 1.5em;
+  margin: 1.2em 3.236em 0 1.5em;
   float: left;
   color: white;
   font-size: 1.4em;
@@ -5298,14 +5240,14 @@ div[class^='highlight'] pre {
   float: right;
   background-color: #28728d;
   color: white;
-  height: 70px;
-  width: 70px;
+  height: 80px;
+  width: 80px;
 }
 .back-to-suite .back-to-suite-inner {
   background: url("../img/suite-logo-only.png") no-repeat;
-  height: 40px;
-  width: 40px;
-  margin: 0.7em auto;
+  height: 60px;
+  width: 60px;
+  margin: 10px auto;
 }
 
 @media screen and (max-width: 768px) {
@@ -5315,7 +5257,7 @@ div[class^='highlight'] pre {
 }
 
 .wy-grid-for-nav, .wy-nav-shift {
-  top: 70px;
+  top: 90px;
 }
 
 .wy-nav-side {
@@ -5324,7 +5266,7 @@ div[class^='highlight'] pre {
 }
 
 nav.stickynav {
-  top: 70px;
+  top: 90px;
 }
 
 .wy-side-nav-search {

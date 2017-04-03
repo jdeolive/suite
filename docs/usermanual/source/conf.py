@@ -203,7 +203,7 @@ latex_documents = [
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
-latex_logo = "../../themes/suite_rtd_theme/static/img/suite-logo-only-blue.png"
+latex_logo = "../../themes/suite_rtd_theme/static/img/suite-logo-only-color.png"
 
 # For "manual" documents, if this is true, then toplevel headings are parts,
 # not chapters.
@@ -274,7 +274,7 @@ latex_preamble = """
 \\newlength{\\somewidth}
 \\renewcommand{\\includegraphics}[1]{
   \\settowidth{\\somewidth}{\\OLDincludegraphics{#1}}
-  \\ifnum\\pdfstrcmp{#1}{suite-logo-only-blue.png}=0
+  \\ifnum\\pdfstrcmp{#1}{suite-logo-only-color.png}=0
     \\OLDincludegraphics{#1}
   \\else
     \\ifthenelse{\\lengthtest{\\somewidth>4in}}{

@@ -129,24 +129,27 @@ a:focus, a:active {
 .navbar {
   background-color: #28728d;
   color: white;
-  height: 60px;
-  padding: 7px 15px 13px 20px;
+  height: 80px;
+  padding: 9px 15px 13px 20px;
   border-radius: 0;
+}
+.navbar-right {
+  padding-top: 10px;
 }
 
 .navbar-brand {
-  background: #28728d url(../img/opengeo-logo.png) no-repeat left center;
-  width: 304px;
-  height: 40px;
+  background: #28728d url(../img/suite-logo.png) no-repeat left center;
+  width: 300px;
+  height: 60px;
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2),
   (min-resolution: 192dpi) {
   .navbar-brand {
-    background-image: url(../img/opengeo-logo@2x.png);
-    width: 304px;
-    height: 40px;
-    background-size: 304px 40px;
+    background-image: url(../img/suite-logo@2x.png);
+    width: 300px;
+    height: 60px;
+    background-size: 170px 60px;
     background-repeat: no-repeat;
   }
 }
@@ -174,10 +177,6 @@ h5.version-info {
 
 .version {
   display: inline;
-}
-
-.navbar-nav.navbar-right:last-child {
-  padding-top: 3px;
 }
 
 .navbar-nav > li > a.tablink {
@@ -343,6 +342,7 @@ a.dash-component {
 }
 .dash-component.suite {
    background-image: url(../img/suite_32.png);
+   background-size: 32px 32px;
 }
 .dash-component.postgis {
    background-image: url(../img/postgis_suite_32.png);
@@ -351,7 +351,7 @@ a.dash-component {
    background-image: url(../img/geoserver_suite_32.png);
 }
 .dash-component.qgis {
-   background-image: url(../img/qgis_suite_32.png);
+   background-image: url(../img/desktop_32.png);
 }
 .dash-component.geowebcache {
    background-image: url(../img/geowebcache_suite_32.png);

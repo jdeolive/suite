@@ -31,7 +31,7 @@ See the :ref:`install.redhat.packages.list` for details about the possible packa
    .. code-block:: bash
 
       mkdir -p /etc/pki/boundless
-      wget -O /etc/pki/boundless/GPG-KEY-Boundless_Suite https://yum.boundlessgeo.com/GPG-KEY-Boundless_Suite
+      wget -O /etc/pki/boundless/GPG-KEY-Boundless https://downloads-repo.boundlessgeo.com/GPG-KEY-Boundless
 
 #. Add the Boundless Suite repository by creating the file :file:`/etc/yum.repos.d/Boundless.repo` and adding the following contents:
 
@@ -39,16 +39,18 @@ See the :ref:`install.redhat.packages.list` for details about the possible packa
 
       [boundless-suite]
       name=Boundless Suite Repository
-      baseurl=https://<username>:<password>@yum-ee.boundlessgeo.com/suite/v49/el6/$releasever/$basearch
+      baseurl=https://<username>:<password>@downloads-repo.boundlessgeo.com/suite-repo/4.9.1/el/6/x86_64
       enabled=1
       gpgcheck=1
-      gpgkey=file:///etc/pki/boundless/GPG-KEY-Boundless_Suite
+      gpgkey=file:///etc/pki/boundless/GPG-KEY-Boundless
 
-   Make sure to replace ``<username>`` and ``<password>`` with the user name and password supplied to you.  
+   Make sure to replace ``<username>`` and ``<password>`` with the user name and password supplied to you.
+
+   .. note:: Your username is your email address. When entering your username into the ``Boundless.repo`` file, replace the ``@`` in your username with ``%40``.
 
    .. note:: Please `contact us <http://boundlessgeo.com/about/contact-us/>`__ if you have purchased Boundless Suite and do not have a user name and password.
 
-#. Search for Boundless packages to verify that the repository list is correct. 
+#. Search for Boundless packages to verify that the repository list is correct.
 
    .. code-block:: bash
 
@@ -62,7 +64,7 @@ See the :ref:`install.redhat.packages.list` for details about the possible packa
 
      .. code-block:: bash
 
-        yum install suite-geoserver suite-docs suite-dashboard 
+        yum install suite-geoserver suite-docs suite-dashboard
 
    * A more complete install, including all the web applications, PostGIS, GDAL, and NetCDF:
 
@@ -78,7 +80,7 @@ See the :ref:`install.redhat.packages.list` for details about the possible packa
                     postgis21-postgresql93 \
                     suite-gs-gdal \
                     suite-gs-netcdf \
-                    suite-gs-netcdf-out 
+                    suite-gs-netcdf-out
 
    .. note::  See the :ref:`install.redhat.packages.list` for details of individual packages.
 
@@ -103,13 +105,73 @@ See the :ref:`install.redhat.packages.list` for details about the possible packa
 Upgrade
 -------
 
-This section describes how to upgrade Boundless Suite 4.x to |version| on Red Hat-based Linux distributions.
+Upgrading from 4.9.0 to |version|
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This section describes how to upgrade Boundless Suite 4.9.0 to |version| on Red Hat-based Linux distributions.
+
+.. note::
+
+   If you made changes to the tomcat context files located in ``/etc/tomcat8/Catalina/localhost/``, please back them up now or your changes will be lost. After completing the upgrade process, restore the backed up files.
+
+#. Change to the ``root`` user:
+
+   .. code-block:: bash
+
+      sudo su -
+
+#. Remove the 4.9.0 packages:
+
+   .. code-block:: bash
+
+      yum remove suite-*
+
+   Make note of which packages were removed this way.
+
+#. Download the Boundless key:
+
+   .. code-block:: bash
+
+      wget -O /etc/pki/boundless/GPG-KEY-Boundless https://downloads-repo.boundlessgeo.com/GPG-KEY-Boundless
+
+#. Replace the 4.9.0 repo definition with the new repo definition. Open ``/etc/yum.repos.d/Boundless.repo`` and replace the contents with:
+
+   .. code-block:: none
+
+      [boundless-suite]
+      name=Boundless Suite Repository
+      baseurl=https://<username>:<password>@downloads-repo.boundlessgeo.com/suite-repo/4.9.1/el/6/x86_64
+      enabled=1
+      gpgcheck=1
+      gpgkey=file:///etc/pki/boundless/GPG-KEY-Boundless
+
+   Make sure to replace each instance of ``<username>`` and ``<password>`` with the user name and password supplied to you.
+
+   .. note:: Your username is your email address. When entering your username into the ``Boundless.repo`` file, replace the ``@`` in your username with ``%40``.
+
+#. Refresh the yum repo data:
+
+   .. code-block:: bash
+
+      yum clean all
+
+#. Install all Boundless Suite 4.9.1 packages corresponding to the ``suite-*`` packages which were removed in step 1. For example:
+
+   .. code-block:: bash
+
+      yum install suite-geoserver suite-docs suite-dashboard
+
+
+Upgrading from 4.8 and older
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This section describes how to upgrade Boundless Suite 4.8 and earlier to |version| on Red Hat-based Linux distributions.
 
 .. warning:: We do **not** recommend upgrading Boundless Suite on a production server. Instead, do a new install on new machine, then transfer your data and settings to the new machine.
 
 .. warning::
 
-   Because of the major package changes involved, if you have any version earlier than 4.9, it must be uninstalled first.  Make sure you backup your data, configuration, your old 4.8 install, and any other data/software on the system. 
+   Because of the major package changes involved, if you have any version earlier than 4.9.0, it must be uninstalled first.  Make sure you backup your data, configuration, your old 4.8 install, and any other data/software on the system.
 
    The data directory at ``/var/lib/opengeo/geoserver`` will not be removed during uninstallation.
 
@@ -163,7 +225,7 @@ This section describes how to upgrade Boundless Suite 4.x to |version| on Red Ha
                       wxBase \
                       wxGTK \
                       wxGTK-*
- 
+
 #. Remove the reference to the Suite 4.8 repository:
 
    .. code-block:: bash
@@ -251,13 +313,13 @@ The following major binary packages are available:
    * - ``libjpeg-turbo-official``
      - Libjpeg turbo binaries (version 1.4.2)
    * - ``netcdf``
-     - NetCDF Binary packages 
+     - NetCDF Binary packages
    * - ``netcdf-devel``
-     - Development support for the NetCDF Binary 
+     - Development support for the NetCDF Binary
    * - ``postgis21-postgresql93``
      - Postgresql 9.3 and PostGIS 2.1
    * - ``pointcloud-postgresql93``
-     - Pointcloud for postgresql 
+     - Pointcloud for postgresql
    * - ``pdal``
      - PDAL (Point Data Abstraction Library)
    * - ``pdal-devel``

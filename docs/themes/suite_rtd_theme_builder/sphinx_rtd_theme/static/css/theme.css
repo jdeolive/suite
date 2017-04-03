@@ -4854,11 +4854,11 @@ div[class^='highlight'] pre {
 #header .suite_logo a {
   margin: 1em 0 0 1em;
   float: left;
-  width: 304px;
+  width: 188px;
   height: 40px;
   overflow: hidden;
   text-indent: -9999em;
-  background: url("../img/opengeo-logo.png") no-repeat;
+  background: url("../img/suite-logo.png") no-repeat;
 }
 #header .suite_logo_only {
   display: inline-block;
@@ -4866,7 +4866,7 @@ div[class^='highlight'] pre {
   margin-top: 1em;
 }
 #header .suite_logo_only a {
-  background: url("../img/opengeo-logo-only.png") no-repeat;
+  background: url("../img/suite-logo-only.png") no-repeat;
   width: 40px;
   height: 40px;
   text-indent: -9999em;
@@ -4941,8 +4941,8 @@ div[class^='highlight'] pre {
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 1.5 / 1), only screen and (min-resolution: 144dpi), only screen and (min-resolution: 1.5dppx) {
   #header .suite_logo a {
-    background: url("../img/opengeo-logo@2x.png") no-repeat;
-    background-size: 304px 40px;
+    background: url("../img/suite-logo@2x.png") no-repeat;
+    background-size: 188px 40px;
   }
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (min-width: 320px) and (max-width: 480px), only screen and (min--moz-device-pixel-ratio: 1.5) and (min-width: 320px) and (max-width: 480px), only screen and (-o-min-device-pixel-ratio: 1.5 / 1) and (min-width: 320px) and (max-width: 480px), only screen and (min-resolution: 144dpi) and (min-width: 320px) and (max-width: 480px), only screen and (min-resolution: 1.5dppx) and (min-width: 320px) and (max-width: 480px) {
@@ -5090,7 +5090,7 @@ div[class^='highlight'] pre {
   width: 70px;
 }
 .back-to-suite .back-to-suite-inner {
-  background: url("../img/opengeo-logo-only.png") no-repeat;
+  background: url("../img/suite-logo-only.png") no-repeat;
   height: 40px;
   width: 40px;
   margin: 1em auto;

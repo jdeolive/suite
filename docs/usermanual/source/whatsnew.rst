@@ -3,9 +3,15 @@
 What's new in |version|
 =======================
 
-Each new version of Boundless Suite includes numerous fixes and component upgrades.
+**This version is a maintenance release** that contains minor bug fixes and some other changes:
 
-In addition, Boundless Suite |version| includes the following new features:
+* Boundless Suite is now integrated with `Boundless Connect <https://connect.boundlessgeo.com/>`__ for easier access to support, documentation, and community.  See the upgrade instructions for your platform.
+
+* New product logos and branding.
+
+* **Security updates**: fixes to reduce the risk of unauthorized activity on your system.
+
+Version 4.9.0 included the following new and updated features:
 
 * A new name! OpenGeo Suite is now **Boundless Suite**.
 

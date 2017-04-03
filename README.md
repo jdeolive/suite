@@ -1,13 +1,13 @@
-OpenGeo Suite README
-====================
+Boundless Suite
+===============
 
-These instructions describe how to build platform independent components of OpenGeo Suite.
+These instructions describe how to build platform independent components of Boundless Suite.
 
 ## Prerequisites
 
 The following base software packages are required.
 
-* Java 7 - [Java Development Kit (JDK)](http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html) - 1.7+ or [Open JDK 7](http://openjdk.java.net/install/)
+* Java 8 - [Java Development Kit (JDK)](http://www.oracle.com/technetwork/java/javase/downloads/index.html) - 1.8+ or [Open JDK](http://openjdk.java.net/install/)
 * [Apache Ant](http://ant.apache.org/bindownload.cgi) - 1.8+
 * [Apache Ivy](http://ant.apache.org/ivy/download.cgi) - 2.3+
 * [Git](http://git-scm.com/) - 1.7.10+*
